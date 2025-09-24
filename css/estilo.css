@@ -1,0 +1,24 @@
+.navbar {
+      background-color: #1B1B2F; 
+    }
+
+    .navbar-nav .nav-link {
+      margin: 0 12px;          
+      color: #d9d9d9 !important;  /*tem que colocar "!important", se não o bootstrap não adere ao estilo */
+      font-weight: 500;         
+    }
+    .navbar-nav .nav-link:hover {
+      color: #ffffff !important;  
+    }
+
+    /* Botão de contato */
+    .navbar .btn-contato {
+      width: 140px !important;         
+      text-align: center !important; 
+      font-weight: 500 !important;
+      border-radius: 8px !important; 
+      padding-left: 25px !important;
+      padding-right: 25px !important;
+
+     }
+
