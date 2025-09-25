@@ -17,12 +17,12 @@
 <body>
     
    <!--nav-->
-   <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3 fixed-top">
   <div class="container-fluid">
     <!-- Logo -->
     <a class="navbar-brand d-flex align-items-center" href="#">
       <img src="#" alt="#" width="40" height="40" class="me-2">
-      <span>FETELECOM</span>
+      <span>aguardando logo</span>
     </a>
 
     <!-- Botão toggle no mobile -->
@@ -31,17 +31,20 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Links -->
+    <!-- nav -->
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav me-5">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Sobre Nós</a>
+         <li class="nav-item">
+          <a class="nav-link" href="#home">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Nossos Serviços</a>
+          <a class="nav-link" href="#sobrenos">Sobre Nós</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Orçamento</a>
+          <a class="nav-link" href="#servicos">Nossos Serviços</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#orcamento">Orçamento</a>
         </li>
       </ul>
       <!-- Botão de contato -->
@@ -49,6 +52,63 @@
     </div>
   </div>
 </nav>
+
+<!-- Seção home -->
+<section  id="home" class="d-flex align-items-center min-vh-100">
+  <div class="container-fluid h-100">
+    <div class="row align-items-center no-gutters">
+      
+      <!-- Coluna de texto -->
+      <div class="col-lg-6 col-md-12 p-5 text-center text-lg-left">
+        <h1 class="font-weight-bold" style="font-size: 80px; color: #1b1b2f">TECNOLOGIA ESSENCIAL</h1>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+        <p>
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </p>
+        <a href="#" class="btn btn-outline-primary btn-lg">INICIAR</a>
+      </div>
+      
+      <!-- Coluna de imagem -->
+      <div class="col-lg-6 col-md-12 p-0">
+        <div class="img-wrapper h-100">
+          <img src="images/home.jpg" alt="#" class="img-fluid w-100 h-100">
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Seção Nossa História -->
+<section id="sobrenos" class="nossa-historia min-vh-100">
+  <div class="container-fluid h-100">
+    <div class="row h-100 no-gutters">
+      
+      <!-- Coluna de texto -->
+      <div class="col-lg-6 col-md-12 d-flex flex-column justify-content-center align-items-start p-5 text-white bg-azul">
+        <h2 class="font-weight-bold mb-4">Nossa História</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+          Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+        <p>
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi 
+          ut aliquip ex ea commodo consequat.
+        </p>
+      </div>
+
+      <!-- Coluna de imagem -->
+      <div class="col-lg-6 col-md-12 p-0">
+        <img src="images/fe 1.jpg" alt="Nossa História" class="img-fluid w-100 h-100" style="object-fit: cover;">
+      </div>
+
+    </div>
+  </div>
+</section>
+
 
 <!--jQuery, Popper.js, Bootstrap JS-->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
