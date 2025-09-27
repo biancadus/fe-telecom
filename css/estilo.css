@@ -1,12 +1,29 @@
  /*tem que colocar "!important", se não o bootstrap não adere ao estilo */
 
 body {
-  padding-top: 70px; /* mesma altura da navbar */
+  padding-top: 70px;
   margin: 0;
   box-sizing: border-box;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #ffffff;
-  scroll-behavior: smooth;   /* rolagem suave */
+  scroll-behavior: smooth; 
+}
+
+section {
+  scroll-margin-top: 80px;
+}
+
+#home,
+#sobrenos {
+  padding-top: 70px; 
+}
+
+#home {
+  margin-bottom: 50px;
+}
+
+.nossa-historia {
+  height: 100vh !important;
 }
 
 .navbar {
@@ -38,7 +55,7 @@ body {
   height: 90%;
   overflow: hidden;
   margin-left: 20px;
-  margin-top: 50px;
+  margin-top: 30px;
   border-radius: 63% 58% 75% 63% / 96% 80% 68% 54% !important;
 
      }
