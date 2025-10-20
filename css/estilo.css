@@ -88,7 +88,7 @@ section {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin:150px auto 0; 
+  margin:170px auto 0; 
   width: 90%;
   max-width: 1100px;
   border-top: 3px solid #b3b3be;
@@ -102,12 +102,25 @@ section {
 }
 
 .timeline-dot {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   background-color: #1b1b2f;
   border-radius: 50%;
   position: relative;
-  top: -20px;
+  top: -52px;
+  margin: 0 auto;
+  cursor: pointer;
+  transition: background 0.3s;
+  z-index: 2;
+}
+
+.timeline-dot-grande {
+  width: 60px;
+  height: 60px;
+  background-color: #22577a;
+  border-radius: 50%;
+  position: relative;
+  top: -40px;
   margin: 0 auto;
   cursor: pointer;
   transition: background 0.3s;
@@ -115,9 +128,17 @@ section {
 }
 
 .timeline-year {
-  font-size: 0.85rem;
+  font-size: 1.5rem;
   color: #1b1b2f;
   margin-top: 5px;
+  font-weight: 600;
+  cursor: default;
+}
+
+.timeline-year-pequeno {
+  font-size: 1.2rem;
+  color: #1b1b2f;
+  margin-top: -5px;
   font-weight: 600;
   cursor: default;
 }
@@ -126,9 +147,13 @@ section {
   background-color: #1b4f9c;
 }
 
+.timeline-event:hover .timeline-dot-grande {
+  background-color: #567199;
+}
+
 .tooltip {
   position: absolute;
-  top: -150px;
+  top: -170px;
   left: 50%;
   transform: translateX(-50%);
   width: 230px;
@@ -168,3 +193,52 @@ section {
 }
 
 /* ======== COMPETÊNCIAS ======== */
+.competencias {
+  background-color: #eaf2f9;
+  padding: 60px 20px;
+}
+
+.titulo-competencias {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #003865;
+  margin-bottom: 40px;
+}
+
+.cards-competencias {
+  display: flex;
+  justify-content: center; 
+  gap: 40px;  
+  flex-wrap: nowrap;  
+}
+
+.card-competencia {
+  background-color: #fff;
+  border-radius: none;
+  padding: 30px 25px;
+  width: 350px;   
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.icon-competencia img {
+  width: 150px;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+.title-competencia {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #002b5c;
+  margin-bottom: 10px;
+}
+
+.text-competencia {
+  font-size: 0.95rem;
+  color: #333;
+  line-height: 1.5;
+}
+
