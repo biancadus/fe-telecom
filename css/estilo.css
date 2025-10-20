@@ -50,7 +50,7 @@ section {
 
      }
 
-     .img-wrapper {
+.img-wrapper {
   width: 90%;
   height: 90%;
   overflow: hidden;
@@ -58,7 +58,8 @@ section {
   margin-top: 30px;
   border-radius:  60% 40% 30% 70% / 60% 30% 70% 40% !important;
 
-     }
+}
+
 .img-wrapper img {
   width: 100%;
   height: 100%;
@@ -66,13 +67,104 @@ section {
   aspect-ratio: 1.4 / 0;
 }
 
-/* Fundo azul personalizado */
 .bg-azul {
-  background-color: #1b4f9c; /* escolha o tom que quiser */
+  background-color: #1b4f9c; 
 }
 
-/* Seção para ocupar altura automática ou tela inteira */
 .nossa-historia {
-  min-height: 100vh !important; /* pode trocar para 100vh se quiser ocupar a tela toda */
+  min-height: 100vh !important; 
 }
 
+/* ======== LINHA DO TEMPO ======== */
+
+.linha-tempo {
+  background-color: #ffffff;
+  min-height: 60vh; 
+  padding: 60px 0;
+}
+
+.timeline {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin:150px auto 0; 
+  width: 90%;
+  max-width: 1100px;
+  border-top: 3px solid #b3b3be;
+  padding-top: 10px; 
+}
+
+.timeline-event {
+  position: relative;
+  text-align: center;
+  flex: 1;
+}
+
+.timeline-dot {
+  width: 20px;
+  height: 20px;
+  background-color: #1b1b2f;
+  border-radius: 50%;
+  position: relative;
+  top: -20px;
+  margin: 0 auto;
+  cursor: pointer;
+  transition: background 0.3s;
+  z-index: 2;
+}
+
+.timeline-year {
+  font-size: 0.85rem;
+  color: #1b1b2f;
+  margin-top: 5px;
+  font-weight: 600;
+  cursor: default;
+}
+
+.timeline-event:hover .timeline-dot {
+  background-color: #1b4f9c;
+}
+
+.tooltip {
+  position: absolute;
+  top: -150px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 230px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  padding: 15px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  font-size: 0.9rem;
+  pointer-events: none;
+}
+
+.timeline-event:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(-5px);
+  pointer-events: auto;
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px;
+  border-style: solid;
+  border-color: #fff transparent transparent transparent;
+}
+
+.tooltip strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #1b1b2f;
+}
+
+/* ======== COMPETÊNCIAS ======== */
