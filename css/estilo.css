@@ -196,6 +196,7 @@ section {
 .competencias {
   background-color: #eaf2f9;
   padding: 60px 20px;
+   overflow-x: hidden;
 }
 
 .titulo-competencias {
@@ -210,7 +211,7 @@ section {
   display: flex;
   justify-content: center; 
   gap: 40px;  
-  flex-wrap: nowrap;  
+  flex-wrap: wrap;
 }
 
 .card-competencia {
@@ -218,6 +219,7 @@ section {
   border-radius: none;
   padding: 30px 25px;
   width: 350px;   
+  flex: 1 1 250px;
   flex: 0 0 auto;
   box-sizing: border-box;
   text-align: center;
@@ -242,3 +244,90 @@ section {
   line-height: 1.5;
 }
 
+/* ======== MISSÃO, VISÃO E VALORES ======== */
+.mvv {
+  background-color: #f8f9fa;
+  padding: 60px 20px;
+}
+
+.card-mvv-visao {
+  background-color: #6387ba;
+  color: white;
+  padding: 40px 25px;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+}
+
+.card-mvv-valores {
+  background-color: #122d55;
+  color: white;
+  padding: 40px 25px;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+}
+
+.card-mvv {
+  background-color: #0a2851;
+  color: white;
+  padding: 40px 25px;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+}
+
+.icon-mvv img {
+  width: 150px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.titulo-mvv {
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.card-mvv p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .card-mvv {
+    margin-bottom: 30px;
+  }
+}
+
+/* ======== MEDIA QUERIES ======== */
+/* Telas médias (tablets) */
+@media (max-width: 992px) {
+  .cards-competencias {
+    gap: 30px;
+  }
+
+  .card-competencia {
+    width: 45%; /* dois cards por linha */
+  }
+
+  .icon-competencia img {
+    width: 100px;
+  }
+}
+
+/* Telas pequenas (celulares) */
+@media (max-width: 600px) {
+  .cards-competencias {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card-competencia {
+    width: 90%; /* ocupa quase toda a tela */
+  }
+
+  .icon-competencia img {
+    width: 90px;
+  }
+}
