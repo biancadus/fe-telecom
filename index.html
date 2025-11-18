@@ -346,7 +346,55 @@
   </div>
 </section>
 
+<!-- Seção Simulação -->
+<section id="simulacao" class="simulacao">
+  <h2 class="titulo-simulacao">FAÇA UMA SIMULAÇÃO CONOSCO</h2>
+
+  <h3 class="subtitulo-simulacao">
+    Preencha o formulário abaixo para simular um orçamento personalizado para o seu projeto.
+  </h3>
+
+  <form class="simulacao-form">
+
+    <!-- Select do Serviço -->
+    <select class="simulacao-input select-servico">
+      <option selected disabled>Serviço</option>
+      <option>Instalação</option>
+      <option>Reparo</option>
+      <option>Manutenção</option>
+    </select>
+
+    <!-- Campos de localização -->
+    <div class="linha-endereco">
+      <input id="cep" type="text" class="simulacao-input" placeholder="CEP" />
+      <input id="endereco" type="text" class="simulacao-input" placeholder="Localização" />
+      <input  id="complemento" type="text" class="simulacao-input" placeholder="Complemento" />
+    </div>
+
+    <!-- Detalhes adicionais -->
+    <h4 class="detalhes-titulo">Detalhes adicionais</h4>
+
+    <div class="detalhes-container">
+      <label><input type="checkbox" value="fiacao-completa" /> Substituição de fiação completa</label>
+      <label><input type="checkbox" value="reparo-emergencia" /> Reparo de emergência</label>
+
+      <label><input type="checkbox" value="fiacao-energizada" /> Fiação energizada</label>
+      <label><input type="checkbox" value="instalacao-emergencia" /> Instalação de emergência</label>
+
+      <label><input type="checkbox" value="grande-porte" /> Reparo de grande porte</label>
+      <label><input type="checkbox" value="outros" /> Outros...</label>
+    </div>
+
+    <!-- Botão -->
+    <button type="submit" class="btn-simular">
+      SIMULAR ORÇAMENTO
+    </button>
+
+  </form>
+</section>
+
 <script src="js/perguntas.js"></script>
+<script src="js/cep.js"></script>
 
 <!--jQuery, Popper.js, Bootstrap JS-->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
