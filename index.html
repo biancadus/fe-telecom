@@ -45,15 +45,9 @@
         <li class="nav-item">
           <a class="nav-link" href="#servicos">Nossos Serviços</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#simulacao">Faça uma simulação</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#orcamento">Orçamento</a>
-        </li>
       </ul>
       <!-- Botão de contato -->
-      <a href="contato" class="btn btn-outline-light">Contato</a>
+      <a href="#contato" class="btn btn-outline-light">Contato</a>
     </div>
   </div>
 </nav>
@@ -431,12 +425,15 @@ Respondemos rapidamente com valores e disponibilidade.
 
       <textarea placeholder="Detalhes Adicionais"></textarea>
 
-      <button type="submit" class="btn-contato-enviar">ENVIAR</button>
+<button type="submit" class="btn-contato-enviar" onclick="sendEmail('Solicitação de Serviço de ' + form[3] + 'criado com sucesso.', form[0].value, form[1].value)" >ENVIAR</button>
+
+      
 
     </form>
 
   </div>
 
+  
 </section>
 
 <!-- ======== PARCERIA ======== -->
@@ -494,6 +491,7 @@ Respondemos rapidamente com valores e disponibilidade.
 
 <script src="js/perguntas.js"></script>
 <script src="js/máscara.js"></script>
+<script src="js/sendemail.js"> </script>
 
 <!--jQuery, Popper.js, Bootstrap JS-->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
