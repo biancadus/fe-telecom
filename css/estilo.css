@@ -191,6 +191,14 @@ section {
   color: #1b1b2f;
 }
 
+.timeline-event:nth-child(4) .tooltip {
+  top: -200px;
+}
+
+.timeline-event:nth-child(2) .tooltip {
+  top: -180px;
+}
+
 /* ======== COMPETÊNCIAS ======== */
 .competencias {
   background-color: #eaf2f9;
@@ -207,24 +215,20 @@ section {
 }
 
 .cards-competencias {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 40px;
-  max-width: 1600px;
-  margin: 0 auto;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(300px, 1fr));
+  gap: 20px;
+ justify-content: center;
+  max-width: 1400px;  
+  margin: 0 auto;  
 }
 
 .card-competencia {
   background-color: #fff;
-  padding: 35px 30px;
+  padding: 25px 20px;
   border-radius: 12px;
   text-align: center;
   transition: transform .25s ease, box-shadow .25s ease;
-}
-
-.card-competencia:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
 }
 
 .icon-competencia img {
@@ -659,7 +663,8 @@ section {
 }
 
 .footer-logo img {
-  width: 120px;
+  width: 200px;
+  margin-left: 50px;
 }
 
 .footer-links h3,
@@ -741,11 +746,7 @@ section {
 
 @media (max-width: 992px) {
   .cards-competencias {
-    gap: 30px;
-  }
-
-  .card-competencia {
-    width: 45%;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .icon-competencia img {
@@ -778,14 +779,8 @@ section {
 
 @media (max-width: 600px) {
   .cards-competencias {
-    flex-direction: column;
-    align-items: center;
+    grid-template-columns: 1fr;
   }
-
-  .card-competencia {
-    width: 90%;
-  }
-
   .icon-competencia img {
     width: 90px;
   }
