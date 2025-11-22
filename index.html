@@ -399,7 +399,7 @@
     </div>
 
     <!-- lado direito -->
-    <form class="contato-form">
+    <form class="contato-form"  id="formContato">
 
       <input type="text" placeholder="Nome" required>
       <input type="email" placeholder="Email" required>
@@ -429,11 +429,21 @@
 
       <textarea placeholder="Detalhes Adicionais"></textarea>
 
-<button type="submit" class="btn-contato-enviar" onclick="sendEmail('Solicitação de Serviço de ' + form[3] + 'criado com sucesso.', form[0].value, form[1].value)" >ENVIAR</button>
+<button type="button" class="btn-contato-enviar" onclick="enviarPedido()">ENVIAR</button>
     </form>
 
   </div>
 
+  <!-- MODAL DE ENVIO -->
+<div id="modalEnvio" class="modal-envio">
+  <div class="modal-conteudo">
+    <div id="modalLoading" class="loading"></div>
+
+    <h3 id="modalMensagem">Enviando seu pedido...</h3>
+
+    <button id="btnFecharModal" class="modal-btn" style="display:none;" onclick="fecharModal()">OK</button>
+  </div>
+</div>
   
 </section>
 
@@ -498,5 +508,11 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  emailjs.init("-WVXfsp3EU3jTTgzK");
+</script>
+
 </body>
 </html>
