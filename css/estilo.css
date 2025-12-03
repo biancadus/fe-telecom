@@ -7,6 +7,7 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #ffffff;
   scroll-behavior: smooth; 
+  overflow-x: hidden !important;
 }
 
 section {
@@ -216,7 +217,7 @@ section {
 
 .cards-competencias {
   display: grid !important;
-  grid-template-columns: repeat(4, minmax(300px, 1fr));
+  grid-template-columns: repeat(4, minmax(280px, 1fr));
   gap: 20px;
  justify-content: center;
   max-width: 1400px;  
@@ -806,6 +807,7 @@ section {
   .img-wrapper-inicio img {
     height: auto !important;
     border-radius: 0 !important;
+      border-radius:  60% 40% 30% 70% / 60% 30% 70% 40% !important;
   }
 
   /* NOSSA HISTÓRIA */
@@ -841,15 +843,47 @@ section {
     width: 100% !important;
   }
 
-  /* CONTATO */
+  @media (max-width: 768px) {
+
   .contato-container {
     flex-direction: column !important;
-    padding: 20px;
+    gap: 20px !important;
+    padding: 10px !important;
+    margin: 0 !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
   }
 
-  .contato-form, .contato-info {
+  .contato-info {
     width: 100% !important;
+    min-width: 0 !important;     
+    margin: 0 !important;
+    padding: 0 10px !important;
   }
+
+  .contato-info p {
+    max-width: 100% !important;   
+    margin-left: 0 !important;
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+  }
+
+  .info-item {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .contato-form {
+    width: 100% !important;
+    min-width: 0 !important;      
+    margin: 0 !important;
+    padding: 0 10px !important;
+  }
+
+  .linha-dupla {
+    flex-direction: column !important;
+  }
+}
 
   /* PARCERIA */
   .img-parceria img {
