@@ -769,79 +769,111 @@ section {
   color: #d3d3d3;
 }
 
-/* ======== MEDIA QUERIES ======== */
+@media (max-width: 991px) {
 
-@media (max-width: 600px) {
-  .img-parceria {
-    gap: 30px;
+  /* NAVBAR */
+  .navbar-brand img {
+    width: 200px !important;
+    height: auto !important;
   }
 
-  .footer-container {
-    text-align: center;
+  .navbar {
+    padding: 10px 15px !important;
   }
 
-  .footer-logo {
-    display: flex;
-    justify-content: center;
-  }
-}
-
-@media (max-width: 600px) {
-  .barra-pesquisa {
-    max-width: 90%;
-  }
-}
-
-@media (max-width: 900px) {
-  .contato-container {
-    flex-direction: column;
-    text-align: left;
+  .navbar-nav .nav-link {
+    margin: 10px 0 !important;
+    text-align: center !important;
   }
 
-  .linha-dupla {
-    flex-direction: column;
-  }
-}
-/*Tamanho Médio (max-width: 992px)*/
-
-@media (max-width: 992px) {
-  .cards-competencias {
-    grid-template-columns: repeat(2, 1fr);
+  .navbar .btn {
+    margin-top: 10px;
+    width: 100% !important;
   }
 
-  .icon-competencia img {
-    width: 100px;
+  /* HOME */
+  #home h1 {
+    font-size: 40px !important;
   }
-}
 
-/*Tamanho Pequeno (max-width: 768px)*/
+  .img-wrapper-inicio {
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 auto;
+    border-radius: 0 !important;
+  }
+
+  .img-wrapper-inicio img {
+    height: auto !important;
+    border-radius: 0 !important;
+  }
+
+  /* NOSSA HISTÓRIA */
+  .nossa-historia {
+    height: auto !important;
+  }
+
+  /* SERVIÇOS */
+  .container-servico {
+    flex-direction: column !important;
+  }
+
+  .container-servico.inverso {
+    flex-direction: column !important;
+  }
 
 @media (max-width: 768px) {
-  .container-servico,
-  .container-servico.inverso {
-    flex-direction: column;
-    text-align: center;
+
+  .cards-competencias {
+    grid-template-columns: 1fr !important;
+    gap: 25px !important;
+    justify-items: center !important;
   }
 
-  .container-servico img {
-    flex: 0 0 100%;
-    margin-bottom: 15px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .card-mvv {
-    margin-bottom: 30px;
+  .card-competencia {
+    width: 100%;
+    max-width: 360px; 
   }
 }
 
-/*Tamanho Extra Pequeno (max-width: 600px)*/
-
-@media (max-width: 600px) {
-  .cards-competencias {
-    grid-template-columns: 1fr;
+  /* FAQ */
+  .barra-pesquisa {
+    width: 100% !important;
   }
-  .icon-competencia img {
-    width: 90px;
+
+  /* CONTATO */
+  .contato-container {
+    flex-direction: column !important;
+    padding: 20px;
+  }
+
+  .contato-form, .contato-info {
+    width: 100% !important;
+  }
+
+  /* PARCERIA */
+  .img-parceria img {
+    width: 40% !important;
+  }
+}
+
+@media (max-width: 576px) {
+
+  .navbar-brand img {
+    width: 150px !important;
+  }
+
+  #home h1 {
+    font-size: 32px !important;
+  }
+
+  .titulo-competencias,
+  .titulo-servicos,
+  .titulo-parceria,
+  .titulo-perguntas {
+    font-size: 26px !important;
+  }
+   .logo-navbar {
+    width: 170px;
   }
 }
