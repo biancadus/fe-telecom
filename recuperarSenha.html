@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FETELECOM</title>
+
+     <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!--font awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!--Css personalizado-->
+    <link rel="stylesheet" href="css/recuperarSenha.css">
+
+    <!--Icone na aba do navegador-->
+    <link rel="shortcut icon" href="images/icons/icon-page.png" type="image/x-icon">
+</head>
+<body>
+    <div class="wrapper">
+    <div class="box">
+      <h2>Redefinir senha</h2>
+      <p class="desc">Digite sua senha atual e escolha uma nova senha segura.</p>
+
+      <form id="formSenha">
+
+        <div class="campo">
+          <label>Senha atual</label>
+          <input type="password" class="senha" required>
+        </div>
+
+        <div class="campo">
+          <label>Nova senha</label>
+          <input type="password" id="novaSenha" class="senha" required>
+        </div>
+
+        <div class="campo">
+          <label>Confirmar nova senha</label>
+          <input type="password" id="confirmarSenha" class="senha" required>
+        </div>
+
+        <div class="mostrar">
+          <input type="checkbox" id="toggleSenha">
+          <label for="toggleSenha">Mostrar senha</label>
+        </div>
+
+        <small id="erro"></small>
+
+        <button type="submit">ATUALIZAR SENHA</button>
+      </form>
+
+      <a href="login.html" class="voltar">Voltar ao login</a>
+    </div>
+  </div>
+
+  <script>
+    const toggle = document.getElementById("toggleSenha");
+    const senhas = document.querySelectorAll(".senha");
+    const novaSenha = document.getElementById("novaSenha");
+    const confirmar = document.getElementById("confirmarSenha");
+    const erro = document.getElementById("erro");
+
+    toggle.addEventListener("change", () => {
+      senhas.forEach(input => {
+        input.type = toggle.checked ? "text" : "password";
+      });
+    });
+
+    function validar() {
+      const senha = novaSenha.value;
+      const confirm = confirmar.value;
+
+      const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/;
+
+      if (senha.length === 0 && confirm.length === 0) {
+        erro.innerText = "";
+        return;
+      }
+
+      if (!regex.test(senha)) {
+        erro.innerText = "Mín. 8 caracteres, número e especial.";
+        return;
+      }
+
+      if (confirm && senha !== confirm) {
+        erro.innerText = "As senhas não coincidem.";
+        return;
+      }
+
+      erro.innerText = "";
+    }
+
+    novaSenha.addEventListener("input", validar);
+    confirmar.addEventListener("input", validar);
+
+    document.getElementById("formSenha").addEventListener("submit", (e) => {
+      validar();
+      if (erro.innerText !== "") {
+        e.preventDefault();
+      }
+    });
+  </script>
+
+</body>
+</html>
