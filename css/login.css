@@ -164,8 +164,8 @@ button:hover {
 
   .left {
     width: 100%;
-    margin: 0; /* 🔥 ESSENCIAL */
-    border-radius: 0; /* opcional (fica mais clean mobile) */
+    margin: 0;
+    border-radius: 0; 
     padding: 30px 20px;
     text-align: center;
     align-items: center;
