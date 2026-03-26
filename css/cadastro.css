@@ -1,0 +1,304 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+.container {
+ width: 100%;
+  height: 100vh;
+  display: flex;
+}
+
+/* LADO ESQUERDO */
+.left {
+  width: 40%;
+  background-color: #0b2a66;
+  color: white;
+  padding: 60px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10px 10px 10px 10px;
+  margin: 20px;
+}
+
+.logo {
+  position: absolute;
+  top: 40px;
+  left: 15px;
+  width: 300px;
+  height: 150px;
+  letter-spacing: 2px;
+}
+
+.left h1 {
+  margin-bottom: 20px;
+}
+
+.left p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* LADO DIREITO */
+.right {
+  width: 60%;
+  padding: 40px;
+  position: relative;
+}
+
+.voltar {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  font-size: 12px;
+  text-decoration: none;
+  color: #666;
+}
+
+.right h1 {
+  margin-bottom: 30px;
+  justify-content: center;
+  flex-direction: row;
+
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  width: 100%;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+input:focus {
+  border: 1px solid #0b2a66;
+  box-shadow: 0 0 0 2px rgba(11, 42, 102, 0.2);
+}
+
+.MostrarSenha {
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+
+input[type="checkbox"] {
+  accent-color: #0b2a66; 
+  cursor: pointer;
+}
+
+.recuperarSenha {
+  font-size: 12px;
+  color: #0b2a66;
+  text-decoration: none;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 12px;
+  border: none;
+  background-color: #0b2a66;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #081f4d;
+}
+
+.cad {
+  margin-top: 20px;
+  font-size: 12px;
+}
+
+.cad a {
+  color: #0b2a66;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.telefone-box {
+  width: 100%;
+  max-width: 350px;
+  background-color: #0b2a66;
+  color: white;
+  padding: 40px 30px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.wrapper {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.telefone-box .logo {
+  margin-bottom: 20px;
+}
+
+.telefone-box .title {
+  font-size: 14px;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+.telefone-input {
+ display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  padding: 0 10px;
+  height: 50px;
+}
+
+.telefone-input span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 14px;
+  color: #333;
+}
+
+.telefone-input input {
+ border: none;
+  outline: none;
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  font-size: 14px;
+  line-height: normal;
+  top: 7px;
+  position: relative;
+}
+
+.telefone-input input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.telefone-box button {
+  width: 100%;
+  padding: 12px;
+  background: white;
+  color: #0b2a66;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.telefone-box button:hover {
+  background: #e5e5e5;
+}
+
+.sair {
+  display: block;
+  margin-top: 15px;
+  font-size: 12px;
+  color: white;
+  text-decoration: none;
+}
+
+/* TABLET */
+@media (max-width: 1024px) {
+  .left {
+    padding: 40px;
+  }
+
+  .right {
+    padding: 40px;
+  }
+
+  form {
+    max-width: 100%;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .left {
+    width: 100%;
+    margin: 0;
+    border-radius: 0; 
+    padding: 30px 20px;
+    text-align: center;
+    align-items: center;
+  }
+
+  .right {
+    width: 100%;
+    padding: 30px 20px;
+  }
+
+  .logo {
+    position: static;
+    margin-bottom: 10px;
+  }
+
+  .back {
+    position: static;
+    display: block;
+    text-align: right;
+    margin-bottom: 15px;
+  }
+}
+
+/* MOBILE PEQUENO */
+@media (max-width: 480px) {
+  .left {
+    height: auto;
+    padding: 20px;
+  }
+
+  .right {
+    height: auto;
+    padding: 20px;
+  }
+
+  .right h1 {
+    font-size: 24px;
+  }
+
+  input {
+    padding: 10px;
+  }
+
+  button {
+    padding: 12px;
+  }
+}
