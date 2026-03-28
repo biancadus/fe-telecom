@@ -162,6 +162,162 @@ header h1 {
   transform: scale(1.1);
 }
 
+/* modal*/
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-box {
+  background: white;
+  padding: 30px;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+  animation: aparecer 0.2s ease;
+}
+
+@keyframes aparecer {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-box h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1e40af;
+}
+
+.modal-box form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-box label {
+  font-size: 14px;
+  margin: 10px 0 5px;
+  font-weight: 500;
+}
+
+.modal-box span {
+  color: #0A2851;
+}
+
+.modal-box input,
+.modal-box select,
+.telefone-input {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 2px solid #e5e7eb;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.modal-box input:focus,
+.modal-box select:focus,
+.telefone-input:focus {
+  outline: none;
+  border-color: #0A2851;
+}
+
+.datas {
+  display: flex;
+  gap: 15px;
+}
+
+.datas div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.datas input {
+  width: 100%;
+}
+
+.telefone-input {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  padding: 0 10px;
+  height: 50px;
+}
+
+.telefone-input span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.telefone-input input {
+ border: none;
+  outline: none;
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  font-size: 14px;
+  line-height: normal;
+  position: relative;
+}
+
+.acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.cancelar {
+  background: #f3f4f6;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 150px;
+}
+
+.cancelar:hover {
+  background: #e5e7eb;
+}
+
+.ok {
+  background-color: #0150ac;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  width:150px;
+}
+
+.ok:hover {
+  background-color: #0A2851;
+}
+
 /* Responsivo */
 @media (max-width: 768px) {
   .stats {
