@@ -1,9 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-<title>Área do Cliente</title>
+  <meta charset="UTF-8">
+  <title>FETELECOM - Solicitações</title>
+
+  <link rel="stylesheet" href="css/areaCliente">
 </head>
 <body>
+  <header>
+    <h1>Solicitações</h1>
+    <button class="btn-nova">NOVA SOLICITAÇÃO</button>
+  </header>
 
+  <div class="stats">
+    <div class="stat-box">Ativas<br><strong>0</strong></div>
+    <div class="stat-box">Concluídas<br><strong>10</strong></div>
+    <div class="stat-box">Canceladas<br><strong>3</strong></div>
+    <div class="stat-box">Total<br><strong>13</strong></div>
+  </div>
+
+  <div class="search-bar">
+    <input type="text" placeholder="Buscar...">
+    <button>🔍</button>
+    <button>⚙️</button>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-info">
+        <div><strong>ID:</strong> 45</div>
+        <div><strong>Endereço:</strong> Rua Exemplo, 123</div>
+        <div><strong>Data:</strong> 01/03/2026</div>
+      </div>
+      <button class="edit-btn">✏️</button>
+    </div>
+    <div class="card">
+      <div class="card-info">
+        <div><strong>ID:</strong> 46</div>
+        <div><strong>Endereço:</strong> Av. Central, 456</div>
+        <div><strong>Data:</strong> 05/03/2026</div>
+      </div>
+      <button class="edit-btn">✏️</button>
+    </div>
+    <div class="card">
+      <div class="card-info">
+        <div><strong>ID:</strong> 47</div>
+        <div><strong>Endereço:</strong> Praça das Flores, 789</div>
+        <div><strong>Data:</strong> 10/03/2026</div>
+      </div>
+      <button class="edit-btn">✏️</button>
+    </div>
+  </div>
 </body>
 </html>
