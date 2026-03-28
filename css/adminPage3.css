@@ -39,16 +39,14 @@ body {
 }
 
 .sidebar nav ul li a {
-    color: #cbd5e0;
+    color: #ffffff;
     text-decoration: none;
     font-size: 1.1rem;
     transition: color 0.3s;
 }
 
 .sidebar nav ul li a:hover, .sidebar nav ul li a.active {
-    color: white;
-    text-decoration: underline;
-    
+    color: rgb(255, 255, 255);
 }
 
 .main-content {
@@ -109,4 +107,93 @@ body {
 .card .number {
     font-size: 3.5rem;
     font-weight: bold;
+}
+
+.search-bar {
+    display: flex;
+    gap: 0; 
+    margin-bottom: 40px;
+    align-items: center;
+}
+
+.search-select, .search-input {
+    height: 40px;
+    border: 1px solid #000;
+    padding: 0 10px;
+    outline: none;
+}
+
+.search-select {
+    width: 150px;
+    background-color: white;
+}
+
+.search-input {
+    width: 350px;
+}
+
+.search-btn {
+    height: 40px;
+    background-color: #0056b3; 
+    color: white;
+    border: none;
+    padding: 0 25px;
+    margin-left: 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+.client-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.client-table th, .client-table td {
+    border: 2px solid #000; 
+    height: 50px;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.client-table th {
+    background-color: white;
+}
+/* Container das datas */
+.date-filters {
+    display: flex !important;       
+    flex-direction: row !important;
+    gap: 50px !important;
+    margin: 20px 0 30px 0;
+    width: 100%;
+    align-items: flex-start;
+}
+
+
+.date-group {
+    display: inline-flex; 
+    flex-direction: column;
+    vertical-align: top;  
+    margin-right: 50px;  
+    gap: 8px;
+}
+
+.date-group label {
+    color: #001a5e;
+    font-weight: bold;
+    font-size: 0.9rem;
+    display: block;
+}
+
+.date-group input {
+    width: 220px;
+    height: 38px;
+    border: 1px solid #000;
+    text-align: center;
+    background-color: white;
+    outline: none;
 }
