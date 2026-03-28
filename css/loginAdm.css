@@ -1,0 +1,89 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #ffffff;
+}
+
+.wrapper {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  color: #3b6ea8;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+.box {
+  background: #0b2a66;
+  padding: 40px 30px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 350px;
+  color: white;
+}
+
+.box h3 {
+  text-align: center;
+  margin-bottom: 25px;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.desc {
+  text-align: center;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+input {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  margin-bottom: 15px;
+  outline: none;
+}
+
+.MostrarSenha {
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+input[type="checkbox"] {
+  accent-color: #d6def0; 
+  cursor: pointer;
+}
+
+button {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  background: #ffffff;
+  color: #0b2a66;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #d6d6d6;
+}
