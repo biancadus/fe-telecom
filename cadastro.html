@@ -30,15 +30,17 @@
         <label>Email</label>
         <input type="email" required>
 
-        <label>Senha</label>
-        <input type="password" class="senha" required>
+       <label>Senha</label>
+        <input type="password" id="senha" class="senha" required>
 
         <label>Confirmar Senha</label>
-        <input type="password" class="senha" required>
-            <small id="erroSenha"></small>
+        <input type="password" id="confirmarSenha" class="senha" required>
+
+        <small id="erroSenha"></small>
+
         <div class="mostrar">
-          <input type="checkbox" id="toggleSenha">
-          <label for="toggleSenha">Mostrar senha</label>
+          <input type="checkbox" onclick="toggleSenha(); toggleConfirmarSenha();">
+          <label>Mostrar senha</label>
         </div>
 
         <button type="button" onclick="window.location.href='telefone.html'">
@@ -60,17 +62,7 @@
     </div>
 
   </div>
-
-  <script>
-    const toggle = document.getElementById("toggleSenha");
-    const senhas = document.querySelectorAll(".senha");
-
-    toggle.addEventListener("change", () => {
-      senhas.forEach(input => {
-        input.type = toggle.checked ? "text" : "password";
-      });
-    });
-  </script>
+  
 
   <script>
         const senha = document.querySelectorAll(".senha")[0];
@@ -104,6 +96,8 @@
         senha.addEventListener("input", validarSenha);
         confirmar.addEventListener("input", validarSenha);
 </script>
+
+<script src="js/ocultarSenha.js"></script>
 
 </body>
 </html>
