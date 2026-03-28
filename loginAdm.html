@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FETELECOM</title>
+     <title>FETELECOM</title>
 
      <!--Bootstrap CSS-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -12,52 +12,37 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <!--Css personalizado-->
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/loginAdm.css">
 
     <!--Icone na aba do navegador-->
     <link rel="shortcut icon" href="images/icons/icon-page.png" type="image/x-icon">
 </head>
 <body>
-    <div class="container">
-    
-    <!-- Lado esquerdo -->
-    <div class="left">
-       <a class="logo" href="#">
-      <img src="images/Logo FETELECOM vetor.png" alt="#" width="400" height="80" class="me-2">
-    </a>
-      <h1>Bem vindo de volta!</h1>
-      <p>Efetue login no nosso sistema para realizar suas solicitações conosco!</p>
+    <div class="wrapper">
+
+    <div class="logo">
+        <img src="#" alt="">
     </div>
 
-    <!-- Lado direito -->
-    <div class="right">
-      <a href="index.html" class="voltar">Retornar ao início</a>
-      <h1>Login</h1>
+    <div class="box">
+      <h3>ADMINISTRADOR</h3>
 
       <form>
-        <label>E-mail</label>
-        <input type="email" required>
+        <label>Login</label>
+        <input type="text" required>
 
         <label>Senha</label>
         <input type="password" id="senha" required>
-
         <div class="MostrarSenha">
           <input type="checkbox" onclick="toggleSenha()"> Mostrar senha
         </div>
 
-        <a href="recuperarSenha.html" class="recuperarSenha">Esqueci a senha</a>
-
-        <button type="submit">ACESSAR</button>
+        <button type="submit" onclick="window.location.href='codAdm.html'">ACESSAR</button>
       </form>
-
-      <p class="cad">
-        Ainda não possui uma conta? <a href="cadastro.html">Cadastre-se</a>
-      </p>
     </div>
 
   </div>
 
   <script src="js/ocultarSenha.js"></script>
-
 </body>
 </html>
