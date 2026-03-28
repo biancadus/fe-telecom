@@ -6,13 +6,13 @@
 }
 
 body {
-  background: #f5f7fa;
+  background: #ffffff;
   color: #333;
   padding: 20px;
 }
 
 header {
-  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  background-color: #0A2851;
   color: white;
   padding: 20px 30px;
   border-radius: 12px;
@@ -20,7 +20,6 @@ header {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 25px;
-  box-shadow: 0 4px 20px rgba(30,58,138,0.3);
 }
 
 header h1 {
@@ -29,7 +28,7 @@ header h1 {
 }
 
 .btn-nova {
-  background: #10b981;
+  background: #0b2851;
   color: white;
   border: none;
   padding: 12px 24px;
@@ -41,8 +40,7 @@ header h1 {
 }
 
 .btn-nova:hover {
-  background: #059669;
-  transform: translateY(-2px);
+  background: #080a50;
 }
 
 .stats {
@@ -53,17 +51,10 @@ header h1 {
 }
 
 .stat-box {
-  background: linear-gradient(135deg, #1e40af, #3b82f6);
+  background: #0A2851;
   color: white;
   padding: 20px;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 6px 25px rgba(30,64,175,0.4);
-  transition: transform 0.3s;
-}
-
-.stat-box:hover {
-  transform: translateY(-5px);
+  text-align: left;
 }
 
 .stat-box strong {
@@ -83,7 +74,7 @@ header h1 {
 .search-bar input {
   flex: 1;
   padding: 14px 18px;
-  border: 2px solid #e5e7eb;
+  border: 2px solid #9c9595;
   border-radius: 10px;
   font-size: 16px;
   transition: border-color 0.3s;
@@ -99,16 +90,15 @@ header h1 {
   height: 50px;
   border: none;
   border-radius: 10px;
-  background: linear-gradient(135deg, #3b82f6, #1e40af);
+  background-color: #0A2851;
   color: white;
   cursor: pointer;
   font-size: 18px;
   transition: all 0.3s;
-  box-shadow: 0 4px 15px rgba(59,130,246,0.4);
 }
 
 .search-bar button:hover {
-  transform: scale(1.05);
+  background-color: #22577A;
 }
 
 .cards {
@@ -130,7 +120,6 @@ header h1 {
 }
 
 .card:hover {
-  transform: translateY(-8px);
   box-shadow: 0 20px 40px rgba(0,0,0,0.15);
 }
 
@@ -145,7 +134,7 @@ header h1 {
 }
 
 .edit-btn {
-  background: #f59e0b;
+  background: #0A2851;
   color: white;
   border: none;
   width: 45px;
@@ -158,11 +147,144 @@ header h1 {
 }
 
 .edit-btn:hover {
-  background: #d97706;
-  transform: scale(1.1);
+  background: #22577A;
 }
 
-/* modal*/
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px; 
+}
+
+.btn-icon {
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 10px;
+
+  background: white;
+  color: #0A2851;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  cursor: pointer;
+
+  transition: all 0.3s;
+}
+
+.btn-icon:hover {
+  transform: scale(1.05);
+  background: #f3f4f6;
+}
+
+.btn-icon i,
+.search-bar button i,
+.edit-btn i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.search-bar button i,
+.edit-btn i {
+  pointer-events: none;
+}
+
+.search-bar button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* modal notificação*/
+/* MODAL NOTIF */
+.modal-notif-box {
+  background: white;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 16px;
+  padding: 20px;
+
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+  animation: aparecer 0.2s ease;
+}
+
+/* TÍTULO */
+.modal-notif-box h2 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #0A2851;
+}
+
+/* LISTA */
+.lista-notif {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* ITEM */
+.notif-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background: #f9fafb;
+  align-items: center;
+  transition: 0.2s;
+}
+
+.notif-item:hover {
+  background: #eef2ff;
+}
+
+/* ÍCONE */
+.notif-item i {
+  font-size: 18px;
+  color: #3b82f6;
+  min-width: 20px;
+}
+
+/* TEXTO */
+.notif-item p {
+  font-size: 14px;
+}
+
+.notif-item span {
+  font-size: 12px;
+  color: #666;
+}
+
+/* BOTÃO */
+.fechar-notif {
+  margin-top: 15px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #0A2851;
+  color: white;
+  cursor: pointer;
+}
+
+.fechar-notif:hover {
+  background: #081d3a;
+}
+
+/* modal criar solicitação*/
 .modal-overlay {
   position: fixed;
   top: 0;

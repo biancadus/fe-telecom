@@ -1,16 +1,39 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>FETELECOM - Solicitações</title>
+  <title>FETELECOM</title>
 
+  <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+     <!--font awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+      <!--Css personalizado-->
   <link rel="stylesheet" href="css/areaCliente.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+   <!--Icone na aba do navegador-->
+    <link rel="shortcut icon" href="images/icons/icon-page.png" type="image/x-icon">
 </head>
 <body>
-  <header>
-    <h1>Solicitações</h1>
+ <header>
+  <h1>Solicitações</h1>
+
+  <div class="header-actions">
+    <button class="btn-icon">
+      <i class="fa-solid fa-bell"></i>
+    </button>
+
+    <button onclick="window.location.href='index.html'" class="btn-icon">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </button>
+
     <button class="btn-nova">NOVA SOLICITAÇÃO</button>
-  </header>
+  </div>
+</header>
 
   <div class="stats">
     <div class="stat-box">Ativas<br><strong>0</strong></div>
@@ -21,8 +44,8 @@
 
   <div class="search-bar">
     <input type="text" placeholder="Buscar...">
-    <button>🔍</button>
-    <button>⚙️</button>
+    <button><i class="fa-solid fa-magnifying-glass"></i></button>
+    <button><i class="fa-solid fa-filter"></i></button>
   </div>
 
   <div class="cards">
@@ -32,7 +55,9 @@
         <div><strong>Endereço:</strong> Rua Exemplo, 123</div>
         <div><strong>Data:</strong> 01/03/2026</div>
       </div>
-      <button class="edit-btn">✏️</button>
+<button class="edit-btn">
+  <i class="fa-solid fa-pen"></i>
+</button>
     </div>
     <div class="card">
       <div class="card-info">
@@ -40,7 +65,9 @@
         <div><strong>Endereço:</strong> Av. Central, 456</div>
         <div><strong>Data:</strong> 05/03/2026</div>
       </div>
-      <button class="edit-btn">✏️</button>
+     <button class="edit-btn">
+  <i class="fa-solid fa-pen"></i>
+</button>
     </div>
     <div class="card">
       <div class="card-info">
@@ -48,9 +75,52 @@
         <div><strong>Endereço:</strong> Praça das Flores, 789</div>
         <div><strong>Data:</strong> 10/03/2026</div>
       </div>
-      <button class="edit-btn">✏️</button>
+     <button class="edit-btn">
+  <i class="fa-solid fa-pen"></i>
+</button>
     </div>
   </div>
+
+  <!--modal de notificação-->
+  <div id="modal-notif" class="modal-overlay">
+
+  <div class="modal-notif-box">
+    <h2>Notificações</h2>
+
+    <div class="lista-notif">
+
+      <div class="notif-item">
+        <i class="fa-solid fa-circle-info"></i>
+        <div>
+          <p>Nova solicitação criada</p>
+          <span>Agora mesmo</span>
+        </div>
+      </div>
+
+      <div class="notif-item">
+        <i class="fa-solid fa-check"></i>
+        <div>
+          <p>Solicitação concluída</p>
+          <span>2 horas atrás</span>
+        </div>
+      </div>
+
+      <div class="notif-item">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <div>
+          <p>Erro em solicitação</p>
+          <span>Ontem</span>
+        </div>
+      </div>
+
+    </div>
+
+    <button class="fechar-notif">Fechar</button>
+  </div>
+
+</div>
+
+<!--modal de criar solicitação-->
 
 <div id="modal" class="modal-overlay">
   <div class="modal-box">
@@ -112,6 +182,20 @@
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") modal.style.display = "none";
   });
+  
+</script>
+
+  <script>
+  const btnNotif = document.querySelector(".btn-icon");
+  const modalNotif = document.getElementById("modal-notif");
+  const fecharNotif = document.querySelector(".fechar-notif");
+
+  btnNotif.onclick = () => modalNotif.style.display = "flex";
+  fecharNotif.onclick = () => modalNotif.style.display = "none";
+
+  modalNotif.onclick = (e) => {
+    if (e.target === modalNotif) modalNotif.style.display = "none";
+  };
 </script>
 
 <script src="js/máscara.js"></script>
