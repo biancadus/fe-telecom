@@ -28,7 +28,7 @@ header h1 {
 }
 
 .btn-nova {
-  background: #5d5fe0;
+  background: #0b2851;
   color: white;
   border: none;
   padding: 12px 24px;
@@ -40,7 +40,7 @@ header h1 {
 }
 
 .btn-nova:hover {
-  background: #9fa2eb;
+  background: #080a50;
 }
 
 .stats {
