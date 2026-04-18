@@ -302,3 +302,31 @@ button:hover {
     padding: 12px;
   }
 }
+/* No seu cadastro.css */
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: 100%;
+}
+
+.btn-criar-conta {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    width: 100%;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-criar-conta:hover {
+    background-color: #0056b3;
+}

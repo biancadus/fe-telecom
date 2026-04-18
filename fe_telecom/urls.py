@@ -20,9 +20,6 @@ from core import views
 
 urlpatterns = [
     path('cadastro/', views.cadastro_view, name='cadastro'),
-    # ... outras urls
-]
-
-urlpatterns = [
     path('admin/', admin.site.urls),
-]
+    path('login/', views.login_view, name='login'),
+    ]

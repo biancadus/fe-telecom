@@ -1,23 +1,31 @@
-from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib import messages
-from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
-
-
+from .models import Cliente
 
 def cadastro_view(request):
+    # Se o usuário clicou no botão (POST)
     if request.method == 'POST':
-        nome = request.POST.get('username')
-        email = request.POST.get('email')
-        senha = request.POST.get('password1')
+        print(f"Dados recebidos: {request.POST}")
 
-        # CRITICAL: Aqui é onde o dado entra no banco
-        if nome and email and senha:
-            # create_user já faz o hash da senha automaticamente
-            User.objects.create_user(username=nome, email=email, password=senha)
-            messages.success(request, "Usuário criado!")
-            return redirect('login') 
+        usuario = request.POST.get('username')
+        email = request.POST.get('email')
+        senha = request.POST.get('password1') # Nome que você confirmou
+
+        if usuario and senha:
+            novo_usuario = User.objects.create_user(
+                username=usuario, 
+                email=email, 
+                password=senha
+            )
         
+            Cliente.objects.create(
+                nome=usuario,
+                email=email,
+                senha=senha  # Nota: No Cliente a senha fica em texto simples se o campo for CharField
+            )
+            
+    # Se ele apenas abriu a página (GET)
     return render(request, 'cadastro.html')
+
+def login_view(request):
+    return render(request, 'login.html')

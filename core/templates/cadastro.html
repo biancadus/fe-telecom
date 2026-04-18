@@ -20,39 +20,40 @@
 <body>
     <div class="container">
 
-    <div class="right">
-      <h1>Cadastre-se</h1>
+    {% load static %}
+<div class="right">
+    <h1>Cadastre-se</h1>
 
     <form method="POST" action="{% url 'cadastro' %}">
-      {% csrf_token %} <label>Nome</label>
-      <input type="text" name="username" required> <label>Email</label>
-      <input type="email" name="email" required>
-
-      <label>Senha</label>
-      <input type="password" id="senha" class="senha" name="password1" required>
-
-      <label>Confirmar Senha</label>
-      <input type="password" id="confirmarSenha" class="senha" name="password2" required>
-
-      <small id="erroSenha" style="color: red;"></small>
-
-      <button type="submit">CRIAR CONTA</button>
-    </form>
-
-      <p class="cad">
-        Já possui uma conta? <a href="login.html">Entre</a>
-      </p>
+    {% csrf_token %} <div class="form-group">
+        <label>Nome de Usuário</label>
+        <input type="text" name="username" class="form-control" required>
     </div>
 
-    <div class="left">
-      <a class="logo" href="#">
-      <img src="images/logo.PNG" alt="#" width="400" height="80" class="me-2">
-      </a>
-      <h1>Bem vindo!</h1>
-      <p>Crie uma conta no nosso sistema para realizar suas solicitações conosco!</p>
+    <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" class="form-control" required>
     </div>
 
-  </div>
+    <div class="form-group">
+        <label>Senha</label>
+        <input type="password" name="password1" id="senha" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label>Confirmar Senha</label>
+        <input type="password" name="password2" id="confirmarSenha" class="form-control" required>
+    </div>
+
+    <small id="erroSenha" style="color: red;"></small>
+
+    <button type="submit" class="btn btn-primary mt-3">CRIAR CONTA</button>
+</form>
+
+    <p class="cad">
+        Já possui uma conta? <a href="{% url 'login' %}">Entre</a>
+    </p>
+</div>
   
 
   <script>
