@@ -23,30 +23,21 @@
     <div class="right">
       <h1>Cadastre-se</h1>
 
-      <form>
-        <label>Nome</label>
-        <input type="text" required>
+    <form method="POST" action="{% url 'cadastro' %}">
+      {% csrf_token %} <label>Nome</label>
+      <input type="text" name="username" required> <label>Email</label>
+      <input type="email" name="email" required>
 
-        <label>Email</label>
-        <input type="email" required>
+      <label>Senha</label>
+      <input type="password" id="senha" class="senha" name="password1" required>
 
-       <label>Senha</label>
-        <input type="password" id="senha" class="senha" required>
+      <label>Confirmar Senha</label>
+      <input type="password" id="confirmarSenha" class="senha" name="password2" required>
 
-        <label>Confirmar Senha</label>
-        <input type="password" id="confirmarSenha" class="senha" required>
+      <small id="erroSenha" style="color: red;"></small>
 
-        <small id="erroSenha"></small>
-
-        <div class="mostrar">
-          <input type="checkbox" onclick="toggleSenha(); toggleConfirmarSenha();">
-          <label>Mostrar senha</label>
-        </div>
-
-        <button type="button" onclick="window.location.href='telefone.html'">
-        CRIAR CONTA
-        </button>
-      </form>
+      <button type="submit">CRIAR CONTA</button>
+    </form>
 
       <p class="cad">
         Já possui uma conta? <a href="login.html">Entre</a>
