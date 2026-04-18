@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
-
+import dj_database_url
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -74,14 +75,10 @@ WSGI_APPLICATION = 'fe_telecom.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fetelecomdb', # O nome que você criou no pgAdmin
-        'USER': 'postgres',                   # Geralmente é 'postgres'
-        'PASSWORD': 'post123',         # A senha que você usa no Postgres
-        'HOST': '127.0.0.1',
-        'PORT': '5432',                       # Porta padrão do Postgres
-    }
+    'default': dj_database_url.config(
+        # Substitua pelo seu link real do Supabase com a sua senha
+        default='postgresql://postgres:RAPARIGA123@db.kwgzjynuabkrjthxbqoh.supabase.co:5432/postgres'
+    )
 }
 
 
