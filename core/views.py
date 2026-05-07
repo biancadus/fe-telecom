@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from .models import Cliente
+from django.http import HttpResponse
 
 def cadastro(request):
 
@@ -24,3 +25,6 @@ def cadastro(request):
 
 def login_view(request):
     return render(request, 'login.html')
+
+def home(request):
+    return HttpResponse("<h1>Sistema FE-Telecom</h1><p>O banco de dados e o servidor estão funcionando!</p>")
