@@ -75,12 +75,18 @@ WSGI_APPLICATION = 'fe_telecom.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(
-        # Substitua pelo seu link real do Supabase com a sua senha
-        default='postgresql://postgres:RAPARIGA123@db.kwgzjynuabkrjthxbqoh.supabase.co:5432/postgres'
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres.kwgzjynuabkrjthxbqoh',
+        'PASSWORD': 'RAPARIGA123',
+        'HOST': 'aws-1-us-west-2.pooler.supabase.com',
+        'PORT': '6543',
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
+    }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators

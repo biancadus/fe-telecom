@@ -2,29 +2,24 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from .models import Cliente
 
-def cadastro_view(request):
-    # Se o usuário clicou no botão (POST)
+def cadastro(request):
+
     if request.method == 'POST':
-        print(f"Dados recebidos: {request.POST}")
 
-        usuario = request.POST.get('username')
-        email = request.POST.get('email')
-        senha = request.POST.get('password1') # Nome que você confirmou
+        nome = request.POST.get('nome')
+        cpf = request.POST.get('cpf')
+        telefone = request.POST.get('telefone')
+        plano = request.POST.get('plano')
 
-        if usuario and senha:
-            novo_usuario = User.objects.create_user(
-                username=usuario, 
-                email=email, 
-                password=senha
-            )
+        Cliente.objects.create(
+            nome=nome,
+            cpf=cpf,
+            telefone=telefone,
+            plano=plano
+        )
+
+        return redirect('cadastro')
         
-            Cliente.objects.create(
-                nome=usuario,
-                email=email,
-                senha=senha  # Nota: No Cliente a senha fica em texto simples se o campo for CharField
-            )
-            
-    # Se ele apenas abriu a página (GET)
     return render(request, 'cadastro.html')
 
 def login_view(request):
