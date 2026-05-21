@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -13,19 +14,33 @@
 
     <!--Css personalizado-->
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/cadastro.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/cadastro.css' %}?v=1.1">
 
     <!--Icone na aba do navegador-->
-    <link rel="shortcut icon" href="images/icons/icon-page.png" type="image/x-icon">
-</head>
+   <link rel="shortcut icon" href="{% static 'images/icons/icon-page.png' %}"></head>
 <body>
     <div class="container">
+
+          <!-- LADO ESQUERDO -->
+    <div class="left">
+
+        <img src="{% static '#' %}" class="logo">
+
+        <h1>Bem vindo!</h1>
+
+        <p>
+            Crie uma conta no nosso sistema
+            para realizar suas solicitações conosco!
+        </p>
+
+    </div>
 
     {% load static %}
 <div class="right">
     <h1>Cadastre-se</h1>
 
-    <form method="POST" action="{% url 'cadastro' %}">
+   <form method="POST" action="{% url 'cadastro' %}">
     {% csrf_token %}
 
     <div class="form-group">
@@ -34,69 +49,123 @@
     </div>
 
     <div class="form-group">
-        <label>CPF</label>
-        <input type="text" name="cpf" class="form-control" required>
+        <label>Email</label>
+        <input type="email" name="email" class="form-control" required>
     </div>
 
     <div class="form-group">
         <label>Telefone</label>
-        <input type="text" name="telefone" class="form-control" required>
+        <input 
+        type="tel"
+        name="telefone"
+        class="form-control"
+        placeholder="(11) 99999-9999"
+        maxlength="15"
+        required
+        >
     </div>
 
     <div class="form-group">
-        <label>Plano</label>
-
-        <select name="plano" class="form-control">
-            <option value="FIBRA">Fibra Óptica</option>
-            <option value="RADIO">Via Rádio</option>
-        </select>
+        <label>Senha</label>
+        <input type="password" name="senha" class="form-control senha" required>
     </div>
 
-    <button type="submit" class="btn btn-primary mt-3">
-        CADASTRAR CLIENTE
+    <div class="form-group">
+        <label>Confirmar Senha</label>
+        <input type="password" name="confirmar_senha" class="form-control senha" required>
+    </div>
+
+    <div class="MostrarSenha">
+        <input type="checkbox" id="mostrarSenha">
+        <label for="mostrarSenha">Mostrar senha</label>
+    </div>
+
+    <p id="erroSenha" style="color:red; font-size:12px;"></p>
+
+    {% if erro %}
+    <div class="alert alert-danger">
+        {{ erro }}
+    </div>
+    {% endif %}
+
+    <button type="submit" class="btn-criar-conta">
+        CRIAR CONTA
     </button>
 </form>
 
-    <p class="cad">
-        Já possui uma conta? <a href="{% url 'login' %}">Entre</a>
-    </p>
-</div>
-  
-
   <script>
-        const senha = document.querySelectorAll(".senha")[0];
-        const confirmar = document.querySelectorAll(".senha")[1];
-        const erro = document.getElementById("erroSenha");
+    const senha = document.querySelectorAll(".senha")[0];
+    const confirmar = document.querySelectorAll(".senha")[1];
+    const erro = document.getElementById("erroSenha");
 
-        function validarSenha() {
-        const s = senha.value;
-        const c = confirmar.value;
+    function validarSenha() {
 
-        const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/;
+    const s = senha.value;
+    const c = confirmar.value;
 
-        if (s.length === 0 && c.length === 0) {
-            erro.innerText = "";
-            return;
-        }
+    const regex = /^(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$/;
 
-        if (!regex.test(s)) {
-            erro.innerText = "Mín. 8 caracteres, número e caracter especial.";
-            return;
-        }
-
-        if (c && s !== c) {
-            erro.innerText = "As senhas não coincidem.";
-            return;
-        }
-
+    if (s.length === 0 && c.length === 0) {
         erro.innerText = "";
-        }
+        return;
+    }
 
-        senha.addEventListener("input", validarSenha);
-        confirmar.addEventListener("input", validarSenha);
+    if (!regex.test(s)) {
+        erro.innerText =
+            "A senha deve ter no mínimo 8 caracteres, um número e um caractere especial.";
+        return;
+    }
+
+    if (c.length > 0 && s !== c) {
+        erro.innerText = "As senhas não coincidem.";
+        return;
+    }
+
+    erro.innerText = "";
+}
+
+senha.addEventListener("input", validarSenha);
+confirmar.addEventListener("input", validarSenha);
 </script>
 
-<script src="js/ocultarSenha.js"></script>
+<script>
+const checkbox = document.getElementById("mostrarSenha");
+
+const camposSenha = document.querySelectorAll(".senha");
+
+checkbox.addEventListener("change", () => {
+
+    camposSenha.forEach((campo) => {
+
+        if (checkbox.checked) {
+            campo.type = "text";
+        } else {
+            campo.type = "password";
+        }
+
+    });
+
+});
+</script>
+
+<script>
+    const telefoneInput = document.querySelector('input[name="telefone"]');
+
+telefoneInput.addEventListener("input", (e) => {
+
+    let valor = e.target.value;
+    
+    valor = valor.replace(/\D/g, "");
+    
+    valor = valor.substring(0, 11);
+
+    valor = valor.replace(/^(\d{2})(\d)/g, "($1) $2");
+
+    valor = valor.replace(/(\d{5})(\d)/, "$1-$2");
+
+    e.target.value = valor;
+});
+</script>
 
 </body>
 </html>

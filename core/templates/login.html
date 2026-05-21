@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -58,7 +59,8 @@
 
   </div>
 
-  <script src="js/ocultarSenha.js"></script>
+  {% load static %}
 
+<script src="{% static 'js/ocultarSenha.js' %}"></script>
 </body>
 </html>

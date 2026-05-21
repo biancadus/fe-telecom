@@ -1,9 +1,17 @@
-    function toggleSenha() {
-      const senha = document.getElementById("senha");
-      senha.type = senha.type === "password" ? "text" : "password";
-    }
+const checkbox = document.getElementById("mostrarSenha");
 
-    function toggleConfirmarSenha() {
-    const confirmar = document.getElementById("confirmarSenha");
-    confirmar.type = confirmar.type === "password" ? "text" : "password";
-    }
+const camposSenha = document.querySelectorAll(".senha");
+
+checkbox.addEventListener("change", () => {
+
+    camposSenha.forEach((campo) => {
+
+        if (checkbox.checked) {
+            campo.type = "text";
+        } else {
+            campo.type = "password";
+        }
+
+    });
+
+});
