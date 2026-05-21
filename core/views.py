@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import check_password
 
 from .models import Usuario, Cliente
 
@@ -55,4 +56,42 @@ def cadastro(request):
 
 def login_view(request):
 
+    if request.method == 'POST':
+
+        email = request.POST.get('email')
+        senha = request.POST.get('senha')
+
+        try:
+            usuario = Usuario.objects.get(email=email)
+
+            if check_password(senha, usuario.senha_hash):
+
+                # cria sessão
+                request.session['usuario_id'] = usuario.id
+                request.session['usuario_nome'] = usuario.nome
+
+                return redirect('area_cliente')
+
+            else:
+                return render(request, 'login.html', {
+                    'erro': 'Senha incorreta.'
+                })
+
+        except Usuario.DoesNotExist:
+
+            return render(request, 'login.html', {
+                'erro': 'Email não encontrado.'
+            })
+
     return render(request, 'login.html')
+
+def area_cliente(request):
+
+    if not request.session.get('usuario_id'):
+        return redirect('login')
+
+    nome = request.session.get('usuario_nome')
+
+    return render(request, 'areaDoCliente.html', {
+        'nome': nome
+    })

@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
 
     <!--Icone na aba do navegador-->
-    <link rel="shortcut icon" href="images/icons/icon-page.png" type="image/x-icon">
+       <link rel="shortcut icon" href="{% static 'images/icons/icon-page.png' %}"></head>
 </head>
 <body>
     <div class="container">
@@ -25,8 +25,8 @@
     <!-- Lado esquerdo -->
     <div class="left">
        <a class="logo" href="#">
-      <img src="images/Logo FETELECOM vetor.png" alt="#" width="400" height="80" class="me-2">
-    </a>
+      <img src="{% static '#' %}" width="400" height="80">
+      </a>
       <h1>Bem vindo de volta!</h1>
       <p>Efetue login no nosso sistema para realizar suas solicitações conosco!</p>
     </div>
@@ -36,12 +36,13 @@
       <a href="index.html" class="voltar">Retornar ao início</a>
       <h1>Login</h1>
 
-      <form>
+      <form method="POST" action="{% url 'login' %}">
+    {% csrf_token %}
         <label>E-mail</label>
-        <input type="email" required>
+        <input type="email" name="email" required>
 
         <label>Senha</label>
-        <input type="password" id="senha" required>
+        <input type="password" id="senha" name="senha" required>
 
         <div class="MostrarSenha">
           <input type="checkbox" onclick="toggleSenha()"> Mostrar senha
@@ -49,11 +50,20 @@
 
         <a href="recuperarSenha.html" class="recuperarSenha">Esqueci a senha</a>
 
-        <button type="submit" onclick="window.location.href='areaDoCliente.html'">ACESSAR</button>
-      </form>
+        {% if erro %}
+        <div class="alert alert-danger">
+        {{ erro }}
+        </div>
+        {% endif %}
+
+
+       <button type="submit" value="Enviar">
+        ACESSAR
+       </button>
+</form>
 
       <p class="cad">
-        Ainda não possui uma conta? <a href="cadastro.html">Cadastre-se</a>
+        Ainda não possui uma conta? <a href="{% url 'cadastro' %}">Cadastre-se</a>
       </p>
     </div>
 
