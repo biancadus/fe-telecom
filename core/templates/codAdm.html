@@ -30,10 +30,14 @@
 
       <p class="desc">Digite o código enviado no e-mail</p>
 
-      <form>
-        <input type="text" required>
+     <form method="POST" action="{% url 'codigo_adm' %}">
+{% csrf_token %}
+        <input type="text" name="codigo" required>
 
-        <button type="submit" onclick="window.location.href='codAdm.html'">VALIDAR</button>
+        <button type="submit">
+        VALIDAR
+        </button>
+
       </form>
     </div>
 

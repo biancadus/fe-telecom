@@ -2,8 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
+import random
 
-from .models import Usuario, Cliente
+from django.core.mail import send_mail
+
+from .models import Usuario, Cliente, Administrador
 
 
 def cadastro(request):
@@ -93,5 +96,90 @@ def area_cliente(request):
     nome = request.session.get('usuario_nome')
 
     return render(request, 'areaDoCliente.html', {
+        'nome': nome
+    })
+
+def login_adm(request):
+
+    if request.method == 'POST':
+
+        email = request.POST.get('email')
+        senha = request.POST.get('senha')
+
+        try:
+
+            adm = Administrador.objects.get(email=email)
+
+            if check_password(senha, adm.senha_hash):
+
+                codigo = str(random.randint(100000, 999999))
+
+                adm.codigo_verificacao = codigo
+                adm.save()
+
+                send_mail(
+                    'Código de verificação',
+                    f'Seu código é: {codigo}',
+                    'seuemail@gmail.com',
+                    [email],
+                    fail_silently=False,
+                )
+
+                request.session['adm_id_temp'] = adm.id
+
+                return redirect('codigo_adm')
+
+            else:
+
+                return render(request, 'loginAdm.html', {
+                    'erro': 'Senha incorreta.'
+                })
+
+        except Administrador.DoesNotExist:
+
+            return render(request, 'loginAdm.html', {
+                'erro': 'Administrador não encontrado.'
+            })
+
+    return render(request, 'loginAdm.html')
+
+def codigo_adm(request):
+
+    if request.method == 'POST':
+
+        codigo = request.POST.get('codigo')
+
+        adm_id = request.session.get('adm_id_temp')
+
+        if not adm_id:
+            return redirect('login_adm')
+
+        adm = Administrador.objects.get(id=adm_id)
+
+        if adm.codigo_verificacao == codigo:
+
+            request.session['adm_id'] = adm.id
+            request.session['adm_nome'] = adm.nome
+
+            del request.session['adm_id_temp']
+
+            return redirect('dashboard_adm')
+
+        else:
+
+            return render(request, 'codAdm.html', {
+                'erro': 'Código inválido.'
+            })
+
+    return render(request, 'codAdm.html')
+
+def dashboard_adm(request):
+
+    if not request.session.get('adm_id'):
+        return redirect('login_adm')
+
+    nome = request.session.get('adm_nome')
+
+    return render(request, 'AdminPage.html', {
         'nome': nome
     })

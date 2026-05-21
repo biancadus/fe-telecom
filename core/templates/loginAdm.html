@@ -28,17 +28,20 @@
     <div class="box">
       <h3>ADMINISTRADOR</h3>
 
-      <form>
+      <form method="POST" action="{% url 'login_adm' %}">
+{% csrf_token %}
         <label>Login</label>
-        <input type="text" required>
+        <input type="email" name="email" required>
 
         <label>Senha</label>
-        <input type="password" id="senha" required>
+       <input type="password" id="senha" name="senha" required>
         <div class="MostrarSenha">
           <input type="checkbox" onclick="toggleSenha()"> Mostrar senha
         </div>
 
-        <button type="submit" onclick="window.location.href='codAdm.html'">ACESSAR</button>
+        <button type="submit">
+            ACESSAR
+        </button>
       </form>
     </div>
 
