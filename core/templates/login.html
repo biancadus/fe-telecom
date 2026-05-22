@@ -48,7 +48,7 @@
           <input type="checkbox" onclick="toggleSenha()"> Mostrar senha
         </div>
 
-        <a href="recuperarSenha.html" class="recuperarSenha">Esqueci a senha</a>
+       <a href="{% url 'recuperar_senha' %}">Esqueci a senha</a>
 
         {% if erro %}
         <div class="alert alert-danger">

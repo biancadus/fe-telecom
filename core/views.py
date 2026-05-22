@@ -4,6 +4,7 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
 import random
 
+from django.conf import settings
 from django.core.mail import send_mail
 
 from .models import Usuario, Cliente, Administrador
@@ -183,3 +184,108 @@ def dashboard_adm(request):
     return render(request, 'AdminPage.html', {
         'nome': nome
     })
+
+def recuperar_senha(request):
+
+    if request.method == 'POST':
+
+        email = request.POST.get('email')
+
+        try:
+            usuario = Usuario.objects.get(email=email)
+
+        except Usuario.DoesNotExist:
+            return render(request, 'recuperarSenha.html', {
+                'erro': 'Email não encontrado.'
+            })
+
+        codigo = str(random.randint(100000, 999999))
+
+        request.session['codigo_recuperacao'] = codigo
+        request.session['email_recuperacao'] = email
+
+        send_mail(
+            'Código de recuperação - FETELECOM',
+            f'Seu código é: {codigo}',
+            settings.EMAIL_HOST_USER,
+            [email],
+            fail_silently=False,
+        )
+
+        return redirect('validar_codigo')
+
+    return render(request, 'recuperarSenha.html')
+
+def validar_codigo(request):
+
+    if request.method == 'POST':
+
+        codigo = request.POST.get('codigo')
+
+        if codigo == request.session.get('codigo_recuperacao'):
+
+            return redirect('nova_senha')
+
+        return render(request, 'validarCodigo.html', {
+            'erro': 'Código inválido.'
+        })
+
+    return render(request, 'validarCodigo.html')
+
+def nova_senha(request):
+
+    if request.method == 'POST':
+
+        senha = request.POST.get('senha')
+        confirmar = request.POST.get('confirmar')
+
+        if senha != confirmar:
+
+            return render(request, 'novaSenha.html', {
+                'erro': 'As senhas não coincidem.'
+            })
+
+        email = request.session.get('email_recuperacao')
+
+        usuario = Usuario.objects.get(email=email)
+
+        usuario.senha_hash = make_password(senha)
+
+        usuario.save()
+
+        del request.session['codigo_recuperacao']
+        del request.session['email_recuperacao']
+
+        return redirect('login')
+
+    return render(request, 'novaSenha.html')
+
+def nova_senha(request):
+
+    email = request.session.get('email_recuperacao')
+
+    if not email:
+        return redirect('recuperar_senha')
+
+    if request.method == 'POST':
+
+        nova_senha = request.POST.get('nova_senha')
+        confirmar = request.POST.get('confirmar_senha')
+
+        if nova_senha != confirmar:
+
+            return render(request, 'novaSenha.html', {
+                'erro': 'As senhas não coincidem.'
+            })
+
+        usuario = Usuario.objects.get(email=email)
+
+        usuario.senha_hash = make_password(nova_senha)
+
+        usuario.save()
+
+        return render(request, 'novaSenha.html', {
+            'sucesso': 'Senha atualizada com sucesso!'
+        })
+
+    return render(request, 'novaSenha.html')

@@ -1,0 +1,197 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FETELECOM</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/recuperarSenha.css' %}">
+
+    <!-- Ícone -->
+    <link rel="shortcut icon"
+          href="{% static 'images/icons/icon-page.png' %}">
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <div class="box">
+
+        <h2>Redefinir senha</h2>
+
+        <p class="desc">
+            Escolha uma nova senha segura.
+        </p>
+
+        <form id="formSenha" method="POST">
+
+            {% csrf_token %}
+
+            <div class="campo">
+                <label>Nova senha</label>
+
+                <input
+                    type="password"
+                    id="novaSenha"
+                    name="nova_senha"
+                    class="senha"
+                    required
+                >
+            </div>
+
+            <div class="campo">
+                <label>Confirmar nova senha</label>
+
+                <input
+                    type="password"
+                    id="confirmarSenha"
+                    name="confirmar_senha"
+                    class="senha"
+                    required
+                >
+            </div>
+
+            <!-- MOSTRAR SENHA -->
+            <div class="mostrar">
+
+                <input type="checkbox" id="toggleSenha">
+
+                <label for="toggleSenha">
+                    Mostrar senha
+                </label>
+
+            </div>
+
+            <!-- ERRO -->
+            <small id="erro" style="color:red;"></small>
+
+            <!-- MENSAGENS DJANGO -->
+            {% if erro %}
+            <div class="alert alert-danger mt-2">
+                {{ erro }}
+            </div>
+            {% endif %}
+
+            {% if sucesso %}
+            <div class="alert alert-success mt-2">
+                {{ sucesso }}
+            </div>
+            {% endif %}
+
+            <button type="submit">
+                ATUALIZAR SENHA
+            </button>
+
+        </form>
+
+        <a href="{% url 'login' %}" class="voltar">
+            Voltar ao login
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const toggle = document.getElementById("toggleSenha");
+    const senhas = document.querySelectorAll(".senha");
+
+    const novaSenha = document.getElementById("novaSenha");
+    const confirmar = document.getElementById("confirmarSenha");
+
+    const erro = document.getElementById("erro");
+
+    const form = document.getElementById("formSenha");
+
+    // MOSTRAR SENHA
+    if (toggle) {
+
+        toggle.addEventListener("change", () => {
+
+            senhas.forEach(input => {
+
+                input.type =
+                    toggle.checked ? "text" : "password";
+
+            });
+
+        });
+
+    }
+
+    // VALIDAR SENHA
+    function validar() {
+
+        const senha = novaSenha.value;
+        const confirm = confirmar.value;
+
+        const regex =
+            /^(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/;
+
+        if (senha.length === 0 && confirm.length === 0) {
+
+            erro.innerText = "";
+            return;
+
+        }
+
+        if (!regex.test(senha)) {
+
+            erro.innerText =
+                "A senha deve ter no mínimo 8 caracteres, um número e um caractere especial.";
+
+            return;
+
+        }
+
+        if (confirm && senha !== confirm) {
+
+            erro.innerText =
+                "As senhas não coincidem.";
+
+            return;
+
+        }
+
+        erro.innerText = "";
+
+    }
+
+    // INPUTS
+    novaSenha.addEventListener("input", validar);
+
+    confirmar.addEventListener("input", validar);
+
+    // SUBMIT
+    form.addEventListener("submit", (e) => {
+
+        validar();
+
+        if (erro.innerText !== "") {
+
+            e.preventDefault();
+
+        }
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>

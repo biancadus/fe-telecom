@@ -7,7 +7,10 @@ from .views import (
     area_cliente,
     login_adm,
     codigo_adm,
-    dashboard_adm
+    dashboard_adm,
+    recuperar_senha,
+    validar_codigo,
+    nova_senha
 )
 
 urlpatterns = [
@@ -18,4 +21,10 @@ urlpatterns = [
     path('admin-login/', login_adm, name='login_adm'),
     path('admin-codigo/', codigo_adm, name='codigo_adm'),
     path('dashboard-admin/', dashboard_adm, name='dashboard_adm'),
+
+    path('recuperar-senha/', recuperar_senha, name='recuperar_senha'),
+
+    path('validar-codigo/', validar_codigo, name='validar_codigo'),
+
+    path('nova-senha/', nova_senha, name='nova_senha'),
 ]

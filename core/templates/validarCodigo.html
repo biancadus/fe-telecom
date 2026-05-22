@@ -23,14 +23,14 @@
       <h2>Redefinir senha</h2>
       <p class="desc">Digite sua senha atual e escolha uma nova senha segura.</p>
 
-      <form id="formSenha" method="POST">
-        {% csrf_token %}
+     <form method="POST">
+    {% csrf_token %}
 
-        <label>Email</label>
-    <input type="email" name="email" class="campo" required>
+    <label>Código</label>
+    <input type="text" name="codigo" class="campo" required>
 
     <button type="submit">
-        ENVIAR CÓDIGO
+        VALIDAR
     </button>
 
     {% if erro %}
@@ -38,7 +38,7 @@
         {{ erro }}
     </div>
     {% endif %}
-      </form>
+</form>
 
       <a href="login.html" class="voltar">Voltar ao login</a>
     </div>
