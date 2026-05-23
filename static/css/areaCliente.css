@@ -207,8 +207,6 @@ header h1 {
   justify-content: center;
 }
 
-/* modal notificação*/
-/* MODAL NOTIF */
 .modal-notif-box {
   background: white;
   width: 100%;
@@ -220,14 +218,12 @@ header h1 {
   animation: aparecer 0.2s ease;
 }
 
-/* TÍTULO */
 .modal-notif-box h2 {
   text-align: center;
   margin-bottom: 15px;
   color: #0A2851;
 }
 
-/* LISTA */
 .lista-notif {
   display: flex;
   flex-direction: column;
@@ -236,7 +232,6 @@ header h1 {
   overflow-y: auto;
 }
 
-/* ITEM */
 .notif-item {
   display: flex;
   gap: 10px;
@@ -251,14 +246,12 @@ header h1 {
   background: #eef2ff;
 }
 
-/* ÍCONE */
 .notif-item i {
   font-size: 18px;
   color: #3b82f6;
   min-width: 20px;
 }
 
-/* TEXTO */
 .notif-item p {
   font-size: 14px;
 }
@@ -268,7 +261,6 @@ header h1 {
   color: #666;
 }
 
-/* BOTÃO */
 .fechar-notif {
   margin-top: 15px;
   width: 100%;
@@ -284,7 +276,6 @@ header h1 {
   background: #081d3a;
 }
 
-/* modal criar solicitação*/
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -406,10 +397,13 @@ header h1 {
 }
 
 .acoes {
+  width: 100%;
   display: flex;
+  flex-direction: row !important;
   justify-content: flex-end;
+  align-items: center;
   gap: 10px;
-  margin-top: 25px;
+  margin-top: 80px;
 }
 
 .cancelar {
@@ -418,7 +412,13 @@ header h1 {
   padding: 10px 18px;
   border-radius: 8px;
   cursor: pointer;
-  width: 150px;
+}
+
+.cancelar,
+.ok {
+  min-width: 120px;
+  height: 45px;
+  padding: 10px 20px;
 }
 
 .cancelar:hover {
@@ -426,14 +426,13 @@ header h1 {
 }
 
 .ok {
-  background-color: #0150ac;
+  background-color: #002652;
   color: white;
   border: none;
   padding: 10px 18px;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
-  width:150px;
 }
 
 .ok:hover {

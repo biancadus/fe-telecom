@@ -27,6 +27,14 @@
   margin-bottom: 15px;
 }
 
+.campo input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  width: 100%;
+}
+
 .mostrar {
   display: flex;
   align-items: center;

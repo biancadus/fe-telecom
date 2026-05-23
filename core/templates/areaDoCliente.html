@@ -21,7 +21,7 @@
 </head>
 <body>
  <header>
-  <h1>Solicitações</h1>
+  <h1>Olá, {{ primeiro_nome }}</h1>
 
   <div class="header-actions">
     <button class="btn-icon">
@@ -37,10 +37,10 @@
 </header>
 
   <div class="stats">
-    <div class="stat-box">Ativas<br><strong>0</strong></div>
-    <div class="stat-box">Concluídas<br><strong>10</strong></div>
-    <div class="stat-box">Canceladas<br><strong>3</strong></div>
-    <div class="stat-box">Total<br><strong>13</strong></div>
+    <div class="stat-box">Ativas<br> <strong>{{ total_solicitacoes }}</strong></div>
+    <div class="stat-box">Concluídas<br><strong>0</strong></div>
+    <div class="stat-box">Canceladas<br><strong>0</strong></div>
+    <div class="stat-box">Total<br> <strong>{{ total_solicitacoes }}</strong></div>
   </div>
 
   <div class="search-bar">
@@ -66,7 +66,7 @@
     </div>
 
     <div>
-      <strong>Data:</strong> {{ s.data_disponivel }}
+    <strong>Data:</strong> {{ s.data_disponivel|date:"d \d\e F \d\e Y" }}
     </div>
 
     <div>
@@ -147,16 +147,6 @@
         placeholder="Digite o endereço"
         required>
 
-      <input
-        type="email"
-        name="email">
-
-      <label>Numero de celular </label> <span>*Se prefere usar o telefone cadastrado, desconsidere.</span>
-       <div class="telefone-input">
-        <span class="prefixo">+55</span>
-      <input type="text" class="wpp-mask" placeholder="( ) _____-____" required>
-      </div>
-
       <div class="datas">
         <div>
           <label>Data disponível</label>
@@ -168,10 +158,10 @@
     >
       </div>
 
-      <div class="acoes">
-        <button type="button" class="cancelar">Cancelar</button>
-        <button type="submit" class="ok">Criar</button>
-      </div>
+     <div class="acoes">
+    <button type="button" class="cancelar">Cancelar</button>
+    <button type="submit" class="ok">Criar</button>
+</div>
     </form>
   </div>
 </div>

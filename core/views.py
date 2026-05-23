@@ -310,8 +310,6 @@ def criar_solicitacao(request):
 
         data = request.POST.get('data')
 
-        telefone = request.POST.get('telefone')
-
         usuario_id = request.session.get('usuario_id')
 
         usuario = Usuario.objects.get(id=usuario_id)
@@ -351,3 +349,25 @@ def criar_solicitacao(request):
         return redirect('area_cliente')
 
     return redirect('area_cliente')
+
+def area_cliente(request):
+
+    usuario_id = request.session.get('usuario_id')
+
+    usuario = Usuario.objects.get(id=usuario_id)
+
+    cliente = Cliente.objects.get(usuario=usuario)
+
+    solicitacoes = Solicitacao.objects.filter(
+        cliente=cliente
+    ).order_by('-id')
+
+    total_solicitacoes = solicitacoes.count()
+
+    primeiro_nome = usuario.nome.split()[0]
+
+    return render(request, 'areaDoCliente.html', {
+        'solicitacoes': solicitacoes,
+        'total_solicitacoes': total_solicitacoes,
+        'primeiro_nome': primeiro_nome
+    })

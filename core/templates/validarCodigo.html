@@ -27,8 +27,10 @@
      <form method="POST">
     {% csrf_token %}
 
-    <label>Código</label>
-    <input type="text" name="codigo" class="campo" required>
+    <div class="campo">
+        <label>Código</label>
+    <input type="text" name="codigo" required>
+    </div>
 
     <button type="submit">
         VALIDAR
