@@ -41,11 +41,10 @@
         <label>E-mail</label>
         <input type="email" name="email" required>
 
-        <label>Senha</label>
-        <input type="password" id="senha" name="senha" required>
-
+        <label>Senha</label>       
+        <input type="password" id="id_senha" class="senha" name="senha" placeholder="Digite sua senha">
         <div class="MostrarSenha">
-          <input type="checkbox" onclick="toggleSenha()"> Mostrar senha
+          <input type="checkbox" id="mostrarSenha"> Mostrar senha
         </div>
 
        <a href="{% url 'recuperar_senha' %}">Esqueci a senha</a>
