@@ -33,7 +33,7 @@
 
     <!-- Lado direito -->
     <div class="right">
-      <a href="index.html" class="voltar">Retornar ao início</a>
+      <a href="{% url 'index' %}" class="voltar">Retornar ao início</a>
       <h1>Login</h1>
 
       <form method="POST" action="{% url 'login' %}">

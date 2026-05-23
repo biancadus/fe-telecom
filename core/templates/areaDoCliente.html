@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -11,13 +12,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
       <!--Css personalizado-->
-      {% load static %}
   <link rel="stylesheet" href="{% static 'css/areaCliente.css' %}">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
    <!--Icone na aba do navegador-->
-    <link rel="shortcut icon" href="images/icons/icon-page.png" type="image/x-icon">
+   <link rel="shortcut icon" href="{% static 'images/icons/icon-page.png' %}">
 </head>
 <body>
  <header>
@@ -50,37 +50,40 @@
   </div>
 
   <div class="cards">
-    <div class="card">
-      <div class="card-info">
-        <div><strong>ID:</strong> 45</div>
-        <div><strong>Endereço:</strong> Rua Exemplo, 123</div>
-        <div><strong>Data:</strong> 01/03/2026</div>
-      </div>
-<button class="edit-btn">
-  <i class="fa-solid fa-pen"></i>
-</button>
+
+{% for s in solicitacoes %}
+
+<div class="card">
+
+  <div class="card-info">
+
+    <div>
+      <strong>ID:</strong> {{ s.id }}
     </div>
-    <div class="card">
-      <div class="card-info">
-        <div><strong>ID:</strong> 46</div>
-        <div><strong>Endereço:</strong> Av. Central, 456</div>
-        <div><strong>Data:</strong> 05/03/2026</div>
-      </div>
-     <button class="edit-btn">
-  <i class="fa-solid fa-pen"></i>
-</button>
+
+    <div>
+      <strong>Tipo:</strong> {{ s.tipo_servico }}
     </div>
-    <div class="card">
-      <div class="card-info">
-        <div><strong>ID:</strong> 47</div>
-        <div><strong>Endereço:</strong> Praça das Flores, 789</div>
-        <div><strong>Data:</strong> 10/03/2026</div>
-      </div>
-     <button class="edit-btn">
-  <i class="fa-solid fa-pen"></i>
-</button>
+
+    <div>
+      <strong>Data:</strong> {{ s.data_disponivel }}
     </div>
+
+    <div>
+      <strong>Status:</strong> {{ s.status }}
+    </div>
+
   </div>
+<button class="edit-btn"> <i class="fa-solid fa-pen"></i> </button>
+</div>
+
+{% empty %}
+
+<p>Nenhuma solicitação encontrada.</p>
+
+{% endfor %}
+
+</div>
 
   <!--modal de notificação-->
   <div id="modal-notif" class="modal-overlay">
@@ -127,9 +130,10 @@
   <div class="modal-box">
     <h2>Nova Solicitação</h2>
 
-    <form>
+    <form method="POST" action="{% url 'criar_solicitacao' %}">
+    {% csrf_token %}
       <label>Tipo de serviço</label>
-      <select required>
+      <select name="tipo_servico" required>
         <option value="">Selecione</option>
         <option>Instalação</option>
         <option>Manutenção</option>
@@ -137,10 +141,15 @@
       </select>
 
       <label>Endereço</label>
-      <input type="text" placeholder="Digite o endereço que o serviço precisa ser realizado" required>
+      <input
+        type="text"
+        name="endereco"
+        placeholder="Digite o endereço"
+        required>
 
-      <label>Email</label>
-      <input type="email" name="" id="">
+      <input
+        type="email"
+        name="email">
 
       <label>Numero de celular </label> <span>*Se prefere usar o telefone cadastrado, desconsidere.</span>
        <div class="telefone-input">
@@ -150,14 +159,13 @@
 
       <div class="datas">
         <div>
-          <label>Data início</label>
-          <input type="date" required>
-        </div>
+          <label>Data disponível</label>
 
-        <div>
-          <label>Data fim</label>
-          <input type="date" required>
-        </div>
+    <input
+        type="date"
+        name="data"
+        required
+    >
       </div>
 
       <div class="acoes">
@@ -199,7 +207,8 @@
   };
 </script>
 
-<script src="js/máscara.js"></script>
+{% load static %}
 
+<script src="{% static 'js/mascara.js' %}"></script>
 </body>
 </html>

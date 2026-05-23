@@ -62,3 +62,55 @@ class Administrador(models.Model):
 
     def __str__(self):
         return self.nome
+
+class Solicitacao(models.Model):
+
+    cliente = models.ForeignKey(
+        'Cliente',
+        on_delete=models.CASCADE
+    )
+
+    tipo_servico = models.CharField(max_length=100)
+
+    data_disponivel = models.DateField()
+
+    horario_disponivel = models.TimeField()
+
+    porte_local = models.CharField(max_length=20)
+
+    status = models.CharField(
+        max_length=30,
+        default='Recebida'
+    )
+
+    detalhes = models.TextField()
+
+    criado_em = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Solicitação #{self.id}'
+
+
+class Endereco(models.Model):
+
+    solicitacao = models.OneToOneField(
+        Solicitacao,
+        on_delete=models.CASCADE
+    )
+
+    rua = models.CharField(max_length=255)
+
+    bairro = models.CharField(max_length=255)
+
+    numero = models.CharField(max_length=20)
+
+    complemento = models.CharField(
+        max_length=150,
+        blank=True,
+        null=True
+    )
+
+    cidade = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.rua

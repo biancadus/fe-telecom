@@ -2,13 +2,16 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
-import random
-
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.mail import send_mail
+import random
 
-from .models import Usuario, Cliente, Administrador
 
+from .models import Usuario, Cliente, Administrador, Solicitacao, Endereco
+
+def index(request):
+    return render(request, 'index.html')
 
 def cadastro(request):
 
@@ -91,14 +94,19 @@ def login_view(request):
 
 def area_cliente(request):
 
-    if not request.session.get('usuario_id'):
-        return redirect('login')
+    usuario_id = request.session.get('usuario_id')
 
-    nome = request.session.get('usuario_nome')
+    usuario = Usuario.objects.get(id=usuario_id)
+
+    cliente = Cliente.objects.get(usuario=usuario)
+
+    solicitacoes = Solicitacao.objects.filter(
+        cliente=cliente
+    ).order_by('-id')
 
     return render(request, 'areaDoCliente.html', {
-        'nome': nome
-    })
+        'solicitacoes': solicitacoes
+})
 
 def login_adm(request):
 
@@ -289,3 +297,57 @@ def nova_senha(request):
         })
 
     return render(request, 'novaSenha.html')
+
+def criar_solicitacao(request):
+
+    if request.method == 'POST':
+
+        print(request.POST)
+
+        tipo = request.POST.get('tipo_servico')
+
+        endereco = request.POST.get('endereco')
+
+        data = request.POST.get('data')
+
+        telefone = request.POST.get('telefone')
+
+        usuario_id = request.session.get('usuario_id')
+
+        usuario = Usuario.objects.get(id=usuario_id)
+
+        cliente = Cliente.objects.get(usuario=usuario)
+
+        solicitacao = Solicitacao.objects.create(
+
+            cliente=cliente,
+
+            tipo_servico=tipo,
+
+            data_disponivel=data,
+
+            horario_disponivel='08:00',
+
+            porte_local='Pequena',
+
+            detalhes='Solicitação criada pelo cliente'
+
+        )
+
+        Endereco.objects.create(
+
+            solicitacao=solicitacao,
+
+            rua=endereco,
+
+            bairro='Não informado',
+
+            numero='S/N',
+
+            cidade='Não informado'
+
+        )
+
+        return redirect('area_cliente')
+
+    return redirect('area_cliente')

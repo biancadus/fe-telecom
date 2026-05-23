@@ -18,7 +18,8 @@
     <link rel="stylesheet" href="{% static 'css/cadastro.css' %}?v=1.1">
 
     <!--Icone na aba do navegador-->
-   <link rel="shortcut icon" href="{% static 'images/icons/icon-page.png' %}"></head>
+   <link rel="shortcut icon" href="{% static 'images/icons/icon-page.png' %}">
+</head>
 <body>
     <div class="container">
 
@@ -91,6 +92,10 @@
     <button type="submit" class="btn-criar-conta">
         CRIAR CONTA
     </button>
+
+    <p class="cad">
+        Já possui uma conta? <a href="{% url 'login' %}">Entre</a>
+      </p>
 </form>
 
   <script>

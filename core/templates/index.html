@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -16,7 +17,7 @@
     <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
 
     <!--Icone na aba do navegador-->
-    <link rel="shortcut icon" href="images/icons/icon-page.png" type="image/x-icon">
+   <link rel="shortcut icon" href="{% static 'images/icons/icon-page.png' %}">
 </head>
 <body>
     
@@ -25,7 +26,7 @@
   <div class="container-fluid">
     <!-- Logo -->
     <a class="navbar-brand d-flex align-items-center" href="#">
-      <img src="images/logo.PNG" alt="#" width="400" height="80" class="me-2">
+      <img src="{% static 'images/logo.PNG' %}" alt="#" width="400" height="80" class="me-2">
     </a>
 
     <!-- Botão toggle no mobile -->
@@ -33,7 +34,6 @@
   aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
   <span class="navbar-toggler-icon"></span>
 </button>
-
 
     <!-- nav -->
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -50,9 +50,12 @@
         <li class="nav-item">
           <a class="nav-link" href="#perguntas">Perguntas</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#contato">Contato</a>
+        </li>
       </ul>
       <!-- Botão de contato -->
-      <a href="login.html" class="btn btn-outline-light">Contato</a>
+     <a href="{% url 'login' %}" class="btn btn-outline-light">Entrar</a>
     </div>
   </div>
 </nav>
@@ -80,7 +83,7 @@
       <!-- Coluna de imagem -->
       <div class="col-lg-6 col-md-12 p-0">
         <div class="img-wrapper-inicio h-100">
-          <img src="images/home.jpg" alt="" class="img-fluid w-100 h-100">
+          <img src="{%static 'images/home.jpg' %}" alt="" class="img-fluid w-100 h-100">
         </div>
 
       </div>
@@ -107,7 +110,7 @@
 
       <!-- Coluna de imagem -->
       <div class="col-lg-6 col-md-12 p-0">
-        <img src="images/fe 1.jpg" alt="" class="img-fluid w-100 h-100" style="object-fit: cover;">
+        <img src="{%static 'images/fe 1.jpg' %}" alt="" class="img-fluid w-100 h-100" style="object-fit: cover;">
       </div>
 
     </div>
@@ -176,7 +179,7 @@
       
       <div class="card-competencia">
         <div class="icon-competencia">
-          <img src="images/icons/4.png" alt="">
+          <img src="{%static 'images/icons/4.png' %}" alt="">
         </div>
         <div class="title-competencia">Contratos Honestos</div>
         <div class="text-competencia">Prestamos serviços com total transparência, oferecendo contratos claros, valores justos e sem cobranças ocultas. 
@@ -186,7 +189,7 @@
 
       <div class="card-competencia">
         <div class="icon-competencia">
-          <img src="images/icons/3.png" alt="">
+          <img src="{%static 'images/icons/3.png' %}" alt="">
         </div>
         <div class="title-competencia">Agilidade</div>
         <div class="text-competencia">Atuamos com rapidez e eficiência para reduzir tempo de espera e entregar resultados imediatos. 
@@ -196,7 +199,7 @@
 
       <div class="card-competencia">
         <div class="icon-competencia">
-          <img src="images/icons/2.png" alt="">
+          <img src="{%static 'images/icons/2.png' %}" alt="">
         </div>
         <div class="title-competencia">Equipe Qualificada</div>
         <div class="text-competencia">Nossa equipe é formada por profissionais experientes e capacitados, preparados para lidar com instalações, manutenção e projetos de maior complexidade.
@@ -205,7 +208,7 @@
 
       <div class="card-competencia">
         <div class="icon-competencia">
-          <img src="images/icons/1.png" alt="">
+          <img src="{%static 'images/icons/1.png' %}" alt="">
         </div>
         <div class="title-competencia">Materiais de Qualidade</div>
         <div class="text-competencia">Utilizamos apenas materiais certificados e de alto desempenho, assegurando durabilidade, segurança e o melhor funcionamento dos sistemas instalados.
@@ -225,7 +228,7 @@
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card-mvv">
           <div class="icon-mvv">
-            <img src="images/icons-valores/1.png" alt="">
+            <img src="{%static 'images/icons-valores/1.png' %}" alt="">
           </div>
           <h3 class="titulo-mvv">MISSÃO</h3>
           <p>Garantir soluções de telecomunicação e infraestrutura com qualidade, transparência e agilidade, 
@@ -238,7 +241,7 @@
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card-mvv-visao">
           <div class="icon-mvv">
-            <img src="images/icons-valores/2.png" alt="">
+            <img src="{%static 'images/icons-valores/2.png' %}" alt="">
           </div>
           <h3 class="titulo-mvv">VISÃO</h3>
           <p>Tornar-se referência no setor de telecom e serviços técnicos, expandindo nossas operações 
@@ -251,7 +254,7 @@
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card-mvv-valores">
           <div class="icon-mvv">
-            <img src="images/icons-valores/3.png" alt="">
+            <img src="{%static 'images/icons-valores/3.png' %}" alt="">
           </div>
           <h3 class="titulo-mvv">VALORES</h3>
           <p>Honestidade, responsabilidade, respeito ao cliente, compromisso com prazos e constante busca 
@@ -270,7 +273,7 @@
 
   <div class="container-servico">
     <div class="img-wrapper">
-      <img src="images/instalacoes-eletricas.jpg" alt="">
+      <img src="{%static 'images/instalacoes-eletricas.jpg' %}" alt="">
     </div>
     <div class="descServico">
       <h2>Instalações</h2>
@@ -281,7 +284,7 @@
 
   <div class="container-servico inverso">
     <div class="img-wrapper">
-      <img src="images/consertos.jpg" alt="">
+      <img src="{%static 'images/consertos.jpg' %}" alt="">
     </div>
     <div class="descServico">
       <h2>Consertos</h2>
@@ -452,8 +455,8 @@
   <h2 class="titulo-parceria">EM PARCERIA</h2>
 
   <div class="img-parceria">
-    <img src="images/FATEC_ZONA_LESTE.png" alt="">
-    <img src="images/CENTRO_PAULA_SOUZA.png" alt="">
+    <img src="{%static 'images/FATEC_ZONA_LESTE.png' %}" alt="">
+    <img src="{%static 'images/CENTRO_PAULA_SOUZA.png' %}" alt="">
   </div>
 </section>
 
@@ -463,7 +466,7 @@
 
     <!-- Coluna 1 - Logo -->
     <div class="footer-logo">
-      <img src="images/Logo do FE Telecom.png" alt="">
+      <img src="{%static 'images/Logo do FE Telecom.png' %}" alt="">
     </div>
 
     <!-- Coluna 2 - Links -->
