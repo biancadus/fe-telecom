@@ -42,4 +42,11 @@ urlpatterns = [
         views.area_cliente,
         name='area_cliente'
     ),
+
+    path(
+    'editar-solicitacao/<int:id>/',
+    views.editar_solicitacao,
+    name='editar_solicitacao'
+    ),
+
 ]

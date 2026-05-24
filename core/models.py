@@ -101,9 +101,20 @@ class Solicitacao(models.Model):
         blank=True
     )
 
+    @property
+    def pode_editar(self):
+
+        status_bloqueados = [
+            'Agendada',
+            'Em andamento',
+            'Concluída',
+            'Cancelada'
+        ]
+
+        return self.status not in status_bloqueados
+
     def __str__(self):
         return f'Solicitação #{self.id}'
-
 
 class Endereco(models.Model):
 

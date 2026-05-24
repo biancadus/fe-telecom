@@ -121,11 +121,26 @@
 
   </div>
 
-  <div class="card-actions">
-    <button class="edit-btn">
-      <i class="fa-solid fa-pen"></i>
-    </button>
-  </div>
+  {% if s.pode_editar %}
+
+<a
+  href="{% url 'editar_solicitacao' s.id %}"
+  class="edit-btn"
+>
+  <i class="fa-solid fa-pen"></i>
+</a>
+
+{% else %}
+
+<button
+  class="edit-btn disabled"
+  disabled
+  title="Solicitação bloqueada para edição"
+>
+  <i class="fa-solid fa-pen"></i>
+</button>
+
+{% endif %}
 
 </div>
 

@@ -377,3 +377,63 @@ def area_cliente(request):
         'total_solicitacoes': total_solicitacoes,
         'primeiro_nome': primeiro_nome
     })
+
+def editar_solicitacao(request, id):
+
+    usuario_id = request.session.get('usuario_id')
+
+    if not usuario_id:
+        return redirect('login')
+
+    usuario = Usuario.objects.get(id=usuario_id)
+
+    cliente = Cliente.objects.get(usuario=usuario)
+
+    solicitacao = Solicitacao.objects.get(
+        id=id,
+        cliente=cliente
+    )
+
+    # impede edição se status bloquear
+    if not solicitacao.pode_editar:
+
+        messages.error(
+            request,
+            'Esta solicitação não pode mais ser editada.'
+        )
+
+        return redirect('area_cliente')
+
+    endereco = Endereco.objects.get(
+        solicitacao=solicitacao
+    )
+
+    if request.method == 'POST':
+
+        solicitacao.tipo_servico = request.POST.get('tipo_servico')
+
+        solicitacao.data_disponivel = request.POST.get('data')
+
+        solicitacao.horario_disponivel = request.POST.get('horario')
+
+        solicitacao.porte_local = request.POST.get('porte_local')
+
+        solicitacao.detalhes = request.POST.get('detalhes')
+
+        solicitacao.save()
+
+        endereco.rua = request.POST.get('endereco')
+
+        endereco.save()
+
+        messages.success(
+            request,
+            'Solicitação atualizada com sucesso!'
+        )
+
+        return redirect('area_cliente')
+
+    return render(request, 'editarSolicitacao.html', {
+        's': solicitacao,
+        'endereco': endereco
+    })
