@@ -55,26 +55,78 @@
 
 <div class="card">
 
+  <div class="card-topo">
+
+    <div>
+      <h3>{{ s.tipo_servico }}</h3>
+
+      <span class="protocolo">
+        Solicitação #{{ s.id }}
+      </span>
+    </div>
+
+    <span class="status {{ s.status|slugify }}">
+      {{ s.status }}
+    </span>
+
+  </div>
+
   <div class="card-info">
 
-    <div>
-      <strong>ID:</strong> {{ s.id }}
+    <div class="info-item">
+      <i class="fa-solid fa-calendar-days"></i>
+
+      <div>
+        <small>Data disponível</small>
+
+        <p>
+          {{ s.data_disponivel|date:"d/m/Y" }}
+        </p>
+      </div>
     </div>
 
-    <div>
-      <strong>Tipo:</strong> {{ s.tipo_servico }}
+    <div class="info-item">
+      <i class="fa-solid fa-clock"></i>
+
+      <div>
+        <small>Horário</small>
+
+        <p>
+          {{ s.horario_disponivel }}
+        </p>
+      </div>
     </div>
 
-    <div>
-    <strong>Data:</strong> {{ s.data_disponivel|date:"d \d\e F \d\e Y" }}
-    </div>
+    <div class="info-item">
+    <i class="fa-solid fa-building"></i>
 
     <div>
-      <strong>Status:</strong> {{ s.status }}
+      <small>Porte do local</small>
+
+      <p>{{ s.porte_local }}</p>
+    </div>
+  </div>
+
+    <div class="info-item">
+      <i class="fa-solid fa-plus"></i>
+
+      <div>
+        <small>Criada em</small>
+
+        <p>
+          {{ s.criado_em|date:"d/m/Y H:i" }}
+        </p>
+      </div>
     </div>
 
   </div>
-<button class="edit-btn"> <i class="fa-solid fa-pen"></i> </button>
+
+  <div class="card-actions">
+    <button class="edit-btn">
+      <i class="fa-solid fa-pen"></i>
+    </button>
+  </div>
+
 </div>
 
 {% empty %}
@@ -131,38 +183,83 @@
     <h2>Nova Solicitação</h2>
 
     <form method="POST" action="{% url 'criar_solicitacao' %}">
-    {% csrf_token %}
-      <label>Tipo de serviço</label>
-      <select name="tipo_servico" required>
-        <option value="">Selecione</option>
-        <option>Instalação</option>
-        <option>Manutenção</option>
-        <option>Reparo</option>
-      </select>
+{% csrf_token %}
 
-      <label>Endereço</label>
+  <label>Tipo de serviço</label>
+
+  <select name="tipo_servico" required>
+    <option value="">Selecione</option>
+    <option>Instalação</option>
+    <option>Manutenção</option>
+    <option>Reparo</option>
+  </select>
+
+  <label>Endereço</label>
+
+  <input
+    type="text"
+    name="endereco"
+    placeholder="Digite o endereço"
+    required
+  >
+
+  <div class="datas">
+
+    <div>
+      <label>Preferência de atendimento</label>
+
       <input
-        type="text"
-        name="endereco"
-        placeholder="Digite o endereço"
-        required>
-
-      <div class="datas">
-        <div>
-          <label>Data disponível</label>
-
-    <input
         type="date"
         name="data"
         required
-    >
-      </div>
+      >
+    </div>
 
-     <div class="acoes">
-    <button type="button" class="cancelar">Cancelar</button>
-    <button type="submit" class="ok">Criar</button>
-</div>
-    </form>
+    <div>
+      <label>Horário disponível</label>
+
+      <select name="horario" required>
+        <option value="">Selecione</option>
+        <option value="08:00">08:00</option>
+        <option value="10:00">10:00</option>
+        <option value="12:00">12:00</option>
+        <option value="14:00">14:00</option>
+        <option value="16:00">16:00</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Porte do local</label>
+
+      <select name="porte_local" required>
+        <option value="">Selecione</option>
+        <option value="Pequena">Pequena</option>
+        <option value="Média">Média</option>
+        <option value="Grande">Grande</option>
+      </select>
+    </div>
+
+  </div>
+
+  <label>Observações</label>
+
+  <textarea
+    name="detalhes"
+    rows="4"
+    placeholder="Descreva detalhes importantes da solicitação..."
+  ></textarea>
+
+  <div class="acoes">
+    <button type="button" class="cancelar">
+      Cancelar
+    </button>
+
+    <button type="submit" class="ok">
+      Criar
+    </button>
+  </div>
+
+</form>
   </div>
 </div>
 

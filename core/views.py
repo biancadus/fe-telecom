@@ -310,6 +310,12 @@ def criar_solicitacao(request):
 
         data = request.POST.get('data')
 
+        horario = request.POST.get('horario')
+
+        porte_local = request.POST.get('porte_local')
+
+        detalhes = request.POST.get('detalhes')
+
         usuario_id = request.session.get('usuario_id')
 
         usuario = Usuario.objects.get(id=usuario_id)
@@ -324,11 +330,11 @@ def criar_solicitacao(request):
 
             data_disponivel=data,
 
-            horario_disponivel='08:00',
+            horario_disponivel=horario,
 
-            porte_local='Pequena',
+            porte_local=porte_local,
 
-            detalhes='Solicitação criada pelo cliente'
+            detalhes=detalhes
 
         )
 
@@ -364,7 +370,10 @@ def area_cliente(request):
 
     total_solicitacoes = solicitacoes.count()
 
+    primeiro_nome = usuario.nome.split()[0]
+
     return render(request, 'areaDoCliente.html', {
         'solicitacoes': solicitacoes,
-        'total_solicitacoes': total_solicitacoes
-})
+        'total_solicitacoes': total_solicitacoes,
+        'primeiro_nome': primeiro_nome
+    })

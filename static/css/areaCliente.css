@@ -101,53 +101,166 @@ header h1 {
   background-color: #22577A;
 }
 
+/* CARDS */
+
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 20px;
 }
 
 .card {
   background: white;
-  border-radius: 16px;
-  padding: 25px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-  border: 1px solid #f1f5f9;
-  transition: all 0.3s;
+  border-radius: 18px;
+  padding: 22px;
+  border: 1px solid #e5e7eb;
+
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+
+  transition: 0.3s;
+
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .card:hover {
-  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  transform: translateY(-3px);
+
+  box-shadow: 0 16px 35px rgba(0,0,0,0.12);
 }
 
-.card-info div {
-  margin-bottom: 8px;
+/* TOPO */
+
+.card-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.card-topo h3 {
+  font-size: 22px;
+  color: #0A2851;
+  margin-bottom: 5px;
+}
+
+.protocolo {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* STATUS */
+
+.status {
+  padding: 8px 14px;
+  border-radius: 30px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  color: white;
+
+  white-space: nowrap;
+}
+
+.recebida {
+  background: #3b82f6;
+}
+
+.em-analise {
+  background: #f59e0b;
+}
+
+.agendada {
+  background: #8b5cf6;
+}
+
+.em-andamento {
+  background: #2563eb;
+}
+
+.concluida {
+  background: #10b981;
+}
+
+.cancelada {
+  background: #ef4444;
+}
+
+/* INFOS */
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.info-item i {
+  width: 38px;
+  height: 38px;
+
+  background: #eff6ff;
+  color: #0A2851;
+
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   font-size: 15px;
 }
 
-.card-info strong {
-  color: #1e40af;
+.info-item small {
+  display: block;
+  color: #6b7280;
+  font-size: 12px;
+  margin-bottom: 2px;
+}
+
+.info-item p {
+  margin: 0;
+  font-size: 14px;
   font-weight: 600;
+  color: #111827;
+}
+
+/* AÇÕES */
+
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .edit-btn {
-  background: #0A2851;
-  color: white;
-  border: none;
   width: 45px;
   height: 45px;
+
+  border: none;
   border-radius: 12px;
+
+  background: #0A2851;
+  color: white;
+
   cursor: pointer;
-  font-size: 18px;
-  transition: all 0.3s;
-  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.3s;
 }
 
 .edit-btn:hover {
-  background: #22577A;
+  background: #16396d;
+  transform: scale(1.05);
 }
 
 .header-actions {
@@ -292,10 +405,14 @@ header h1 {
 .modal-box {
   background: white;
   padding: 30px;
+
   width: 100%;
-  max-width: 500px;
-  border-radius: 16px;
+  max-width: 700px;
+
+  border-radius: 18px;
+
   box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+
   animation: aparecer 0.2s ease;
 }
 
@@ -348,19 +465,36 @@ header h1 {
   border-color: #0A2851;
 }
 
+.modal-box textarea {
+  width: 100%;
+
+  padding: 14px;
+
+  border-radius: 10px;
+  border: 2px solid #e5e7eb;
+
+  resize: none;
+
+  font-size: 14px;
+
+  transition: border-color 0.3s;
+}
+
+.modal-box textarea:focus {
+  outline: none;
+  border-color: #0A2851;
+}
+
 .datas {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 15px;
+  margin-top: 10px;
 }
 
 .datas div {
-  flex: 1;
   display: flex;
   flex-direction: column;
-}
-
-.datas input {
-  width: 100%;
 }
 
 .telefone-input {
@@ -398,12 +532,14 @@ header h1 {
 
 .acoes {
   width: 100%;
+
   display: flex;
-  flex-direction: row !important;
   justify-content: flex-end;
   align-items: center;
+
   gap: 10px;
-  margin-top: 80px;
+
+  margin-top: 25px;
 }
 
 .cancelar {
@@ -441,17 +577,23 @@ header h1 {
 
 /* Responsivo */
 @media (max-width: 768px) {
-  .stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  header {
-    flex-direction: column;
-    gap: 15px;
-    text-align: center;
-  }
-  
-  .cards {
+
+  .datas {
     grid-template-columns: 1fr;
   }
+
+  .modal-box {
+    max-width: 95%;
+    padding: 20px;
+  }
+
+  .acoes {
+    flex-direction: column;
+  }
+
+  .cancelar,
+  .ok {
+    width: 100%;
+  }
+
 }

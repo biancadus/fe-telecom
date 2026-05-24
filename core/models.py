@@ -65,6 +65,15 @@ class Administrador(models.Model):
 
 class Solicitacao(models.Model):
 
+    STATUS_CHOICES = [
+        ('Recebida', 'Recebida'),
+        ('Em análise', 'Em análise'),
+        ('Agendada', 'Agendada'),
+        ('Em andamento', 'Em andamento'),
+        ('Concluída', 'Concluída'),
+        ('Cancelada', 'Cancelada'),
+    ]
+
     cliente = models.ForeignKey(
         'Cliente',
         on_delete=models.CASCADE
@@ -86,6 +95,11 @@ class Solicitacao(models.Model):
     detalhes = models.TextField()
 
     criado_em = models.DateTimeField(auto_now_add=True)
+
+    concluido_em = models.DateTimeField(
+        null=True,
+        blank=True
+    )
 
     def __str__(self):
         return f'Solicitação #{self.id}'
