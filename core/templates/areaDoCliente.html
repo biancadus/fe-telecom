@@ -43,11 +43,23 @@
     <div class="stat-box">Total<br> <strong>{{ total_solicitacoes }}</strong></div>
   </div>
 
-  <div class="search-bar">
-    <input type="text" placeholder="Buscar...">
-    <button><i class="fa-solid fa-magnifying-glass"></i></button>
-    <button><i class="fa-solid fa-filter"></i></button>
+<form method="GET" action="" class="search-bar">
+  
+  <input type="text" name="busca" placeholder="Buscar..." value="{{ termo_busca }}">
+  
+  <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+  
+  <div class="filter-wrapper" style="position: relative; display: inline-block;">
+    <select name="status_filtro" onchange="this.form.submit()" class="filter-select">
+      <option value="">Filtros</option>
+      <option value="Pendente" {% if status_atual == 'Pendente' %}selected{% endif %}>Pendente</option>
+      <option value="Em Andamento" {% if status_atual == 'Em Andamento' %}selected{% endif %}>Em Andamento</option>
+      <option value="Concluída" {% if status_atual == 'Concluída' %}selected{% endif %}>Concluída</option>
+      <option value="Cancelada" {% if status_atual == 'Cancelada' %}selected{% endif %}>Cancelada</option>
+    </select>
   </div>
+
+</form>
 
   <div class="cards">
 
@@ -276,6 +288,13 @@
 
 </form>
   </div>
+</div>
+
+<div class="stats">
+  <div class="stat-box">Ativas<br> <strong>{{ ativas }}</strong></div>
+  <div class="stat-box">Concluídas<br><strong>{{ concluidas }}</strong></div>
+  <div class="stat-box">Canceladas<br><strong>{{ canceladas }}</strong></div>
+  <div class="stat-box">Total<br> <strong>{{ total_solicitacoes }}</strong></div>
 </div>
 
 <script>
