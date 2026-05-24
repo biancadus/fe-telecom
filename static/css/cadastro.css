@@ -86,7 +86,7 @@ input[type="email"],
 input[type="password"],
 input[type="text"] {
   padding: 12px;
-  margin-bottom: 15px;
+  margin-bottom: 8px; /* diminui o espaço */
   border-radius: 6px;
   border: 1px solid #ccc;
   outline: none;
@@ -101,7 +101,6 @@ input:focus {
 
 .MostrarSenha {
   font-size: 12px;
-  margin-bottom: 15px;
 }
 
 input[type="checkbox"] {
@@ -131,7 +130,7 @@ button:hover {
 }
 
 .cad {
-  margin-top: 20px;
+  margin-top: 10px;
   font-size: 12px;
 }
 

@@ -21,15 +21,15 @@ urlpatterns = [
     path('cadastro/', cadastro, name='cadastro'),
     path('login/', login_view, name='login'),
 
-    path('admin-login/', login_adm, name='login_adm'),
-    path('admin-codigo/', codigo_adm, name='codigo_adm'),
-    path('dashboard-admin/', dashboard_adm, name='dashboard_adm'),
+    path('loginAdm/', login_adm, name='login_adm'),
+    path('codAdm/', codigo_adm, name='codigo_adm'),
+    path('adminPage/', dashboard_adm, name='dashboard_adm'),
 
-    path('recuperar-senha/', recuperar_senha, name='recuperar_senha'),
+    path('recuperarSenha/', recuperar_senha, name='recuperar_senha'),
 
-    path('validar-codigo/', validar_codigo, name='validar_codigo'),
+    path('validarCodigo/', validar_codigo, name='validar_codigo'),
 
-    path('nova-senha/', nova_senha, name='nova_senha'),
+    path('novaSenha/', nova_senha, name='nova_senha'),
 
     path(
     'criar-solicitacao/',
@@ -38,7 +38,7 @@ urlpatterns = [
     ),
 
      path(
-        'area-cliente/',
+        'areaDoCliente/',
         views.area_cliente,
         name='area_cliente'
     ),

@@ -23,10 +23,7 @@
 <body>
     <div class="container">
 
-          <!-- LADO ESQUERDO -->
     <div class="left">
-
-        <img src="{% static '#' %}" class="logo">
 
         <h1>Bem vindo!</h1>
 
@@ -38,7 +35,7 @@
     </div>
 
     {% load static %}
-<div class="right">
+    <div class="right">
     <h1>Cadastre-se</h1>
 
    <form method="POST" action="{% url 'cadastro' %}">
@@ -46,12 +43,12 @@
 
     <div class="form-group">
         <label>Nome</label>
-        <input type="text" name="nome" class="form-control" required>
+        <input type="text" name="nome" class="form-control" required placeholder="Digite seu nome completo">
     </div>
 
     <div class="form-group">
         <label>Email</label>
-        <input type="email" name="email" class="form-control" required>
+        <input type="email" name="email" class="form-control" required placeholder="Digite seu Email">
     </div>
 
     <div class="form-group">
@@ -68,12 +65,12 @@
 
     <div class="form-group">
         <label>Senha</label>
-        <input type="password" name="senha" class="form-control senha" required>
+        <input type="password" name="senha" class="form-control senha" required placeholder="Crie uma senha">
     </div>
 
     <div class="form-group">
         <label>Confirmar Senha</label>
-        <input type="password" name="confirmar_senha" class="form-control senha" required>
+        <input type="password" name="confirmar_senha" class="form-control senha" required placeholder="Confirme sua senha">
     </div>
 
     <div class="MostrarSenha">
@@ -117,7 +114,7 @@
 
     if (!regex.test(s)) {
         erro.innerText =
-            "A senha deve ter no mínimo 8 caracteres, um número e um caractere especial.";
+        "A senha deve conter pelo menos 8 caracteres, incluindo um número e um caractere especial, como: ! @ # $ % & * ?";
         return;
     }
 

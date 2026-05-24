@@ -22,7 +22,7 @@
     <div class="wrapper">
     <div class="box">
       <h2>Redefinir senha</h2>
-      <p class="desc">Digite sua senha atual e escolha uma nova senha segura.</p>
+      <p class="desc">Digite seu Email para receber o código de validação.</p>
 
       <form id="formSenha" method="POST">
         {% csrf_token %}
@@ -42,12 +42,12 @@
     {% endif %}
       </form>
 
-      <a href="login.html" class="voltar">Voltar ao login</a>
+      <a href="{% url 'login' %}" class="voltar">Voltar ao login</a>
     </div>
   </div>
 
   <script>
-document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", () => {
 
     const toggle = document.getElementById("toggleSenha");
     const senhas = document.querySelectorAll(".senha");

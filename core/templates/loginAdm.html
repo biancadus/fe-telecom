@@ -29,7 +29,7 @@
       <h3>ADMINISTRADOR</h3>
 
       <form method="POST" action="{% url 'login_adm' %}">
-{% csrf_token %}
+        {% csrf_token %}
         <label>Login</label>
         <input type="email" name="email" required>
 
@@ -47,6 +47,6 @@
 
   </div>
 
-  <script src="js/ocultarSenha.js"></script>
+  <script src="{%static 'js/ocultarSenha.js' %}"></script>
 </body>
 </html>

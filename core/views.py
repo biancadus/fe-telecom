@@ -364,10 +364,7 @@ def area_cliente(request):
 
     total_solicitacoes = solicitacoes.count()
 
-    primeiro_nome = usuario.nome.split()[0]
-
     return render(request, 'areaDoCliente.html', {
         'solicitacoes': solicitacoes,
-        'total_solicitacoes': total_solicitacoes,
-        'primeiro_nome': primeiro_nome
-    })
+        'total_solicitacoes': total_solicitacoes
+})
