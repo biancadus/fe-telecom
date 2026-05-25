@@ -765,3 +765,28 @@ header h1 {
   }
 
 }
+
+form.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-select {
+    height: 100%;
+    padding: 10px 15px;
+    border: none;
+    background-color: white;
+    color: #0A2851;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.filter-select:hover {
+    background-color: #e0e0e0;
+}

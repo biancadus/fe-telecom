@@ -420,25 +420,45 @@ def criar_solicitacao(request):
     return redirect('area_cliente')
 
 def area_cliente(request):
-
     usuario_id = request.session.get('usuario_id')
+    if not usuario_id:
+        return redirect('login')
 
     usuario = Usuario.objects.get(id=usuario_id)
-
     cliente = Cliente.objects.get(usuario=usuario)
+    
+    solicitacoes = Solicitacao.objects.filter(cliente=cliente).order_by('-id')
 
-    solicitacoes = Solicitacao.objects.filter(
-        cliente=cliente
-    ).order_by('-id')
+    termo_busca = request.GET.get('busca', '').strip()
+    status_filtro = request.GET.get('status_filtro', '').strip()
 
+    if termo_busca:
+        if termo_busca.isdigit():
+            solicitacoes = solicitacoes.filter(id=int(termo_busca))
+        else:
+            solicitacoes = solicitacoes.filter(tipo_servico__icontains=termo_busca)
+
+
+    if status_filtro:
+        solicitacoes = solicitacoes.filter(status=status_filtro)
+
+   
     total_solicitacoes = solicitacoes.count()
+    ativas = solicitacoes.filter(status__in=['Pendente', 'Em Andamento']).count()
+    concluidas = solicitacoes.filter(status='Concluída').count()
+    canceladas = solicitacoes.filter(status='Cancelada').count()
 
     primeiro_nome = usuario.nome.split()[0]
 
     return render(request, 'areaDoCliente.html', {
         'solicitacoes': solicitacoes,
         'total_solicitacoes': total_solicitacoes,
-        'primeiro_nome': primeiro_nome
+        'ativas': ativas,
+        'concluidas': concluidas,
+        'canceladas': canceladas,
+        'primeiro_nome': primeiro_nome,
+        'termo_busca': termo_busca,
+        'status_atual': status_filtro,   
     })
 
 def editar_solicitacao(request, id):
