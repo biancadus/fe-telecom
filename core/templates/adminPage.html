@@ -3,9 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Administrador</title>
+    <title>Painel do Administrador</title>
+
+    <!--font awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/adminpage.css' %}">
+
+    <!--Icone na aba do navegador-->
+   <link rel="shortcut icon" href="{% static 'images/icons/icon-page.png' %}">
 </head>
 <body>
 
@@ -31,26 +39,170 @@
                 </div>
             </header>
 
-            <section class="dashboard-cards">
-                <div class="card">
-                    <p>Para analisar</p>
-                    <span class="number">0</span>
-                </div>
-                <div class="card">
-                    <p>Agendadas</p>
-                    <span class="number">3</span>
-                </div>
-                <div class="card">
-                    <p>Em andamento</p>
-                    <span class="number">15</span>
-                </div>
-                <div class="card">
-                    <p>Concluídas</p>
-                    <span class="number">45</span>
-                </div>
-            </section>
+        <section class="dashboard-cards">
+
+        <div class="card">
+            <p>Para analisar</p>
+            <span class="number">
+                {{ para_analisar }}
+            </span>
+        </div>
+
+        <div class="card">
+            <p>Agendadas</p>
+            <span class="number">
+                {{ agendadas }}
+            </span>
+        </div>
+
+        <div class="card">
+            <p>Em andamento</p>
+            <span class="number">
+                {{ em_andamento }}
+            </span>
+        </div>
+
+        <div class="card">
+            <p>Concluídas</p>
+            <span class="number">
+                {{ concluidas }}
+            </span>
+        </div>
+
+        <div class="card">
+            <p>Canceladas</p>
+            <span class="number">
+                {{ canceladas }}
+            </span>
+        </div>
+
+        </section>
+
+        <section class="grafico-container">
+
+        <div id="grafico_mensal"></div>
+
+        </section>
+
+        <section class="graficos-grid">
+
+        <div class="grafico-box">
+            <div id="grafico_status"></div>
+        </div>
+
+        <div class="grafico-box">
+            <div id="grafico_tipos"></div>
+        </div>
+
+        </section>
         </main>
     </div>
 
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script>
+    google.charts.load('current', {
+    packages:['corechart']
+});
+
+google.charts.setOnLoadCallback(drawCharts);
+
+function drawCharts() {
+
+    // =========================
+    // STATUS
+    // =========================
+
+    const dataStatus = google.visualization.arrayToDataTable([
+        ['Status', 'Quantidade'],
+        ['Para analisar', {{ para_analisar }}],
+        ['Agendadas', {{ agendadas }}],
+        ['Em andamento', {{ em_andamento }}],
+        ['Concluídas', {{ concluidas }}]
+    ]);
+
+    const optionsStatus = {
+
+        title: 'Solicitações por Status',
+
+        pieHole: 0.4,
+
+        height: 400,
+
+        legend: {
+            position: 'bottom'
+        }
+    };
+
+    const chartStatus = new google.visualization.PieChart(
+        document.getElementById('grafico_status')
+    );
+
+    chartStatus.draw(dataStatus, optionsStatus);
+
+    // =========================
+    // CRESCIMENTO MENSAL
+    // =========================
+
+   const dataMensal = google.visualization.arrayToDataTable([
+    ['Mês', 'Solicitações'],
+
+    {% for mes, total in grafico_mensal %}
+        ['{{ mes }}', {{ total }}],
+    {% endfor %}
+]);
+
+    const optionsMensal = {
+
+        title: 'Crescimento Mensal',
+
+        height: 350,
+
+        legend: {
+            position: 'none'
+        }
+    };
+
+    const chartMensal = new google.visualization.ColumnChart(
+        document.getElementById('grafico_mensal')
+    );
+
+    chartMensal.draw(dataMensal, optionsMensal);
+
+    // =========================
+    // TIPOS DE SERVIÇO
+    // =========================
+
+    const dataTipos = google.visualization.arrayToDataTable([
+    ['Serviço', 'Quantidade'],
+
+    {% for tipo, total in grafico_tipos %}
+        ['{{ tipo }}', {{ total }}],
+    {% endfor %}
+]);
+
+    const optionsTipos = {
+
+        title: 'Tipos de Serviço',
+
+        height: 350,
+
+        pieHole: 0.3,
+
+        legend: {
+            position: 'bottom'
+        }
+    };
+
+    const chartTipos = new google.visualization.PieChart(
+        document.getElementById('grafico_tipos')
+    );
+
+    chartTipos.draw(dataTipos, optionsTipos);
+}
+
+window.addEventListener('resize', drawCharts);
+
+</script>
 </body>
 </html>

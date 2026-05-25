@@ -5,6 +5,8 @@ from django.contrib.auth.hashers import check_password
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.mail import send_mail
+from django.db.models import Count
+from django.db.models.functions import TruncMonth
 import random
 
 
@@ -189,8 +191,69 @@ def dashboard_adm(request):
 
     nome = request.session.get('adm_nome')
 
+    para_analisar = Solicitacao.objects.filter(
+        status='Recebida'
+    ).count()
+
+    agendadas = Solicitacao.objects.filter(
+        status='Agendada'
+    ).count()
+
+    em_andamento = Solicitacao.objects.filter(
+        status='Em andamento'
+    ).count()
+
+    concluidas = Solicitacao.objects.filter(
+        status='Concluída'
+    ).count()
+
+    canceladas = Solicitacao.objects.filter(
+    status='Cancelada'
+    ).count()
+
+    # crescimento mensal
+    solicitacoes_mes = (
+        Solicitacao.objects
+        .annotate(mes=TruncMonth('criado_em'))
+        .values('mes')
+        .annotate(total=Count('id'))
+        .order_by('mes')
+    )
+
+    meses = []
+    totais = []
+
+    for item in solicitacoes_mes:
+        meses.append(item['mes'].strftime('%b/%Y'))
+        totais.append(item['total'])
+
+    # tipos de serviço
+    tipos_servico = (
+        Solicitacao.objects
+        .values('tipo_servico')
+        .annotate(total=Count('id'))
+        .order_by('-total')
+    )
+
+    tipos = []
+    totais_tipos = []
+
+    for item in tipos_servico:
+        tipos.append(item['tipo_servico'])
+        totais_tipos.append(item['total'])
+
     return render(request, 'AdminPage.html', {
-        'nome': nome
+
+        'nome': nome,
+
+        'para_analisar': para_analisar,
+        'agendadas': agendadas,
+        'em_andamento': em_andamento,
+        'concluidas': concluidas,
+        'canceladas': canceladas,
+
+        'grafico_mensal': zip(meses, totais),
+        'grafico_tipos': zip(tipos, totais_tipos),
     })
 
 def recuperar_senha(request):
