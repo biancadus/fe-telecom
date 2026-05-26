@@ -7,6 +7,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.db.models import Count
 from django.db.models.functions import TruncMonth
+from django.core.paginator import Paginator
 import random
 
 
@@ -227,7 +228,6 @@ def dashboard_adm(request):
         meses.append(item['mes'].strftime('%b/%Y'))
         totais.append(item['total'])
 
-    # tipos de serviço
     tipos_servico = (
         Solicitacao.objects
         .values('tipo_servico')
@@ -520,3 +520,71 @@ def editar_solicitacao(request, id):
         's': solicitacao,
         'endereco': endereco
     })
+
+def clientes_adm(request):
+
+    if not request.session.get('adm_id'):
+        return redirect('login_adm')
+
+    clientes = Cliente.objects.select_related(
+        'usuario'
+    ).all().order_by('id')
+
+    busca = request.GET.get('busca', '').strip()
+
+    filtro = request.GET.get('filtro', '').strip()
+
+    if busca:
+
+        if filtro == 'id' and busca.isdigit():
+
+            clientes = clientes.filter(id=int(busca))
+
+        elif filtro == 'nome':
+
+            clientes = clientes.filter(
+                nome__icontains=busca
+            )
+
+        elif filtro == 'email':
+
+            clientes = clientes.filter(
+                usuario__email__icontains=busca
+            )
+
+        elif filtro == 'telefone':
+
+            clientes = clientes.filter(
+                telefone__icontains=busca
+            )
+
+    paginator = Paginator(clientes, 5)
+
+    page_number = request.GET.get('page')
+
+    clientes_page = paginator.get_page(page_number)
+
+    return render(request, 'adminPage2.html', {
+
+        'clientes': clientes_page,
+
+        'busca': busca,
+
+        'filtro': filtro
+    })
+
+def excluir_cliente(request, id):
+
+    if not request.session.get('adm_id'):
+        return redirect('login_adm')
+
+    cliente = Cliente.objects.get(id=id)
+
+    usuario = cliente.usuario
+
+    cliente.delete()
+
+    if usuario:
+        usuario.delete()
+
+    return redirect('clientes_adm')

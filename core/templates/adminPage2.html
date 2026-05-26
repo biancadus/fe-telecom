@@ -4,8 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel Administrador</title>
+
+     <!--font awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/adminpage2.css' %}">
+
+     <!--Icone na aba do navegador-->
+   <link rel="shortcut icon" href="{% static 'images/icons/icon-page.png' %}">
 </head>
 <body>
 
@@ -14,8 +21,8 @@
             <h2 class="logo">ADMINISTRADOR</h2>
             <nav>
                 <ul>
-                    <li><a href="adminPage.html" class="active">Início</a></li>
-                    <li><a href="adminPage2.html">Clientes</a></li>
+                    <li><a href="{% url 'dashboard_adm' %}">Início</a></li>
+                    <li><a href="{% url 'clientes_adm' %}" class="active">Clientes</a></li>
                     <li><a href="adminPage3.html">Solicitações</a></li>
                 </ul>
             </nav>
@@ -30,13 +37,35 @@
         </div>
     </header>
 
-    <div class="search-bar">
-        <select class="search-select">
-            <option>Buscar por</option>
-        </select>
-        <input type="text" placeholder="ID, Nome, E-mail, Número..." class="search-input">
-        <button class="search-btn">PESQUISAR</button>
-    </div>
+    <form method="GET" class="search-bar">
+
+    <select name="filtro" class="search-select">
+
+        <option value="">Buscar por</option>
+
+        <option value="id">ID</option>
+
+        <option value="nome">Nome</option>
+
+        <option value="email">E-mail</option>
+
+        <option value="telefone">Número</option>
+
+    </select>
+
+    <input
+        type="text"
+        name="busca"
+        placeholder="ID, Nome, E-mail, Número..."
+        class="search-input"
+        value="{{ busca }}"
+    >
+
+    <button type="submit" class="search-btn">
+        PESQUISAR
+    </button>
+
+</form>
 
     <table class="client-table">
         <thead>
@@ -45,18 +74,149 @@
                 <th>NOME</th>
                 <th>EMAIL</th>
                 <th>NUMERO</th>
-                <th></th> </tr>
+                <th></th> 
+            </tr>
         </thead>
         <tbody>
-            <tr><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td></td><td></td><td></td><td></td><td></td></tr>
-        </tbody>
+
+    {% for cliente in clientes %}
+    <tr>
+        <td>{{ cliente.id }}</td>
+
+        <td>{{ cliente.nome }}</td>
+
+        <td>{{ cliente.usuario.email }}</td>
+
+        <td>{{ cliente.telefone }}</td>
+
+        <td>
+        <button
+        class="search-btn"
+        onclick="abrirModal(
+        '{{ cliente.id }}',
+        '{{ cliente.nome }}',
+        '{{ cliente.usuario.email }}',
+        '{{ cliente.telefone }}',
+        '{{ cliente.criado_em|date:"d/m/Y H:i" }}'
+        )"
+        >
+        Ver detalhes
+        </button>
+        </td>
+    </tr>
+    {% endfor %}
+
+</tbody>
     </table>
+    <div class="pagination">
+
+    {% if clientes.has_previous %}
+
+        <a href="?page=1">&laquo; Primeira</a>
+
+        <a href="?page={{ clientes.previous_page_number }}">
+            Anterior
+        </a>
+
+    {% endif %}
+
+    <span class="pagina-atual">
+
+        Página {{ clientes.number }}
+        de
+        {{ clientes.paginator.num_pages }}
+
+    </span>
+
+    {% if clientes.has_next %}
+
+        <a href="?page={{ clientes.next_page_number }}">
+            Próxima
+        </a>
+
+        <a href="?page={{ clientes.paginator.num_pages }}">
+            Última &raquo;
+        </a>
+
+    {% endif %}
+
+</div>
     </main>
     </div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>Detalhes do Cliente</h2>
+
+            <button class="close-btn" onclick="fecharModal()">
+                &times;
+            </button>
+
+        </div>
+
+        <div class="modal-content">
+
+            <p><strong>ID:</strong> <span id="modalId"></span></p>
+
+            <p><strong>Nome:</strong> <span id="modalNome"></span></p>
+
+            <p><strong>Email:</strong> <span id="modalEmail"></span></p>
+
+            <p><strong>Telefone:</strong> <span id="modalTelefone"></span></p>
+
+            <p><strong>Cadastrado em:</strong> <span id="modalCriado"></span></p>
+
+        </div>
+
+        <div class="modal-actions">
+
+            <form id="formExcluir" method="POST">
+
+                {% csrf_token %}
+
+                <button type="submit" class="delete-btn">
+                    Excluir Cliente
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function abrirModal(id, nome, email, telefone, criado) {
+
+    document.getElementById('modalId').innerText = id;
+
+    document.getElementById('modalNome').innerText = nome;
+
+    document.getElementById('modalEmail').innerText = email;
+
+    document.getElementById('modalTelefone').innerText = telefone;
+
+    document.getElementById('modalCriado').innerText = criado;
+
+    document.getElementById('formExcluir').action =
+        `/excluir-cliente/${id}/`;
+
+    document.getElementById('modalOverlay').style.display = 'flex';
+}
+
+function fecharModal() {
+
+    document.getElementById('modalOverlay').style.display = 'none';
+}
+
+</script>
 
 </body>
 </html>

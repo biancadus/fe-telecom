@@ -13,7 +13,9 @@ from .views import (
     validar_codigo,
     nova_senha,
     criar_solicitacao,
-    index
+    index,
+    clientes_adm,
+    excluir_cliente
 )
 
 urlpatterns = [
@@ -37,7 +39,7 @@ urlpatterns = [
     name='criar_solicitacao'
     ),
 
-     path(
+    path(
         'areaDoCliente/',
         views.area_cliente,
         name='area_cliente'
@@ -47,6 +49,18 @@ urlpatterns = [
     'editar-solicitacao/<int:id>/',
     views.editar_solicitacao,
     name='editar_solicitacao'
+    ),
+
+    path(
+    'adminPage2/',
+    views.clientes_adm,
+    name='clientes_adm'
+    ),
+
+    path(
+    'excluir-cliente/<int:id>/',
+    views.excluir_cliente,
+    name='excluir_cliente'
     ),
 
 ]
