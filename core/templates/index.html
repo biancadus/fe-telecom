@@ -383,11 +383,10 @@
 
       <p>Agende sua visita técnica de forma rápida e prática. Nossa equipe está preparada para auxiliar em instalações, configurações ou reparos de rede e telecom.</p>
 
-      <p>Preencha o formulário ao lado e retornaremos com a confirmação do atendimento e os horários disponíveis.</p>
 
       <div class="info-item">
         <i class="fas fa-map-marker-alt"></i>
-        Travessa Guanaces, 6<br>São Paulo/SP
+        Travessa Guanaces, 6<br>São Paulo-SP
       </div>
 
       <div class="info-item">
@@ -407,30 +406,10 @@
       <input type="text" placeholder="Nome" required>
       <input type="email" placeholder="Email" required>
 
-      <div class="input-wpp">
-      <span class="prefixo">+55</span>
-      <input type="text" class="wpp-mask" placeholder="( ) _____-____" required>
-      </div>
 
-      <select required>
-        <option value="" disabled selected>Serviço</option>
-        <option>Instalação</option>
-        <option>Manutenção</option>
-        <option>Reparo</option>
-      </select>
 
-      <div class="linha-dupla">
-        <input type="date" required>
-        <select required>
-          <option value="" disabled selected>Horário</option>
-          <option>08h</option>
-          <option>10h</option>
-          <option>14h</option>
-          <option>16h</option>
-        </select>
-      </div>
 
-      <textarea placeholder="Detalhes Adicionais"></textarea>
+      <textarea placeholder="Digite sua mensagem..."></textarea>
 
 <button type="button" class="btn-contato-enviar" onclick="enviarPedido()">ENVIAR</button>
     </form>
@@ -442,7 +421,7 @@
   <div class="modal-conteudo">
     <div id="modalLoading" class="loading"></div>
 
-    <h3 id="modalMensagem">Enviando seu pedido...</h3>
+    <h3 id="modalMensagem">Enviando sua mensagem...</h3>
 
     <button id="btnFecharModal" class="modal-btn" style="display:none;" onclick="fecharModal()">OK</button>
   </div>
