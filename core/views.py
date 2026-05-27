@@ -8,6 +8,7 @@ from django.core.mail import send_mail
 from django.db.models import Count
 from django.db.models.functions import TruncMonth
 from django.core.paginator import Paginator
+from django.shortcuts import get_object_or_404
 import random
 
 
@@ -588,3 +589,190 @@ def excluir_cliente(request, id):
         usuario.delete()
 
     return redirect('clientes_adm')
+
+def solicitacoes_adm(request):
+
+    if not request.session.get('adm_id'):
+        return redirect('login_adm')
+
+    solicitacoes = (
+        Solicitacao.objects
+        .select_related('cliente')
+        .select_related('endereco')
+        .all()
+        .order_by('id')
+    )
+
+    busca = request.GET.get('busca', '').strip()
+
+    filtro = request.GET.get('filtro', '').strip()
+
+    data = request.GET.get('data', '').strip()
+
+    # FILTRO POR DATA
+
+    if filtro == 'data' and data:
+
+        solicitacoes = solicitacoes.filter(
+            data_disponivel=data
+        )
+
+    # FILTROS DE TEXTO
+
+    elif busca:
+
+        # ID
+
+        if filtro == 'id':
+
+            if busca.isdigit():
+
+                solicitacoes = solicitacoes.filter(
+                    id=int(busca)
+                )
+
+        # CLIENTE
+
+        elif filtro == 'cliente':
+
+            solicitacoes = solicitacoes.filter(
+                cliente__nome__icontains=busca
+            )
+
+        # STATUS
+
+        elif filtro == 'status':
+
+            solicitacoes = solicitacoes.filter(
+                status__icontains=busca
+            )
+
+        # SERVIÇO
+
+        elif filtro == 'servico':
+
+            solicitacoes = solicitacoes.filter(
+                tipo_servico__icontains=busca
+            )
+
+        # ENDEREÇO
+
+        elif filtro == 'endereco':
+
+            solicitacoes = solicitacoes.filter(
+                endereco__rua__icontains=busca
+            )
+
+        # HORÁRIO
+
+        elif filtro == 'horario':
+
+            solicitacoes = solicitacoes.filter(
+                horario_disponivel__icontains=busca
+            )
+
+    paginator = Paginator(solicitacoes, 5)
+
+    page_number = request.GET.get('page')
+
+    solicitacoes_page = paginator.get_page(page_number)
+
+    return render(request, 'adminPage3.html', {
+
+        'solicitacoes': solicitacoes_page,
+
+        'busca': busca,
+
+        'filtro': filtro,
+
+        'data': data
+    })
+
+def editar_solicitacao_adm(request, id):
+
+    if not request.session.get('adm_id'):
+        return redirect('login_adm')
+
+    solicitacao = get_object_or_404(
+        Solicitacao,
+        id=id
+    )
+
+    endereco = Endereco.objects.get(
+        solicitacao=solicitacao
+    )
+
+    if request.method == 'POST':
+
+        solicitacao.tipo_servico = request.POST.get(
+            'tipo_servico'
+        )
+
+        solicitacao.data_disponivel = request.POST.get(
+            'data'
+        )
+
+        solicitacao.horario_disponivel = request.POST.get(
+            'horario'
+        )
+
+        solicitacao.porte_local = request.POST.get(
+            'porte_local'
+        )
+
+        solicitacao.detalhes = request.POST.get(
+            'detalhes'
+        )
+
+        solicitacao.save()
+
+        endereco.rua = request.POST.get('endereco')
+
+        endereco.bairro = request.POST.get('bairro')
+
+        endereco.numero = request.POST.get('numero')
+
+        endereco.cidade = request.POST.get('cidade')
+
+        endereco.save()
+
+        return redirect('solicitacoes_adm')
+
+    return render(request, 'editarSolicitacaoAdm.html', {
+        's': solicitacao,
+        'endereco': endereco
+    })
+
+def excluir_solicitacao(request, id):
+
+    if not request.session.get('adm_id'):
+        return redirect('login_adm')
+
+    solicitacao = get_object_or_404(
+        Solicitacao,
+        id=id
+    )
+
+    solicitacao.delete()
+
+    return redirect('solicitacoes_adm')
+
+def alterar_status(request, id):
+
+    if not request.session.get('adm_id'):
+        return redirect('login_adm')
+
+    solicitacao = get_object_or_404(
+        Solicitacao,
+        id=id
+    )
+
+    if request.method == 'POST':
+
+        novo_status = request.POST.get('status')
+
+        solicitacao.status = novo_status
+
+        solicitacao.save()
+
+    return redirect('solicitacoes_adm')

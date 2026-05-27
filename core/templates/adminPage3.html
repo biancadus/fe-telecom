@@ -4,67 +4,402 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel Administrador</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/adminpage3.css' %}">
+
+    <link rel="shortcut icon" href="{% static 'images/icons/icon-page.png' %}">
 </head>
 <body>
 
-    <div class="container">
-        <aside class="sidebar">
-            <h2 class="logo">ADMINISTRADOR</h2>
-            <nav>
-                <ul>
-                    <li><a href="adminPage.html" class="active">Início</a></li>
-                    <li><a href="adminPage2.html">Clientes</a></li>
-                    <li><a href="adminPage3.html">Solicitações</a></li>
-                </ul>
-            </nav>
-        </aside>
+<div class="container">
 
-        <main class="main-content">
-    <header class="header">
-        <h1>Solicitações</h1>
+    <aside class="sidebar">
+
+        <h2 class="logo">ADMINISTRADOR</h2>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="{% url 'dashboard_adm' %}">
+                        Início
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'clientes_adm' %}">
+                        Clientes
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'solicitacoes_adm' %}" class="active">
+                        Solicitações
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </aside>
+
+    <main class="main-content">
+
+        <header class="header">
+            <h1>Solicitações</h1>
         </header>
 
+        <!-- PESQUISA -->
+
+    <form method="GET">
+
     <div class="search-bar">
-        <select class="search-select">
-            <option>Buscar por</option>
+
+        <select name="filtro" class="search-select">
+
+            <option value="">Buscar por</option>
+
+            <option value="id"
+            {% if filtro == 'id' %}selected{% endif %}>
+                ID
+            </option>
+
+            <option value="cliente"
+            {% if filtro == 'cliente' %}selected{% endif %}>
+                Cliente
+            </option>
+
+            <option value="status"
+            {% if filtro == 'status' %}selected{% endif %}>
+                Status
+            </option>
+
+            <option value="servico"
+            {% if filtro == 'servico' %}selected{% endif %}>
+                Serviço
+            </option>
+
+            <option value="horario"
+            {% if filtro == 'horario' %}selected{% endif %}>
+                Horário
+            </option>
+
+            <option value="endereco"
+            {% if filtro == 'endereco' %}selected{% endif %}>
+                Endereço
+            </option>
+
+            <option value="data"
+            {% if filtro == 'data' %}selected{% endif %}>
+                Data
+            </option>
+
         </select>
-        <input type="text" placeholder="ID, Cliente, Status, Endereço..." class="search-input">
-        <button class="search-btn">PESQUISAR</button>
+
+        <input
+            type="text"
+            name="busca"
+            value="{{ busca }}"
+            placeholder="ID, Cliente, Serviço, Horário, Status..."
+            class="search-input"
+        >
+
+        <div class="date-group">
+
+    <input
+        type="date"
+        name="data"
+        value="{{ data }}"
+        class="search-date"
+    >
+
+    </div>
+        <button type="submit" class="search-btn">
+            PESQUISAR
+        </button>
+
+        <a href="{% url 'solicitacoes_adm' %}" class="clear-btn">
+            LIMPAR
+        </a>
+
     </div>
 
-    <div class="date-filters">
-    <div class="date-group">
-        <label>Data inicio</label>
-        <input type="text" placeholder="11/09/2007">
+    </form>
+
+        <!-- TABELA -->
+
+        <table class="client-table">
+
+            <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>CLIENTE</th>
+                    <th>SERVIÇO</th>
+                    <th>DATA</th>
+                    <th>HORÁRIO</th>
+                    <th>STATUS</th>
+                    <th>AÇÕES</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+    {% for s in solicitacoes %}
+
+    <tr>
+
+        <td>#{{ s.id }}</td>
+
+        <td>{{ s.cliente.nome }}</td>
+
+        <td>{{ s.tipo_servico }}</td>
+
+        <td>
+            {{ s.data_disponivel|date:"d/m/Y" }}
+        </td>
+
+        <td>
+            {{ s.horario_disponivel }}
+        </td>
+
+        <td>{{ s.status }}</td>
+
+        <td>
+
+            <button
+                class="details-btn"
+                onclick="abrirModal('{{ s.id }}')"
+            >
+                Detalhes
+            </button>
+
+        </td>
+
+    </tr>
+
+    {% empty %}
+
+    <tr>
+
+        <td colspan="7">
+            Nenhuma solicitação encontrada.
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</tbody>
+
+        </table>
+        {% for s in solicitacoes %}
+
+<div id="modal-{{ s.id }}" class="modal">
+
+    <div class="modal-content">
+
+        <span
+            class="close"
+            onclick="fecharModal('{{ s.id }}')"
+        >
+            &times;
+        </span>
+
+        <h2>
+            Solicitação #{{ s.id }}
+        </h2>
+
+        <p>
+            <strong>Cliente:</strong>
+            {{ s.cliente.nome }}
+        </p>
+
+        <p>
+            <strong>Serviço:</strong>
+            {{ s.tipo_servico }}
+        </p>
+
+        <p>
+            <strong>Data:</strong>
+            {{ s.data_disponivel|date:"d/m/Y" }}
+        </p>
+
+        <p>
+            <strong>Horário:</strong>
+            {{ s.horario_disponivel }}
+        </p>
+
+        <p>
+            <strong>Status:</strong>
+            {{ s.status }}
+        </p>
+
+        <p>
+            <strong>Porte:</strong>
+            {{ s.porte_local }}
+        </p>
+
+        <p>
+            <strong>Detalhes:</strong>
+            {{ s.detalhes }}
+        </p>
+
+        {% if s.endereco %}
+
+        <p>
+            <strong>Endereço:</strong>
+            {{ s.endereco.rua }},
+            {{ s.endereco.numero }}
+        </p>
+
+        <p>
+            <strong>Bairro:</strong>
+            {{ s.endereco.bairro }}
+        </p>
+
+        <p>
+            <strong>Cidade:</strong>
+            {{ s.endereco.cidade }}
+        </p>
+
+        {% endif %}
+
+        <hr>
+
+        <h3>Alterar Status</h3>
+
+        <form
+            method="POST"
+            action="{% url 'alterar_status' s.id %}"
+        >
+
+            {% csrf_token %}
+
+            <select
+                name="status"
+                class="status-select"
+            >
+
+                {% for valor, nome in s.STATUS_CHOICES %}
+
+                <option
+                    value="{{ valor }}"
+                    {% if s.status == valor %}selected{% endif %}
+                >
+                    {{ nome }}
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+            <button
+                type="submit"
+                class="save-status-btn"
+            >
+                Salvar Status
+            </button>
+
+        </form>
+
+        <hr>
+
+        <div class="modal-actions">
+
+            <a
+                href="{% url 'editar_solicitacao_adm' s.id %}"
+                class="edit-btn"
+            >
+                Editar
+            </a>
+
+            <a
+                href="{% url 'excluir_solicitacao' s.id %}"
+                class="delete-btn"
+                onclick="return confirm(
+                    'Deseja realmente excluir esta solicitação?'
+                )"
+            >
+                Excluir
+            </a>
+
+        </div>
+
     </div>
-    <div class="date-group">
-        <label>Data Fim</label>
-        <input type="text" placeholder="11/09/2008">
-    </div>
+
 </div>
 
-    <table class="client-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>CLIENTE</th>
-                <th>DATA INICIO</th>
-                <th>DATA FIM</th>
-                <th>STATUS</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td></td><td></td><td></td><td></td><td></td></tr>
-        </tbody>
-    </table>
+{% endfor %}
+        <!-- PAGINAÇÃO -->
+
+        <div class="pagination">
+
+            {% if solicitacoes.has_previous %}
+
+                <a href="?page=1">&laquo;</a>
+
+                <a href="?page={{ solicitacoes.previous_page_number }}">
+                    Voltar
+                </a>
+
+            {% endif %}
+
+            <span>
+                Página {{ solicitacoes.number }}
+                de {{ solicitacoes.paginator.num_pages }}
+            </span>
+
+            {% if solicitacoes.has_next %}
+
+                <a href="?page={{ solicitacoes.next_page_number }}">
+                    Próxima
+                </a>
+
+                <a href="?page={{ solicitacoes.paginator.num_pages }}">
+                    &raquo;
+                </a>
+
+            {% endif %}
+
+        </div>
+
     </main>
-    </div>
+
+</div>
+
+<script>
+
+function abrirModal(id) {
+
+    document.getElementById(
+        `modal-${id}`
+    ).style.display = 'flex';
+}
+
+function fecharModal(id) {
+
+    document.getElementById(
+        `modal-${id}`
+    ).style.display = 'none';
+}
+
+window.onclick = function(event) {
+
+    const modais = document.querySelectorAll('.modal');
+
+    modais.forEach(modal => {
+
+        if (event.target === modal) {
+
+            modal.style.display = 'none';
+        }
+    });
+}
+
+</script>
 
 </body>
 </html>
