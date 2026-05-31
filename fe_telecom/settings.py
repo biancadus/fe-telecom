@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 import dj_database_url
 import os
 from pathlib import Path
+from django.core.mail import get_connection
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -138,4 +139,4 @@ EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = 'fetelecomservices@gmail.com'
 
-EMAIL_HOST_PASSWORD = 'rzzg itbe ldtw ssbs'
+EMAIL_HOST_PASSWORD = os.getenv('rzzg itbe ldtw ssbs')

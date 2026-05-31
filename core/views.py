@@ -9,6 +9,8 @@ from django.db.models import Count
 from django.db.models.functions import TruncMonth
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
+from django.db.models import Count, Q
+from django.core.mail import EmailMultiAlternatives
 import random
 
 
@@ -27,7 +29,6 @@ def cadastro(request):
         confirmar = request.POST.get('confirmar_senha')
         telefone = request.POST.get('telefone')
 
-        #para o telefone salvar 11999999999 no banco ao invés de (11) 99999-9999
         telefone = ''.join(filter(str.isdigit, telefone))
 
         if senha != confirmar:
@@ -97,20 +98,54 @@ def login_view(request):
     return render(request, 'login.html')
 
 def area_cliente(request):
-
     usuario_id = request.session.get('usuario_id')
+    if not usuario_id:
+        return redirect('login')
+    try:
+        cliente = Cliente.objects.select_related('usuario').get(usuario_id=usuario_id)
+        usuario = cliente.usuario
+    except Cliente.DoesNotExist:
+        return redirect('login')
+    
+    solicitacoes_base = Solicitacao.objects.filter(cliente=cliente)
 
-    usuario = Usuario.objects.get(id=usuario_id)
+    total_solicitacoes = solicitacoes_base.count()
+    em_analise = solicitacoes_base.filter(status='Em análise').count()  # <--- Corrigido aqui
+    agendadas = solicitacoes_base.filter(status='Agendada').count()
+    concluidas = solicitacoes_base.filter(status='Concluída').count()
+    canceladas = solicitacoes_base.filter(status='Cancelada').count()
 
-    cliente = Cliente.objects.get(usuario=usuario)
+    solicitacoes_listagem = solicitacoes_base.order_by('-id')
 
-    solicitacoes = Solicitacao.objects.filter(
-        cliente=cliente
-    ).order_by('-id')
+    termo_busca = request.GET.get('busca', '').strip()
+    status_filtro = request.GET.get('status_filtro', '').strip()
+
+    if termo_busca:
+        if termo_busca.isdigit():
+            solicitacoes_listagem = solicitacoes_listagem.filter(
+                Q(id=int(termo_busca))
+        )
+        else:
+            solicitacoes_listagem = solicitacoes_listagem.filter(
+            Q(tipo_servico__icontains=termo_busca) | Q(porte_local__icontains=termo_busca)
+        )
+
+    if status_filtro:
+        solicitacoes_listagem = solicitacoes_listagem.filter(status=status_filtro)
+
+    primeiro_nome = usuario.nome.split()[0]
 
     return render(request, 'areaDoCliente.html', {
-        'solicitacoes': solicitacoes
-})
+        'solicitacoes': solicitacoes_listagem,
+        'total_solicitacoes': total_solicitacoes,
+        'em_analise': em_analise,         
+        'agendadas': agendadas,            
+        'concluidas': concluidas,
+        'canceladas': canceladas,
+        'primeiro_nome': primeiro_nome,
+        'termo_busca': termo_busca,
+        'status_atual': status_filtro,   
+    })
 
 def login_adm(request):
 
@@ -193,27 +228,14 @@ def dashboard_adm(request):
 
     nome = request.session.get('adm_nome')
 
-    para_analisar = Solicitacao.objects.filter(
-        status='Recebida'
-    ).count()
+    contagens = Solicitacao.objects.aggregate(
+        para_analisar=Count('id', filter=Q(status='Recebida')),
+        agendadas=Count('id', filter=Q(status='Agendada')),
+        em_andamento=Count('id', filter=Q(status='Em andamento')),
+        concluidas=Count('id', filter=Q(status='Concluída')),
+        canceladas=Count('id', filter=Q(status='Cancelada'))
+    )
 
-    agendadas = Solicitacao.objects.filter(
-        status='Agendada'
-    ).count()
-
-    em_andamento = Solicitacao.objects.filter(
-        status='Em andamento'
-    ).count()
-
-    concluidas = Solicitacao.objects.filter(
-        status='Concluída'
-    ).count()
-
-    canceladas = Solicitacao.objects.filter(
-    status='Cancelada'
-    ).count()
-
-    # crescimento mensal
     solicitacoes_mes = (
         Solicitacao.objects
         .annotate(mes=TruncMonth('criado_em'))
@@ -245,17 +267,17 @@ def dashboard_adm(request):
 
     return render(request, 'AdminPage.html', {
 
-        'nome': nome,
+    'nome': nome,
 
-        'para_analisar': para_analisar,
-        'agendadas': agendadas,
-        'em_andamento': em_andamento,
-        'concluidas': concluidas,
-        'canceladas': canceladas,
+    'para_analisar': contagens['para_analisar'],
+    'agendadas': contagens['agendadas'],
+    'em_andamento': contagens['em_andamento'],
+    'concluidas': contagens['concluidas'],
+    'canceladas': contagens['canceladas'],
 
-        'grafico_mensal': zip(meses, totais),
-        'grafico_tipos': zip(tipos, totais_tipos),
-    })
+    'grafico_mensal': zip(meses, totais),
+    'grafico_tipos': zip(tipos, totais_tipos),
+})
 
 def recuperar_senha(request):
 
@@ -304,33 +326,6 @@ def validar_codigo(request):
 
     return render(request, 'validarCodigo.html')
 
-def nova_senha(request):
-
-    if request.method == 'POST':
-
-        senha = request.POST.get('senha')
-        confirmar = request.POST.get('confirmar')
-
-        if senha != confirmar:
-
-            return render(request, 'novaSenha.html', {
-                'erro': 'As senhas não coincidem.'
-            })
-
-        email = request.session.get('email_recuperacao')
-
-        usuario = Usuario.objects.get(email=email)
-
-        usuario.senha_hash = make_password(senha)
-
-        usuario.save()
-
-        del request.session['codigo_recuperacao']
-        del request.session['email_recuperacao']
-
-        return redirect('login')
-
-    return render(request, 'novaSenha.html')
 
 def nova_senha(request):
 
@@ -356,11 +351,13 @@ def nova_senha(request):
 
         usuario.save()
 
-        return render(request, 'novaSenha.html', {
-            'sucesso': 'Senha atualizada com sucesso!'
-        })
+        del request.session['codigo_recuperacao']
+        del request.session['email_recuperacao']
 
-    return render(request, 'novaSenha.html')
+        messages.success(request, 'Senha atualizada com sucesso!')
+        return redirect('login')
+
+        return render(request, 'novaSenha.html')
 
 def criar_solicitacao(request):
 
@@ -417,50 +414,6 @@ def criar_solicitacao(request):
         )
 
         return redirect('area_cliente')
-
-    return redirect('area_cliente')
-
-def area_cliente(request):
-    usuario_id = request.session.get('usuario_id')
-    if not usuario_id:
-        return redirect('login')
-
-    usuario = Usuario.objects.get(id=usuario_id)
-    cliente = Cliente.objects.get(usuario=usuario)
-    
-    solicitacoes = Solicitacao.objects.filter(cliente=cliente).order_by('-id')
-
-    termo_busca = request.GET.get('busca', '').strip()
-    status_filtro = request.GET.get('status_filtro', '').strip()
-
-    if termo_busca:
-        if termo_busca.isdigit():
-            solicitacoes = solicitacoes.filter(id=int(termo_busca))
-        else:
-            solicitacoes = solicitacoes.filter(tipo_servico__icontains=termo_busca)
-
-
-    if status_filtro:
-        solicitacoes = solicitacoes.filter(status=status_filtro)
-
-   
-    total_solicitacoes = solicitacoes.count()
-    ativas = solicitacoes.filter(status__in=['Pendente', 'Em Andamento']).count()
-    concluidas = solicitacoes.filter(status='Concluída').count()
-    canceladas = solicitacoes.filter(status='Cancelada').count()
-
-    primeiro_nome = usuario.nome.split()[0]
-
-    return render(request, 'areaDoCliente.html', {
-        'solicitacoes': solicitacoes,
-        'total_solicitacoes': total_solicitacoes,
-        'ativas': ativas,
-        'concluidas': concluidas,
-        'canceladas': canceladas,
-        'primeiro_nome': primeiro_nome,
-        'termo_busca': termo_busca,
-        'status_atual': status_filtro,   
-    })
 
 def editar_solicitacao(request, id):
 
@@ -763,16 +716,133 @@ def alterar_status(request, id):
         return redirect('login_adm')
 
     solicitacao = get_object_or_404(
-        Solicitacao,
+        Solicitacao.objects.select_related(
+            'cliente__usuario'
+        ),
         id=id
     )
 
-    if request.method == 'POST':
+    if request.method != 'POST':
+        return redirect('solicitacoes_adm')
 
-        novo_status = request.POST.get('status')
+    novo_status = request.POST.get('status')
 
-        solicitacao.status = novo_status
+    # Evita processamento desnecessário
+    if novo_status == solicitacao.status:
 
-        solicitacao.save()
+        messages.info(
+            request,
+            'O status selecionado já é o status atual da solicitação.'
+        )
+
+        return redirect('solicitacoes_adm')
+
+    status_antigo = solicitacao.status
+
+    # Atualiza o status
+    solicitacao.status = novo_status
+    solicitacao.save()
+
+    try:
+
+        email_cliente = solicitacao.cliente.usuario.email
+        nome_cliente = solicitacao.cliente.nome
+
+        assunto = (
+            f'Atualização de Solicitação'
+        )
+
+        texto = f"""
+Olá, {nome_cliente}!
+
+O status da sua solicitação #{solicitacao.id} foi atualizado.
+
+Status anterior: {status_antigo}
+Novo status: {novo_status}
+
+Acesse o portal da FETELECOM para visualizar mais detalhes.
+
+Atenciosamente,
+Equipe FETELECOM
+        """
+
+        html = f"""
+        <html>
+        <body style="font-family: Arial, sans-serif;">
+
+            <h2>
+                Atualização da Solicitação #{solicitacao.id}
+            </h2>
+
+            <p>
+                Olá, <strong>{nome_cliente}</strong>!
+            </p>
+
+            <p>
+                O status da sua solicitação foi atualizado.
+            </p>
+
+            <table style="
+                border-collapse: collapse;
+                margin: 15px 0;
+            ">
+                <tr>
+                    <td style="padding: 8px;">
+                        <strong>Status anterior:</strong>
+                    </td>
+                    <td style="padding: 8px;">
+                        {status_antigo}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 8px;">
+                        <strong>Novo status:</strong>
+                    </td>
+                    <td style="padding: 8px;">
+                        {novo_status}
+                    </td>
+                </tr>
+            </table>
+
+            <p>
+                Para visualizar informações completas sobre
+                sua solicitação, acesse o portal da FETELECOM.
+            </p>
+
+            <p>
+                Atenciosamente,<br>
+                <strong>Equipe FETELECOM</strong>
+            </p>
+
+        </body>
+        </html>
+        """
+
+        email = EmailMultiAlternatives(
+            subject=assunto,
+            body=texto,
+            from_email=settings.EMAIL_HOST_USER,
+            to=[email_cliente]
+        )
+
+        email.attach_alternative(
+            html,
+            "text/html"
+        )
+
+        email.send()
+
+        messages.success(
+            request,
+            f'Status alterado para "{novo_status}" e email enviado ao cliente.'
+        )
+
+    except Exception as erro:
+
+        messages.warning(
+            request,
+            f'Status atualizado, mas ocorreu um erro ao enviar o email: {erro}'
+        )
 
     return redirect('solicitacoes_adm')

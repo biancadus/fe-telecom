@@ -197,31 +197,233 @@ body {
     outline: none;
 }
 
-.modal {
+.modal{
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.55);
     justify-content: center;
     align-items: center;
+    padding: 20px;
     z-index: 999;
 }
 
-.modal-content {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    width: 500px;
-    max-width: 90%;
+.modal-content{
+    background: #fff;
+    width: 650px;
+    max-width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 16px;
+    padding: 28px;
     position: relative;
+    box-shadow: 0 20px 40px rgba(0,0,0,.15);
 }
 
-.close {
+.modal-content::-webkit-scrollbar{
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-thumb{
+    background: #cbd5e1;
+    border-radius: 20px;
+}
+
+.modal-content::-webkit-scrollbar-track{
+    background: transparent;
+}
+
+.modal-header-custom{
+    margin-bottom: 25px;
+}
+
+.info-section{
+    margin-bottom: 16px;
+}
+
+.info-grid{
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.info-grid div{
+    padding: 10px 12px;
+}
+
+.modal-header-custom h2{
+    color: #001a5e;
+    margin-bottom: 8px;
+}
+
+.confirm-modal{
+    background: white;
+    width: 400px;
+    max-width: 90%;
+    padding: 30px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,.15);
+}
+
+.confirm-modal h3{
+    color: #001a5e;
+    margin-bottom: 12px;
+}
+
+.confirm-modal p{
+    color: #4b5563;
+    margin-bottom: 25px;
+}
+
+.confirm-actions{
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.cancel-btn{
+    background: #e5e7eb;
+    color: #111827;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.confirm-delete-btn{
+    background: #dc2626;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.cancel-btn:hover{
+    background: #d1d5db;
+}
+
+.confirm-delete-btn:hover{
+    background: #b91c1c;
+}
+
+.status-badge{
+    display: inline-block;
+    background: #fff4cc;
+    color: #8a6d00;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: .85rem;
+    font-weight: 600;
+}
+
+.info-section{
+    margin-bottom: 24px;
+}
+
+.section-title{
+    display: block;
+    font-size: .85rem;
+    color: #6b7280;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.cliente-nome{
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.info-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+.info-grid div{
+    background: #f8fafc;
+    padding: 14px;
+    border-radius: 10px;
+}
+
+.info-grid span{
+    display: block;
+    color: #6b7280;
+    font-size: .85rem;
+    margin-bottom: 5px;
+}
+
+.info-grid strong{
+    color: #111827;
+}
+
+.status-section{
+    background: #f8fafc;
+    padding: 18px;
+    border-radius: 12px;
+    margin-top: 10px;
+}
+
+.status-section label{
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #001a5e;
+}
+
+.status-select{
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    margin-bottom: 12px;
+}
+
+.save-status-btn{
+    width: 100%;
+    padding: 12px;
+    background: #16a34a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.modal-actions{
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.edit-btn,
+.delete-btn{
+    flex: 1;
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.edit-btn{
+    background: #2563eb;
+    color: white;
+}
+
+.delete-btn{
+    background: #dc2626;
+    color: white;
+}
+
+.close{
     position: absolute;
-    right: 15px;
-    top: 10px;
+    right: 18px;
+    top: 12px;
     font-size: 28px;
     cursor: pointer;
+    color: #6b7280;
 }
 
 /* PAGINAÇÃO */

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -170,10 +171,10 @@
         <td>
 
             <button
-                class="details-btn"
+                class="search-btn"
                 onclick="abrirModal('{{ s.id }}')"
             >
-                Detalhes
+                Verificar
             </button>
 
         </td>
@@ -194,136 +195,181 @@
 
 </tbody>
 
-        </table>
-        {% for s in solicitacoes %}
+</table>
 
-<div id="modal-{{ s.id }}" class="modal">
+    {% for s in solicitacoes %}
+
+    <div id="modal-{{ s.id }}" class="modal">
 
     <div class="modal-content">
 
-        <span
-            class="close"
-            onclick="fecharModal('{{ s.id }}')"
-        >
-            &times;
+    <span class="close"
+        onclick="fecharModal('{{ s.id }}')">
+        &times;
+    </span>
+
+    <div class="modal-header-custom">
+
+        <div>
+            <h2>Solicitação #{{ s.id }}</h2>
+
+            <span class="status-badge">
+                {{ s.status }}
+            </span>
+        </div>
+
+    </div>
+
+    <div class="info-section">
+
+        <span class="section-title">
+            Cliente
         </span>
 
-        <h2>
-            Solicitação #{{ s.id }}
-        </h2>
-
-        <p>
-            <strong>Cliente:</strong>
+        <p class="cliente-nome">
             {{ s.cliente.nome }}
         </p>
 
-        <p>
-            <strong>Serviço:</strong>
-            {{ s.tipo_servico }}
-        </p>
+    </div>
+
+    <div class="info-grid">
+
+        <div>
+            <span>Serviço</span>
+            <strong>{{ s.tipo_servico }}</strong>
+        </div>
+
+        <div>
+            <span>Data</span>
+            <strong>
+                {{ s.data_disponivel|date:"d/m/Y" }}
+            </strong>
+        </div>
+
+        <div>
+            <span>Horário</span>
+            <strong>
+                {{ s.horario_disponivel }}
+            </strong>
+        </div>
+
+        <div>
+            <span>Porte</span>
+            <strong>
+                {{ s.porte_local }}
+            </strong>
+        </div>
+
+    </div>
+
+    {% if s.endereco %}
+    <div class="info-section">
+
+        <span class="section-title">
+            Endereço
+        </span>
 
         <p>
-            <strong>Data:</strong>
-            {{ s.data_disponivel|date:"d/m/Y" }}
-        </p>
-
-        <p>
-            <strong>Horário:</strong>
-            {{ s.horario_disponivel }}
-        </p>
-
-        <p>
-            <strong>Status:</strong>
-            {{ s.status }}
-        </p>
-
-        <p>
-            <strong>Porte:</strong>
-            {{ s.porte_local }}
-        </p>
-
-        <p>
-            <strong>Detalhes:</strong>
-            {{ s.detalhes }}
-        </p>
-
-        {% if s.endereco %}
-
-        <p>
-            <strong>Endereço:</strong>
             {{ s.endereco.rua }},
             {{ s.endereco.numero }}
         </p>
 
         <p>
-            <strong>Bairro:</strong>
-            {{ s.endereco.bairro }}
-        </p>
-
-        <p>
-            <strong>Cidade:</strong>
+            {{ s.endereco.bairro }} -
             {{ s.endereco.cidade }}
         </p>
 
-        {% endif %}
+    </div>
+    {% endif %}
 
-        <hr>
+    <div class="info-section">
 
-        <h3>Alterar Status</h3>
+        <span class="section-title">
+            Observações
+        </span>
 
-        <form
-            method="POST"
-            action="{% url 'alterar_status' s.id %}"
-        >
+        <p>
+            {{ s.detalhes }}
+        </p>
+
+    </div>
+
+    <div class="status-section">
+
+        <label>
+            Alterar Status
+        </label>
+
+        <form method="POST"
+            action="{% url 'alterar_status' s.id %}">
 
             {% csrf_token %}
 
             <select
                 name="status"
-                class="status-select"
-            >
+                class="status-select">
 
                 {% for valor, nome in s.STATUS_CHOICES %}
-
                 <option
                     value="{{ valor }}"
-                    {% if s.status == valor %}selected{% endif %}
-                >
+                    {% if s.status == valor %}selected{% endif %}>
                     {{ nome }}
                 </option>
-
                 {% endfor %}
 
             </select>
 
             <button
                 type="submit"
-                class="save-status-btn"
-            >
-                Salvar Status
+                class="save-status-btn">
+
+                Salvar Alteração
+
             </button>
 
         </form>
 
-        <hr>
+    </div>
 
-        <div class="modal-actions">
+    <div class="modal-actions">
 
-            <a
-                href="{% url 'editar_solicitacao_adm' s.id %}"
-                class="edit-btn"
-            >
-                Editar
-            </a>
+        <a href="{% url 'editar_solicitacao_adm' s.id %}" class="edit-btn">Editar</a>
+
+        <button type="button" class="delete-btn" onclick="abrirModalExcluir('{{ s.id }}')">Excluir</button>
+
+    </div>
+
+</div>
+
+</div>
+
+<div id="modal-excluir-{{ s.id }}" class="modal">
+
+    <div class="confirm-modal">
+
+        <h3>Excluir solicitação</h3>
+
+        <p>
+            Deseja realmente excluir esta solicitação?
+        </p>
+
+        <div class="confirm-actions">
+
+            <button
+                type="button"
+                class="cancel-btn"
+                onclick="fecharModalExcluir('{{ s.id }}')">
+
+                Cancelar
+
+            </button>
 
             <a
                 href="{% url 'excluir_solicitacao' s.id %}"
-                class="delete-btn"
-                onclick="return confirm(
-                    'Deseja realmente excluir esta solicitação?'
-                )"
-            >
-                Excluir
+                class="confirm-delete-btn">
+
+                OK
+
             </a>
 
         </div>
@@ -386,19 +432,32 @@ function fecharModal(id) {
     ).style.display = 'none';
 }
 
-window.onclick = function(event) {
+window.onclick = function(event){
 
     const modais = document.querySelectorAll('.modal');
 
     modais.forEach(modal => {
 
-        if (event.target === modal) {
+        if(event.target === modal){
 
             modal.style.display = 'none';
         }
     });
 }
 
+function abrirModalExcluir(id){
+
+    document.getElementById(
+        `modal-excluir-${id}`
+    ).style.display = "flex";
+}
+
+function fecharModalExcluir(id){
+
+    document.getElementById(
+        `modal-excluir-${id}`
+    ).style.display = "none";
+}
 </script>
 
 </body>

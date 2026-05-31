@@ -5,22 +5,17 @@
   <meta charset="UTF-8">
   <title>FETELECOM</title>
 
-  <!--Bootstrap CSS-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
-     <!--font awesome-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-      <!--Css personalizado-->
-  <link rel="stylesheet" href="{% static 'css/areaCliente.css' %}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-   <!--Icone na aba do navegador-->
-   <link rel="shortcut icon" href="{% static 'images/icons/icon-page.png' %}">
+  <link rel="stylesheet" href="{% static 'css/areaCliente.css' %}">
+
+  <link rel="shortcut icon" href="{% static 'images/icons/icon-page.png' %}">
 </head>
 <body>
- <header>
+
+<header>
   <h1>Olá, {{ primeiro_nome }}</h1>
 
   <div class="header-actions">
@@ -36,142 +31,132 @@
   </div>
 </header>
 
-  <div class="stats">
-    <div class="stat-box">Ativas<br> <strong>{{ total_solicitacoes }}</strong></div>
-    <div class="stat-box">Concluídas<br><strong>0</strong></div>
-    <div class="stat-box">Canceladas<br><strong>0</strong></div>
-    <div class="stat-box">Total<br> <strong>{{ total_solicitacoes }}</strong></div>
-  </div>
+<div class="stats">
+  <div class="stat-box">Em Análise<br> <strong>{{ em_analise|default:0 }}</strong></div>
+  <div class="stat-box">Agendadas<br> <strong>{{ agendadas|default:0 }}</strong></div>
+  <div class="stat-box">Concluídas<br><strong>{{ concluidas|default:0 }}</strong></div>
+  <div class="stat-box">Canceladas<br><strong>{{ canceladas|default:0 }}</strong></div>
+  <div class="stat-box">Total<br> <strong>{{ total_solicitacoes|default:0 }}</strong></div>
+</div>
 
 <form method="GET" action="" class="search-bar">
-  
-  <input type="text" name="busca" placeholder="Buscar..." value="{{ termo_busca }}">
-  
+  <input
+    type="text"
+    name="busca"
+    placeholder="Buscar por ID, Serviço ou Porte..."
+    value="{{ termo_busca }}"
+  >
   <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
   
-  <div class="filter-wrapper" style="position: relative; display: inline-block;">
-    <select name="status_filtro" onchange="this.form.submit()" class="filter-select">
-      <option value="">Filtros</option>
-      <option value="Pendente" {% if status_atual == 'Pendente' %}selected{% endif %}>Pendente</option>
-      <option value="Em Andamento" {% if status_atual == 'Em Andamento' %}selected{% endif %}>Em Andamento</option>
-      <option value="Concluída" {% if status_atual == 'Concluída' %}selected{% endif %}>Concluída</option>
-      <option value="Cancelada" {% if status_atual == 'Cancelada' %}selected{% endif %}>Cancelada</option>
-    </select>
-  </div>
+  <div class="filter-wrapper">
+    <i class="fa-solid fa-filter"></i>
 
+    <select name="status_filtro"
+            onchange="this.form.submit()"
+            class="filter-select">
+
+        <option value="">Todos</option>
+
+        <option value="Recebida"
+            {% if status_atual == "Recebida" %}selected{% endif %}>
+            Recebida
+        </option>
+
+        <option value="Em análise"
+            {% if status_atual == "Em análise" %}selected{% endif %}>
+            Em análise
+        </option>
+
+        <option value="Agendada"
+            {% if status_atual == "Agendada" %}selected{% endif %}>
+            Agendada
+        </option>
+
+        <option value="Em andamento"
+            {% if status_atual == "Em andamento" %}selected{% endif %}>
+            Em andamento
+        </option>
+
+        <option value="Concluída"
+            {% if status_atual == "Concluída" %}selected{% endif %}>
+            Concluída
+        </option>
+
+        <option value="Cancelada"
+            {% if status_atual == "Cancelada" %}selected{% endif %}>
+            Cancelada
+        </option>
+    </select>
+</div>
+   <a href="{% url 'area_cliente' %}" class="btn-limpar">
+        <i class="fa-solid fa-trash"></i>
+    </a>
 </form>
 
-  <div class="cards">
-
-{% for s in solicitacoes %}
-
-<div class="card">
-
-  <div class="card-topo">
-
-    <div>
-      <h3>{{ s.tipo_servico }}</h3>
-
-      <span class="protocolo">
-        Solicitação #{{ s.id }}
-      </span>
-    </div>
-
-    <span class="status {{ s.status|slugify }}">
-      {{ s.status }}
-    </span>
-
-  </div>
-
-  <div class="card-info">
-
-    <div class="info-item">
-      <i class="fa-solid fa-calendar-days"></i>
-
-      <div>
-        <small>Data disponível</small>
-
-        <p>
-          {{ s.data_disponivel|date:"d/m/Y" }}
-        </p>
+<div class="cards">
+  {% for s in solicitacoes %}
+    <div class="card">
+      <div class="card-topo">
+        <div>
+          <h3>{{ s.tipo_servico }}</h3>
+          <span class="protocolo">Solicitação #{{ s.id }}</span>
+        </div>
+        <span class="status {{ s.status|slugify }}">{{ s.status }}</span>
       </div>
-    </div>
 
-    <div class="info-item">
-      <i class="fa-solid fa-clock"></i>
+      <div class="card-info">
+        <div class="info-item">
+          <i class="fa-solid fa-calendar-days"></i>
+          <div>
+            <small>Data disponível</small>
+            <p>{{ s.data_disponivel|date:"d/m/Y" }}</p>
+          </div>
+        </div>
 
-      <div>
-        <small>Horário</small>
+        <div class="info-item">
+          <i class="fa-solid fa-clock"></i>
+          <div>
+            <small>Horário</small>
+            <p>{{ s.horario_disponivel }}</p>
+          </div>
+        </div>
 
-        <p>
-          {{ s.horario_disponivel }}
-        </p>
+        <div class="info-item">
+          <i class="fa-solid fa-building"></i>
+          <div>
+            <small>Porte do local</small>
+            <p>{{ s.porte_local }}</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <i class="fa-solid fa-plus"></i>
+          <div>
+            <small>Criada em</small>
+            <p>{{ s.criado_em|date:"d/m/Y H:i" }}</p>
+          </div>
+        </div>
       </div>
+
+      {% if s.pode_editar %}
+        <a href="{% url 'editar_solicitacao' s.id %}" class="edit-btn">
+          <i class="fa-solid fa-pen"></i>
+        </a>
+      {% else %}
+        <button class="edit-btn disabled" disabled title="Solicitação bloqueada para edição">
+          <i class="fa-solid fa-pen"></i>
+        </button>
+      {% endif %}
     </div>
-
-    <div class="info-item">
-    <i class="fa-solid fa-building"></i>
-
-    <div>
-      <small>Porte do local</small>
-
-      <p>{{ s.porte_local }}</p>
-    </div>
-  </div>
-
-    <div class="info-item">
-      <i class="fa-solid fa-plus"></i>
-
-      <div>
-        <small>Criada em</small>
-
-        <p>
-          {{ s.criado_em|date:"d/m/Y H:i" }}
-        </p>
-      </div>
-    </div>
-
-  </div>
-
-  {% if s.pode_editar %}
-
-<a
-  href="{% url 'editar_solicitacao' s.id %}"
-  class="edit-btn"
->
-  <i class="fa-solid fa-pen"></i>
-</a>
-
-{% else %}
-
-<button
-  class="edit-btn disabled"
-  disabled
-  title="Solicitação bloqueada para edição"
->
-  <i class="fa-solid fa-pen"></i>
-</button>
-
-{% endif %}
-
+  {% empty %}
+    <p>Nenhuma solicitação encontrada.</p>
+  {% endfor %}
 </div>
 
-{% empty %}
-
-<p>Nenhuma solicitação encontrada.</p>
-
-{% endfor %}
-
-</div>
-
-  <!--modal de notificação-->
-  <div id="modal-notif" class="modal-overlay">
-
+<div id="modal-notif" class="modal-overlay">
   <div class="modal-notif-box">
     <h2>Notificações</h2>
-
     <div class="lista-notif">
-
       <div class="notif-item">
         <i class="fa-solid fa-circle-info"></i>
         <div>
@@ -179,7 +164,6 @@
           <span>Agora mesmo</span>
         </div>
       </div>
-
       <div class="notif-item">
         <i class="fa-solid fa-check"></i>
         <div>
@@ -187,7 +171,6 @@
           <span>2 horas atrás</span>
         </div>
       </div>
-
       <div class="notif-item">
         <i class="fa-solid fa-triangle-exclamation"></i>
         <div>
@@ -195,106 +178,65 @@
           <span>Ontem</span>
         </div>
       </div>
-
     </div>
-
     <button class="fechar-notif">Fechar</button>
   </div>
-
 </div>
-
-<!--modal de criar solicitação-->
 
 <div id="modal" class="modal-overlay">
   <div class="modal-box">
     <h2>Nova Solicitação</h2>
-
     <form method="POST" action="{% url 'criar_solicitacao' %}">
-{% csrf_token %}
-
-  <label>Tipo de serviço</label>
-
-  <select name="tipo_servico" required>
-    <option value="">Selecione</option>
-    <option>Instalação</option>
-    <option>Manutenção</option>
-    <option>Reparo</option>
-  </select>
-
-  <label>Endereço</label>
-
-  <input
-    type="text"
-    name="endereco"
-    placeholder="Digite o endereço"
-    required
-  >
-
-  <div class="datas">
-
-    <div>
-      <label>Preferência de atendimento</label>
-
-      <input
-        type="date"
-        name="data"
-        required
-      >
-    </div>
-
-    <div>
-      <label>Horário disponível</label>
-
-      <select name="horario" required>
+      {% csrf_token %}
+      <label>Tipo de serviço</label>
+      <select name="tipo_servico" required>
         <option value="">Selecione</option>
-        <option value="08:00">08:00</option>
-        <option value="10:00">10:00</option>
-        <option value="12:00">12:00</option>
-        <option value="14:00">14:00</option>
-        <option value="16:00">16:00</option>
+        <option>Instalação</option>
+        <option>Manutenção</option>
+        <option>Reparo</option>
       </select>
-    </div>
 
-    <div>
-      <label>Porte do local</label>
+      <label>Endereço</label>
+      <input type="text" name="endereco" placeholder="Digite o endereço" required>
 
-      <select name="porte_local" required>
-        <option value="">Selecione</option>
-        <option value="Pequena">Pequena</option>
-        <option value="Média">Média</option>
-        <option value="Grande">Grande</option>
-      </select>
-    </div>
+      <div class="datas">
+        <div>
+          <label>Preferência de atendimento</label>
+          <input type="date" name="data" required>
+        </div>
 
+        <div>
+          <label>Horário disponível</label>
+          <select name="horario" required>
+            <option value="">Selecione</option>
+            <option value="08:00">08:00</option>
+            <option value="10:00">10:00</option>
+            <option value="12:00">12:00</option>
+            <option value="14:00">14:00</option>
+            <option value="16:00">16:00</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Porte do local</label>
+          <select name="porte_local" required>
+            <option value="">Selecione</option>
+            <option value="Pequena">Pequena</option>
+            <option value="Média">Média</option>
+            <option value="Grande">Grande</option>
+          </select>
+        </div>
+      </div>
+
+      <label>Observações</label>
+      <textarea name="detalhes" rows="4" placeholder="Descreva detalhes importantes da solicitação..."></textarea>
+
+      <div class="acoes">
+        <button type="button" class="cancelar">Cancelar</button>
+        <button type="submit" class="ok">Criar</button>
+      </div>
+    </form>
   </div>
-
-  <label>Observações</label>
-
-  <textarea
-    name="detalhes"
-    rows="4"
-    placeholder="Descreva detalhes importantes da solicitação..."
-  ></textarea>
-
-  <div class="acoes">
-    <button type="button" class="cancelar">
-      Cancelar
-    </button>
-
-    <button type="submit" class="ok">
-      Criar
-    </button>
-  </div>
-
-</form>
-  </div>
-</div>
-
-<div class="stats">
-  <div class="stat-box">Ativas<br> <strong>{{ ativas }}</strong></div>
-  <div class="stat-box">Concluídas<br><strong>{{ concluidas }}</strong></div>
-  <div class="stat-box">Canceladas<br><strong>{{ canceladas }}</strong></div>
-  <div class="stat-box">Total<br> <strong>{{ total_solicitacoes }}</strong></div>
 </div>
 
 <script>
@@ -312,10 +254,9 @@
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") modal.style.display = "none";
   });
-  
 </script>
 
-  <script>
+<script>
   const btnNotif = document.querySelector(".btn-icon");
   const modalNotif = document.getElementById("modal-notif");
   const fecharNotif = document.querySelector(".fechar-notif");
@@ -327,8 +268,6 @@
     if (e.target === modalNotif) modalNotif.style.display = "none";
   };
 </script>
-
-{% load static %}
 
 <script src="{% static 'js/mascara.js' %}"></script>
 </body>
