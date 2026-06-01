@@ -354,7 +354,6 @@ def nova_senha(request):
         confirmar = request.POST.get('confirmar_senha')
 
         if nova_senha != confirmar:
-
             return render(request, 'novaSenha.html', {
                 'erro': 'As senhas não coincidem.'
             })
@@ -362,16 +361,15 @@ def nova_senha(request):
         usuario = Usuario.objects.get(email=email)
 
         usuario.senha_hash = make_password(nova_senha)
-
         usuario.save()
 
-        del request.session['codigo_recuperacao']
-        del request.session['email_recuperacao']
+        request.session.pop('codigo_recuperacao', None)
+        request.session.pop('email_recuperacao', None)
 
         messages.success(request, 'Senha atualizada com sucesso!')
         return redirect('login')
 
-        return render(request, 'novaSenha.html')
+    return render(request, 'novaSenha.html')
 
 def criar_solicitacao(request):
 
@@ -381,7 +379,13 @@ def criar_solicitacao(request):
 
         tipo = request.POST.get('tipo_servico')
 
-        endereco = request.POST.get('endereco')
+        rua = request.POST.get('rua')
+
+        bairro = request.POST.get('bairro')
+
+        numero = request.POST.get('numero')
+
+        cidade = request.POST.get('cidade')
 
         data = request.POST.get('data')
 
@@ -390,6 +394,7 @@ def criar_solicitacao(request):
         porte_local = request.POST.get('porte_local')
 
         detalhes = request.POST.get('detalhes')
+
 
         usuario_id = request.session.get('usuario_id')
 
@@ -414,17 +419,11 @@ def criar_solicitacao(request):
         )
 
         Endereco.objects.create(
-
             solicitacao=solicitacao,
-
-            rua=endereco,
-
-            bairro='Não informado',
-
-            numero='S/N',
-
-            cidade='Não informado'
-
+            rua=rua,
+            bairro=bairro,
+            numero=numero,
+            cidade=cidade
         )
 
         return redirect('area_cliente')
@@ -473,7 +472,10 @@ def editar_solicitacao(request, id):
 
         solicitacao.save()
 
-        endereco.rua = request.POST.get('endereco')
+        endereco.rua = request.POST.get('rua')
+        endereco.numero = request.POST.get('numero')
+        endereco.bairro = request.POST.get('bairro')
+        endereco.cidade = request.POST.get('cidade')
 
         endereco.save()
 
@@ -703,7 +705,7 @@ def editar_solicitacao_adm(request, id):
     )
 )
 
-        endereco.rua = request.POST.get('endereco')
+        endereco.rua = request.POST.get('rua')
 
         endereco.bairro = request.POST.get('bairro')
 

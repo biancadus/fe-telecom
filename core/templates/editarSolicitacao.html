@@ -80,14 +80,49 @@
 
       </select>
 
-      <label>Endereço</label>
+      <div class="endereco-grid">
 
-      <input
-        type="text"
-        name="endereco"
-        value="{{ endereco.rua }}"
-        required
-      >
+  <div>
+    <label>Rua</label>
+    <input
+      type="text"
+      name="rua"
+      value="{{ endereco.rua }}"
+      required
+    >
+  </div>
+
+  <div>
+    <label>Número</label>
+    <input
+      type="text"
+      name="numero"
+      value="{{ endereco.numero }}"
+      required
+    >
+  </div>
+
+  <div>
+    <label>Bairro</label>
+    <input
+      type="text"
+      name="bairro"
+      value="{{ endereco.bairro }}"
+      required
+    >
+  </div>
+
+  <div>
+    <label>Cidade</label>
+    <input
+      type="text"
+      name="cidade"
+      value="{{ endereco.cidade }}"
+      required
+    >
+  </div>
+
+</div>
 
       <div class="datas">
 

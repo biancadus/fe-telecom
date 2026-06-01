@@ -211,8 +211,48 @@
         <option>Reparo</option>
       </select>
 
-      <label>Endereço</label>
-      <input type="text" name="endereco" placeholder="Digite o endereço" required>
+    <div class="endereco-grid">
+
+    <div>
+        <label>Rua</label>
+        <input
+            type="text"
+            name="rua"
+            required
+        >
+    </div>
+
+    <div>
+        <label>Número</label>
+        <input
+            type="text"
+            name="numero"
+            value="{{ endereco.numero }}"
+            required
+        >
+    </div>
+
+    <div>
+        <label>Bairro</label>
+        <input
+            type="text"
+            name="bairro"
+            value="{{ endereco.bairro }}"
+            required
+        >
+    </div>
+
+    <div>
+        <label>Cidade</label>
+        <input
+            type="text"
+            name="cidade"
+            value="{{ endereco.cidade }}"
+            required
+        >
+    </div>
+
+</div>
 
       <div class="datas">
         <div>
