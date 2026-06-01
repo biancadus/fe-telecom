@@ -431,18 +431,18 @@
 </div>
 
 {% if messages %}
-<script>
-window.addEventListener("load", function(){
+    {% for message in messages %}
+        {% if "contato" in message.tags %}
+            <script>
+            window.addEventListener("load", function(){
 
-    document.getElementById("modalMensagem").style.display = "flex";
+                document.getElementById("modalMensagem").style.display = "flex";
+                document.getElementById("textoModal").innerText = "{{ message }}";
 
-    document.getElementById("textoModal").innerHTML = `
-        {% for message in messages %}
-            {{ message }}
-        {% endfor %}
-    `;
-});
-</script>
+            });
+            </script>
+        {% endif %}
+    {% endfor %}
 {% endif %}
   
 </section>
@@ -499,9 +499,9 @@ window.addEventListener("load", function(){
   </div>
 </footer>
 
-<script src="js/perguntas.js"></script>
+<script src="{% static 'js/perguntas.js' %}"></script>
 <script src="js/máscara.js"></script>
-<script src="js/sendemail.js"> </script>
+<script src="js/sendemail.js"></script>
 
 <!--jQuery, Popper.js, Bootstrap JS-->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

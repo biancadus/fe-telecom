@@ -918,9 +918,6 @@ Mensagem:
             fail_silently=False
         )
 
-        messages.success(
-            request,
-            "Mensagem enviada com sucesso! Entraremos em contato em breve."
-        )
+        messages.success(request, "Mensagem enviada com sucesso!", extra_tags="contato")
 
     return redirect("/#contato")
