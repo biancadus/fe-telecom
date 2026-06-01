@@ -140,3 +140,26 @@ class Endereco(models.Model):
 
     def __str__(self):
         return self.rua
+
+class Notificacao(models.Model):
+
+    cliente = models.ForeignKey(
+        Cliente,
+        on_delete=models.CASCADE,
+        related_name='notificacoes'
+    )
+
+    titulo = models.CharField(max_length=150)
+
+    mensagem = models.TextField()
+
+    lida = models.BooleanField(default=False)
+
+    criada_em = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'notificacoes'
+        ordering = ['-criada_em']
+
+    def __str__(self):
+        return self.titulo

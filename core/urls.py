@@ -16,22 +16,22 @@ from .views import (
     index,
     clientes_adm,
     excluir_cliente,
-    solicitacoes_adm
+    solicitacoes_adm,
+    logout_view,
+    enviar_contato
 )
 
 urlpatterns = [
     path('', views.index, name='index'),
     path('cadastro/', cadastro, name='cadastro'),
     path('login/', login_view, name='login'),
-
+    path('logout/', views.logout_view, name='logout'),
     path('loginAdm/', login_adm, name='login_adm'),
     path('codAdm/', codigo_adm, name='codigo_adm'),
     path('adminPage/', dashboard_adm, name='dashboard_adm'),
-
+    path("enviar-contato/", views.enviar_contato, name="enviar_contato"),
     path('recuperarSenha/', recuperar_senha, name='recuperar_senha'),
-
     path('validarCodigo/', validar_codigo, name='validar_codigo'),
-
     path('novaSenha/', nova_senha, name='nova_senha'),
 
     path(

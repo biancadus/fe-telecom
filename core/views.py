@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth import logout
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.decorators import login_required
@@ -14,10 +15,15 @@ from django.core.mail import EmailMultiAlternatives
 import random
 
 
-from .models import Usuario, Cliente, Administrador, Solicitacao, Endereco
+from .models import Usuario, Cliente, Administrador, Solicitacao, Endereco, Notificacao
 
 def index(request):
     return render(request, 'index.html')
+
+def logout_view(request):
+    logout(request)
+    request.session.flush()
+    return redirect('login')
 
 def cadastro(request):
 
@@ -110,7 +116,7 @@ def area_cliente(request):
     solicitacoes_base = Solicitacao.objects.filter(cliente=cliente)
 
     total_solicitacoes = solicitacoes_base.count()
-    em_analise = solicitacoes_base.filter(status='Em análise').count()  # <--- Corrigido aqui
+    em_analise = solicitacoes_base.filter(status='Em análise').count()  
     agendadas = solicitacoes_base.filter(status='Agendada').count()
     concluidas = solicitacoes_base.filter(status='Concluída').count()
     canceladas = solicitacoes_base.filter(status='Cancelada').count()
@@ -135,6 +141,12 @@ def area_cliente(request):
 
     primeiro_nome = usuario.nome.split()[0]
 
+    notificacoes = cliente.notificacoes.all()[:20]
+
+    nao_lidas = cliente.notificacoes.filter(
+        lida=False
+    ).count()
+
     return render(request, 'areaDoCliente.html', {
         'solicitacoes': solicitacoes_listagem,
         'total_solicitacoes': total_solicitacoes,
@@ -145,6 +157,8 @@ def area_cliente(request):
         'primeiro_nome': primeiro_nome,
         'termo_busca': termo_busca,
         'status_atual': status_filtro,   
+        'notificacoes': notificacoes,
+        'nao_lidas': nao_lidas,
     })
 
 def login_adm(request):
@@ -679,6 +693,16 @@ def editar_solicitacao_adm(request, id):
 
         solicitacao.save()
 
+        Notificacao.objects.create(
+        cliente=solicitacao.cliente,
+        titulo='Solicitação atualizada',
+        mensagem=(
+            f'Os dados da solicitação '
+            f'#{solicitacao.id} foram atualizados '
+            f'pela equipe.'
+    )
+)
+
         endereco.rua = request.POST.get('endereco')
 
         endereco.bairro = request.POST.get('bairro')
@@ -742,6 +766,15 @@ def alterar_status(request, id):
     # Atualiza o status
     solicitacao.status = novo_status
     solicitacao.save()
+
+    Notificacao.objects.create(
+    cliente=solicitacao.cliente,
+    titulo='Status atualizado',
+    mensagem=(
+        f'Sua solicitação #{solicitacao.id} '
+        f'foi alterada para "{novo_status}".'
+        )
+    )
 
     try:
 
@@ -846,3 +879,46 @@ Equipe FETELECOM
         )
 
     return redirect('solicitacoes_adm')
+
+def marcar_notificacoes_lidas(request):
+
+    usuario_id = request.session.get('usuario_id')
+
+    cliente = Cliente.objects.get(
+        usuario_id=usuario_id
+    )
+
+    cliente.notificacoes.filter(
+        lida=False
+    ).update(
+        lida=True
+    )
+
+    return redirect('area_cliente')
+
+def enviar_contato(request):
+    if request.method == "POST":
+        nome = request.POST.get("nome")
+        email = request.POST.get("email")
+        mensagem = request.POST.get("mensagem")
+
+        send_mail(
+            subject=f"Contato do site - {nome}",
+            message=f"""
+Nome: {nome}
+Email: {email}
+
+Mensagem:
+{mensagem}
+""",
+            from_email=None,
+            recipient_list=["fetelecomservices@gmail.com"],
+            fail_silently=False
+        )
+
+        messages.success(
+            request,
+            "Mensagem enviada com sucesso! Entraremos em contato em breve."
+        )
+
+    return redirect("/#contato")

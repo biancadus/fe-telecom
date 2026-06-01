@@ -29,27 +29,26 @@ section {
 
 .navbar {
       background-color: #1b1b2f; 
-    }
+}
 
     .navbar-nav .nav-link {
       margin: 0 12px;          
       color: #d9d9d9 !important; 
       font-weight: 500;         
-    }
-    .navbar-nav .nav-link:hover {
+}
+  
+.navbar-nav .nav-link:hover {
       color: #ffffff !important;  
-    }
+}
 
-    /* Botão de contato */
-    .navbar .btn-contato {
+.navbar .btn-contato {
       width: 140px !important;         
       text-align: center !important; 
       font-weight: 500 !important;
       border-radius: 8px !important; 
       padding-left: 25px !important;
       padding-right: 25px !important;
-
-     }
+}
 
 .img-wrapper-inicio {
   width: 90%;
@@ -620,63 +619,71 @@ section {
 
 }
 
-.modal-envio {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.55);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 99999;
+.alert-sucesso{
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
 }
 
-.modal-conteudo {
-  background: #fff;
-  padding: 30px;
-  width: 320px;
-  border-radius: 12px;
-  text-align: center;
-  position: relative;
-  animation: surgir .3s ease;
+.modal-msg{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.6);
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
 }
 
-@keyframes surgir {
-  from { transform: scale(0.8); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+.modal-msg-content{
+    background:#fff;
+    padding:30px;
+    border-radius:12px;
+    width:90%;
+    max-width:400px;
+    text-align:center;
+    animation:fadeIn .3s ease;
 }
 
-.loading {
-  border: 5px solid #e0e0e0;
-  border-top: 5px solid #007bff;
-  border-radius: 50%;
-  width: 45px;
-  height: 45px;
-  margin: 0 auto 15px;
-  animation: girar 0.7s linear infinite;
+.modal-icon{
+    width:70px;
+    height:70px;
+    margin:auto;
+    border-radius:50%;
+    background:#28a745;
+    color:white;
+    font-size:40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
-@keyframes girar {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.modal-msg-content h3{
+    margin:15px 0 10px;
 }
 
-.ok {
-  font-size: 45px;
-  color: #00c851;
-  margin-bottom: 10px;
+.modal-msg-content button{
+    margin-top:20px;
+    padding:10px 20px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
 }
 
-.modal-btn {
-  background: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  margin-top: 10px;
-  cursor: pointer;
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:scale(.9);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
 }
 
 /* ======== PARCERIA ======== */

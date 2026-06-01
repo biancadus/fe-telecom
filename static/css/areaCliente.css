@@ -127,13 +127,9 @@ header h1 {
     position: absolute;
     top: 50%;
     left: 50%;
-
     transform: translate(-50%, -50%);
-
     pointer-events: none;
-
     color: #0A2851;
-
     font-size: 22px;
 }
 
@@ -149,17 +145,12 @@ header h1 {
 .filter-select {
     width: 55px;
     height: 50px;
-
     border: none;
     border-radius: 10px;
-
     background: white;
-  
     color: transparent;
     text-shadow: 0 0 0 transparent;
-
     cursor: pointer;
-
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -173,18 +164,13 @@ header h1 {
 .btn-limpar{
     width: 50px;
     height: 50px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     background: #dc3545;
     color: white;
-
     border-radius: 10px;
-
     text-decoration: none;
-
     transition: .3s;
 }
 
@@ -215,11 +201,8 @@ header h1 {
   border-radius: 18px;
   padding: 22px;
   border: 1px solid #e5e7eb;
-
   box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-
   transition: 0.3s;
-
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -227,7 +210,6 @@ header h1 {
 
 .card:hover {
   transform: translateY(-3px);
-
   box-shadow: 0 16px 35px rgba(0,0,0,0.12);
 }
 
@@ -256,12 +238,9 @@ header h1 {
 .status {
   padding: 8px 14px;
   border-radius: 30px;
-
   font-size: 13px;
   font-weight: 700;
-
   color: white;
-
   white-space: nowrap;
 }
 
@@ -306,16 +285,12 @@ header h1 {
 .info-item i {
   width: 38px;
   height: 38px;
-
   background: #eff6ff;
   color: #0A2851;
-
   border-radius: 10px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   font-size: 15px;
 }
 
@@ -343,19 +318,14 @@ header h1 {
 .edit-btn {
   width: 45px;
   height: 45px;
-
   border: none;
   border-radius: 12px;
-
   background: #0A2851;
   color: white;
-
   cursor: pointer;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   transition: 0.3s;
 }
 
@@ -374,6 +344,7 @@ header h1 {
 .btn-icon {
   width: 50px;
   height: 50px;
+
   border: none;
   border-radius: 10px;
 
@@ -388,11 +359,16 @@ header h1 {
   cursor: pointer;
 
   transition: all 0.3s;
+
+  text-decoration: none;
 }
 
-.btn-icon:hover {
-  transform: scale(1.05);
-  background: #f3f4f6;
+.btn-icon,
+.btn-icon:hover,
+.btn-icon:visited,
+.btn-icon:focus{
+    text-decoration: none;
+    color: #0A2851;
 }
 
 .btn-icon i,
@@ -403,6 +379,7 @@ header h1 {
   justify-content: center;
   width: 100%;
   height: 100%;
+  text-decoration: none;
 }
 
 .search-bar button i,
@@ -422,73 +399,165 @@ header h1 {
   justify-content: center;
 }
 
-.modal-notif-box {
-  background: white;
-  width: 100%;
-  max-width: 400px;
-  border-radius: 16px;
-  padding: 20px;
+/* BOTÃO DE NOTIFICAÇÃO */
 
-  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-  animation: aparecer 0.2s ease;
+.btn-notificacoes{
+    position: relative;
 }
 
-.modal-notif-box h2 {
-  text-align: center;
-  margin-bottom: 15px;
-  color: #0A2851;
+.badge-notif{
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ef4444;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.lista-notif {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-height: 300px;
-  overflow-y: auto;
+/* MODAL */
+
+.modal-notif-box{
+    width: 100%;
+    max-width: 500px;
+
+    background: white;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    box-shadow: 0 20px 50px rgba(0,0,0,.25);
+
+    animation: aparecer .2s ease;
 }
 
-.notif-item {
-  display: flex;
-  gap: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  background: #f9fafb;
-  align-items: center;
-  transition: 0.2s;
+.notif-header{
+    background: #0A2851;
+    color: white;
+
+    padding: 18px;
+    text-align: center;
 }
 
-.notif-item:hover {
-  background: #eef2ff;
+.notif-header h2{
+    margin: 0;
+    font-size: 24px;
 }
 
-.notif-item i {
-  font-size: 18px;
-  color: #3b82f6;
-  min-width: 20px;
+/* LISTA */
+
+.lista-notif{
+    max-height: 420px;
+    overflow-y: auto;
+
+    padding: 15px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-.notif-item p {
-  font-size: 14px;
+.notif-item{
+    display: flex;
+    gap: 15px;
+
+    padding: 15px;
+
+    border-radius: 12px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e5e7eb;
+
+    transition: .3s;
 }
 
-.notif-item span {
-  font-size: 12px;
-  color: #666;
+.notif-item:hover{
+    background: #eef4ff;
+    transform: translateY(-2px);
 }
 
-.fechar-notif {
-  margin-top: 15px;
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  background: #0A2851;
-  color: white;
-  cursor: pointer;
+.notif-icon{
+    width: 45px;
+    height: 45px;
+
+    min-width: 45px;
+
+    border-radius: 12px;
+
+    background: #dbeafe;
+    color: #0A2851;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.fechar-notif:hover {
-  background: #081d3a;
+.notif-icon i{
+    font-size: 18px;
+}
+
+.notif-content{
+    flex: 1;
+}
+
+.notif-content p{
+    margin: 0;
+    font-weight: 700;
+    color: #111827;
+}
+
+.notif-content small{
+    display: block;
+    margin-top: 4px;
+    color: #6b7280;
+}
+
+.notif-content span{
+    display: block;
+    margin-top: 8px;
+
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+/* SEM NOTIFICAÇÕES */
+
+.notif-vazia{
+    text-align: center;
+    padding: 40px 20px;
+    color: #6b7280;
+}
+
+.notif-vazia i{
+    font-size: 40px;
+    margin-bottom: 12px;
+}
+
+/* BOTÃO FECHAR */
+
+.fechar-notif{
+    width: calc(100% - 30px);
+    margin: 0 15px 15px;
+    height: 45px;
+    border: none;
+    border-radius: 10px;
+    background: #0A2851;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.fechar-notif:hover{
+    background: #133b73;
 }
 
 .modal-overlay {

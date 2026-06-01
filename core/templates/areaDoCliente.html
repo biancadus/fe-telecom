@@ -19,13 +19,21 @@
   <h1>Olá, {{ primeiro_nome }}</h1>
 
   <div class="header-actions">
-    <button class="btn-icon">
-      <i class="fa-solid fa-bell"></i>
-    </button>
+    <button class="btn-icon btn-notificacoes">
 
-    <button onclick="window.location.href='index.html'" class="btn-icon">
-      <i class="fa-solid fa-arrow-right-from-bracket"></i>
-    </button>
+    <i class="fa-solid fa-bell"></i>
+
+    {% if nao_lidas > 0 %}
+    <span class="badge-notif">
+        {{ nao_lidas }}
+    </span>
+    {% endif %}
+
+  </button>
+
+    <a href="{% url 'logout' %}" class="btn-icon">
+    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </a>
 
     <button class="btn-nova">NOVA SOLICITAÇÃO</button>
   </div>
@@ -154,33 +162,40 @@
 </div>
 
 <div id="modal-notif" class="modal-overlay">
-  <div class="modal-notif-box">
-    <h2>Notificações</h2>
-    <div class="lista-notif">
-      <div class="notif-item">
-        <i class="fa-solid fa-circle-info"></i>
-        <div>
-          <p>Nova solicitação criada</p>
-          <span>Agora mesmo</span>
+    <div class="modal-notif-box">
+        <div class="notif-header">
+            <h2>Notificações</h2>
         </div>
-      </div>
-      <div class="notif-item">
-        <i class="fa-solid fa-check"></i>
-        <div>
-          <p>Solicitação concluída</p>
-          <span>2 horas atrás</span>
+        <div class="lista-notif">
+            {% for notif in notificacoes %}
+            <div class="notif-item">
+                <div class="notif-icon">
+                    <i class="fa-solid fa-bell"></i>
+                </div>
+
+                <div class="notif-content">
+                    <p>{{ notif.titulo }}</p>
+
+                    <small>
+                        {{ notif.mensagem }}
+                    </small>
+
+                    <span>
+                        {{ notif.criada_em|date:"d/m/Y H:i" }}
+                    </span>
+                </div>
+            </div>
+            {% empty %}
+            <div class="notif-vazia">
+                <i class="fa-solid fa-bell-slash"></i>
+                <p>Nenhuma notificação encontrada.</p>
+            </div>
+            {% endfor %}
         </div>
-      </div>
-      <div class="notif-item">
-        <i class="fa-solid fa-triangle-exclamation"></i>
-        <div>
-          <p>Erro em solicitação</p>
-          <span>Ontem</span>
-        </div>
-      </div>
+        <button class="fechar-notif">
+            Fechar
+        </button>
     </div>
-    <button class="fechar-notif">Fechar</button>
-  </div>
 </div>
 
 <div id="modal" class="modal-overlay">
@@ -257,15 +272,22 @@
 </script>
 
 <script>
-  const btnNotif = document.querySelector(".btn-icon");
+ const btnNotif = document.querySelector(".btn-notificacoes");
   const modalNotif = document.getElementById("modal-notif");
   const fecharNotif = document.querySelector(".fechar-notif");
 
-  btnNotif.onclick = () => modalNotif.style.display = "flex";
-  fecharNotif.onclick = () => modalNotif.style.display = "none";
+  btnNotif.onclick = () => {
+      modalNotif.style.display = "flex";
+  };
+
+  fecharNotif.onclick = () => {
+      modalNotif.style.display = "none";
+  };
 
   modalNotif.onclick = (e) => {
-    if (e.target === modalNotif) modalNotif.style.display = "none";
+      if (e.target === modalNotif) {
+          modalNotif.style.display = "none";
+      }
   };
 </script>
 

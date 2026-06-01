@@ -107,11 +107,20 @@
 
 google.charts.setOnLoadCallback(drawCharts);
 
-function drawCharts() {
+function getChartHeight() {
 
-    // =========================
-    // STATUS
-    // =========================
+    if (window.innerWidth < 768) {
+        return 280;
+    }
+
+    if (window.innerWidth < 1200) {
+        return 350;
+    }
+
+    return 400;
+}
+
+function drawCharts() {
 
     const dataStatus = google.visualization.arrayToDataTable([
         ['Status', 'Quantidade'],
@@ -127,7 +136,7 @@ function drawCharts() {
 
         pieHole: 0.4,
 
-        height: 400,
+        height: getChartHeight(),
 
         legend: {
             position: 'bottom'
@@ -139,10 +148,6 @@ function drawCharts() {
     );
 
     chartStatus.draw(dataStatus, optionsStatus);
-
-    // =========================
-    // CRESCIMENTO MENSAL
-    // =========================
 
    const dataMensal = google.visualization.arrayToDataTable([
     ['Mês', 'Solicitações'],
@@ -156,7 +161,7 @@ function drawCharts() {
 
         title: 'Crescimento Mensal',
 
-        height: 350,
+        height: getChartHeight(),
 
         legend: {
             position: 'none'
@@ -168,10 +173,6 @@ function drawCharts() {
     );
 
     chartMensal.draw(dataMensal, optionsMensal);
-
-    // =========================
-    // TIPOS DE SERVIÇO
-    // =========================
 
     const dataTipos = google.visualization.arrayToDataTable([
     ['Serviço', 'Quantidade'],
@@ -201,7 +202,15 @@ function drawCharts() {
     chartTipos.draw(dataTipos, optionsTipos);
 }
 
-window.addEventListener('resize', drawCharts);
+let resizeTimeout;
+
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+
+    resizeTimeout = setTimeout(() => {
+        drawCharts();
+    }, 200);
+});
 
 </script>
 </body>
