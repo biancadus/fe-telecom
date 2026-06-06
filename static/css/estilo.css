@@ -28,26 +28,29 @@ section {
 }
 
 .navbar {
-      background-color: #1b1b2f; 
+  background-color: #1b1b2f;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  transition: all .3s ease;
 }
 
-    .navbar-nav .nav-link {
-      margin: 0 12px;          
-      color: #d9d9d9 !important; 
-      font-weight: 500;         
+.navbar-nav .nav-link {
+  margin: 0 12px;          
+  color: #d9d9d9 !important; 
+  font-weight: 500;         
 }
   
 .navbar-nav .nav-link:hover {
-      color: #ffffff !important;  
+  color: #ffffff !important;  
 }
 
 .navbar .btn-contato {
-      width: 140px !important;         
-      text-align: center !important; 
-      font-weight: 500 !important;
-      border-radius: 8px !important; 
-      padding-left: 25px !important;
-      padding-right: 25px !important;
+  width: 140px !important;         
+  text-align: center !important; 
+  font-weight: 500 !important;
+  border-radius: 8px !important; 
+  padding-left: 25px !important;
+  padding-right: 25px !important;
 }
 
 .img-wrapper-inicio {
@@ -66,12 +69,135 @@ section {
   aspect-ratio: 1.4 / 0;
 }
 
-.bg-azul {
-  background-color: #1b4f9c; 
+.nossa-historia-tech{
+
+    min-height:100vh;
+
+    display:flex;
+    align-items:center;
+
+    background:
+    radial-gradient(circle at top left,
+    rgba(0,191,255,.15),
+    transparent 30%),
+
+    radial-gradient(circle at bottom right,
+    rgba(37,99,235,.15),
+    transparent 30%),
+
+    #081120;
+
+    color:white;
 }
 
-.nossa-historia {
-  min-height: 100vh !important; 
+.historia-conteudo{
+
+    max-width:900px;
+    margin:auto;
+    text-align:center;
+}
+
+.tag-historia{
+
+    color:#00bfff;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    letter-spacing:3px;
+}
+
+.historia-conteudo h2{
+
+    font-size:60px;
+
+    font-weight:800;
+
+    margin:25px 0;
+
+    line-height:1.1;
+}
+
+.historia-conteudo p{
+
+    font-size:18px;
+
+    line-height:1.9;
+
+    color:#c7d2e2;
+
+    max-width:800px;
+
+    margin:auto;
+}
+
+.historia-cards{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:25px;
+
+    margin-top:60px;
+
+    flex-wrap:wrap;
+}
+
+.card-historia{
+
+    background:
+    rgba(255,255,255,.05);
+
+    backdrop-filter:blur(12px);
+
+    border:
+    1px solid rgba(255,255,255,.08);
+
+    border-radius:20px;
+
+    padding:30px;
+
+    min-width:220px;
+
+    transition:.3s;
+}
+
+.card-historia:hover{
+
+    transform:translateY(-8px);
+
+    border-color:#00bfff;
+}
+
+.card-historia h3{
+
+    font-size:42px;
+
+    color:#00bfff;
+
+    font-weight:800;
+
+    margin-bottom:10px;
+}
+
+.card-historia span{
+
+    color:#d8e2f0;
+}
+
+@media(max-width:768px){
+
+    .historia-conteudo h2{
+
+        font-size:38px;
+    }
+
+    .card-historia{
+
+        width:100%;
+    }
 }
 
 /* ======== LINHA DO TEMPO ======== */
@@ -218,7 +344,7 @@ section {
   display: grid !important;
   grid-template-columns: repeat(4, minmax(280px, 1fr));
   gap: 20px;
- justify-content: center;
+  justify-content: center;
   max-width: 1400px;  
   margin: 0 auto;  
 }
