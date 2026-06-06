@@ -158,7 +158,7 @@ import os
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp-relay.brevo.com')
-EMAIL_PORT = int(os.getenv('EMAIL_PORT', 2525))  # Força virar número inteiro
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', 465))  # Força virar número inteiro
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 EMAIL_TIMEOUT = 10
