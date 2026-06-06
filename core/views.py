@@ -238,7 +238,7 @@ def dashboard_adm(request):
         tipos.append(item['tipo_servico'])
         totais_tipos.append(item['total'])
 
-    return render(request, 'AdminPage.html', {
+    return render(request, 'adminPage.html', {
         'nome': nome,
         'para_analisar': contagens['para_analisar'],
         'agendadas': contagens['agendadas'],
