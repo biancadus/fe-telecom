@@ -61,7 +61,6 @@
                 >
             </div>
 
-            <!-- MOSTRAR SENHA -->
             <div class="mostrar">
 
                 <input type="checkbox" id="toggleSenha">
@@ -72,10 +71,8 @@
 
             </div>
 
-            <!-- ERRO -->
             <small id="erro" style="color:red;"></small>
 
-            <!-- MENSAGENS DJANGO -->
             {% if erro %}
             <div class="alert alert-danger mt-2">
                 {{ erro }}
@@ -132,7 +129,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-    // VALIDAR SENHA
     function validar() {
 
         const senha = novaSenha.value;
@@ -170,12 +166,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-    // INPUTS
     novaSenha.addEventListener("input", validar);
 
     confirmar.addEventListener("input", validar);
 
-    // SUBMIT
     form.addEventListener("submit", (e) => {
 
         validar();
@@ -191,6 +185,18 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 </script>
+
+    <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+    </div>
+</div>
+
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+      new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 
 </body>
 </html>

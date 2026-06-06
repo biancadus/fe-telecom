@@ -920,4 +920,4 @@ Mensagem:
 
         messages.success(request, "Mensagem enviada com sucesso!", extra_tags="contato")
 
-    return redirect("/#contato")
+    return redirect("index")

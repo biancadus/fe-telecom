@@ -150,10 +150,18 @@
         <a href="{% url 'editar_solicitacao' s.id %}" class="edit-btn">
           <i class="fa-solid fa-pen"></i>
         </a>
-      {% else %}
-        <button class="edit-btn disabled" disabled title="Solicitação bloqueada para edição">
-          <i class="fa-solid fa-pen"></i>
-        </button>
+     {% else %}
+      <button
+        class="edit-btn disabled"
+        disabled
+        title="O status da solicitação não permite edição. Em caso de dúvidas, entre em contato com a empresa pelo WhatsApp."
+        >
+        <i class="fa-solid fa-pen"></i>
+      </button>
+
+      <small>
+      Edição indisponível para este status.
+      </small>
       {% endif %}
     </div>
   {% empty %}
@@ -332,5 +340,18 @@
 </script>
 
 <script src="{% static 'js/mascara.js' %}"></script>
+
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+    </div>
+</div>
+
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+      new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+
 </body>
 </html>
