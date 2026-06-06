@@ -152,4 +152,4 @@ EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = 'fetelecomservices@gmail.com'
 
-EMAIL_HOST_PASSWORD = 'rzzg itbe ldtw ssbs'
+EMAIL_HOST_PASSWORD = 'rzzgitbeldtwssbs'
