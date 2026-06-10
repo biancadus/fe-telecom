@@ -87,4 +87,10 @@ urlpatterns = [
         views.alterar_status,
         name='alterar_status'
     ),
+
+    path(
+    'editar-cliente/<int:id>/',
+    views.editar_cliente,
+    name='editar_cliente'
+    ),
 ]

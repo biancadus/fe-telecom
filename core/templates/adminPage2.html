@@ -28,8 +28,8 @@
             </nav>
         </aside>
 
-        <main class="main-content">
-            <main class="main-content">
+
+<main class="main-content">
     <header class="header">
         <h1>Nossos Clientes</h1>
         <div class="menu-toggle">
@@ -179,8 +179,18 @@
 
         <div class="modal-actions">
 
-            <form id="formExcluir" method="POST">
+            <button
+                type="button"
+                class="edit-btn"
+                onclick="abrirModalEditar()">
+                Editar Cliente
+            </button>
 
+            <form
+                id="formExcluir"
+                method="POST"
+                onsubmit="return confirmarExclusao()"
+            >
                 {% csrf_token %}
 
                 <button type="submit" class="delete-btn">
@@ -195,18 +205,90 @@
 
 </div>
 
+<!--MODAL DE EDIÇÃO DO CLIENTE-->
+
+<div class="modal-overlay" id="modalEditar">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>Editar Cliente</h2>
+
+            <button
+                class="close-btn"
+                onclick="fecharModalEditar()"
+            >
+                &times;
+            </button>
+
+        </div>
+
+        <form
+            id="formEditarCliente"
+            method="POST"
+        >
+            {% csrf_token %}
+
+            <div class="modal-content">
+
+                <label>Nome</label>
+                <input
+                    type="text"
+                    name="nome"
+                    id="editNome"
+                    required
+                >
+
+                <label>Email</label>
+                <input
+                    type="email"
+                    name="email"
+                    id="editEmail"
+                    required
+                >
+
+                <label>Telefone</label>
+                <input
+                    type="text"
+                    name="telefone"
+                    id="editTelefone"
+                    required
+                >
+
+            </div>
+
+            <div class="modal-actions">
+
+                <button type="submit" class="search-btn">
+                    Salvar Alterações
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
 <script>
+
+let clienteAtual = {};
 
 function abrirModal(id, nome, email, telefone, criado) {
 
+    clienteAtual = {
+        id,
+        nome,
+        email,
+        telefone
+    };
+
     document.getElementById('modalId').innerText = id;
-
     document.getElementById('modalNome').innerText = nome;
-
     document.getElementById('modalEmail').innerText = email;
-
     document.getElementById('modalTelefone').innerText = telefone;
-
     document.getElementById('modalCriado').innerText = criado;
 
     document.getElementById('formExcluir').action =
@@ -219,6 +301,79 @@ function fecharModal() {
 
     document.getElementById('modalOverlay').style.display = 'none';
 }
+
+function abrirModalEditar() {
+
+    document.getElementById('editNome').value =
+        clienteAtual.nome;
+
+    document.getElementById('editEmail').value =
+        clienteAtual.email;
+
+    document.getElementById('editTelefone').value =
+        clienteAtual.telefone;
+
+    document.getElementById('formEditarCliente').action =
+        `/editar-cliente/${clienteAtual.id}/`;
+
+    document.getElementById('modalEditar').style.display =
+        'flex';
+}
+
+function fecharModalEditar() {
+
+    document.getElementById('modalEditar').style.display =
+        'none';
+}
+
+function confirmarExclusao() {
+
+    return confirm(
+        'Tem certeza que deseja excluir este cliente? Esta ação não poderá ser desfeita.'
+    );
+}
+
+const telefoneInput = document.getElementById('editTelefone');
+
+telefoneInput.addEventListener('input', function (e) {
+
+    let value = e.target.value.replace(/\D/g, '');
+
+    if (value.length > 11) {
+        value = value.slice(0, 11);
+    }
+
+    if (value.length > 10) {
+
+        value = value.replace(
+            /^(\d{2})(\d{5})(\d{4}).*/,
+            '($1) $2-$3'
+        );
+
+    } else if (value.length > 6) {
+
+        value = value.replace(
+            /^(\d{2})(\d{4})(\d{0,4}).*/,
+            '($1) $2-$3'
+        );
+
+    } else if (value.length > 2) {
+
+        value = value.replace(
+            /^(\d{2})(\d+)/,
+            '($1) $2'
+        );
+
+    } else if (value.length > 0) {
+
+        value = value.replace(
+            /^(\d*)/,
+            '($1'
+        );
+    }
+
+    e.target.value = value;
+});
 
 </script>
 

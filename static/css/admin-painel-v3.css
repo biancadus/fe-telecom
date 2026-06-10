@@ -21,6 +21,11 @@ body {
     background-color: #001a5e;
     color: white;
     padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow-y: auto;
 }
 
 .logo {
@@ -52,6 +57,8 @@ body {
 .main-content {
     flex: 1;
     padding: 30px;
+    margin-left: 300px;
+    min-width: 0;
 }
 
 .header {
@@ -111,8 +118,9 @@ body {
 
 .search-bar {
     display: flex;
-    gap: 0; 
-    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
     align-items: center;
 }
 
@@ -124,12 +132,12 @@ body {
 }
 
 .search-select {
-    width: 150px;
-    background-color: white;
+    width: 170px;
 }
 
 .search-input {
-    width: 350px;
+    flex: 1;
+    min-width: 220px;
 }
 
 .search-btn {
@@ -146,8 +154,14 @@ body {
 
 .client-table {
     width: 100%;
+    min-width: 750px;
     border-collapse: collapse;
     background-color: white;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
 }
 
 .client-table th, .client-table td {
@@ -172,7 +186,6 @@ body {
     align-items: flex-start;
 }
 
-
 .date-group {
     display: inline-flex; 
     flex-direction: column;
@@ -189,7 +202,7 @@ body {
 }
 
 .date-group input {
-    width: 220px;
+    width: 180px;
     height: 40px;
     border: 1px solid #000;
     text-align: center;
@@ -523,4 +536,70 @@ body {
     padding: 10px;
     border-radius: 8px;
     margin-bottom: 12px;
+}
+
+@media (max-width: 900px) {
+
+    .search-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-select,
+    .search-input,
+    .search-date,
+    .search-btn,
+    .clear-btn {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .date-group {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .date-group input {
+        width: 100%;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+    }
+
+    .edit-btn,
+    .delete-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    .header h1 {
+        font-size: 1.4rem;
+    }
 }

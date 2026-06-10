@@ -622,3 +622,28 @@ def enviar_contato(request):
         messages.success(request, "Mensagem enviada com sucesso!", extra_tags="contato")
 
     return redirect("index")
+
+def editar_cliente(request, id):
+
+    if not request.session.get('adm_id'):
+        return redirect('login_adm')
+
+    cliente = get_object_or_404(Cliente, id=id)
+
+    if request.method == 'POST':
+
+        cliente.nome = request.POST.get('nome')
+        cliente.telefone = request.POST.get('telefone')
+        cliente.save()
+
+        if cliente.usuario:
+            cliente.usuario.nome = request.POST.get('nome')
+            cliente.usuario.email = request.POST.get('email')
+            cliente.usuario.save()
+
+        messages.success(
+            request,
+            'Cliente atualizado com sucesso!'
+        )
+
+    return redirect('clientes_adm')
